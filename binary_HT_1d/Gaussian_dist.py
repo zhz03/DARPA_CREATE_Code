@@ -115,14 +115,22 @@ def error_prob(mean0,mean1,var0,var1,Plotflag = False):
         plotGaussian(x,mean1,var1,'b.','mean={},var={}'.format(mean1,var1))
      
     return Prob_D,Prob_FA,Prob_M,Prob_CR
-        
-if __name__ == '__main__':
-    # one example
+
+def example1():
+    """
+    one example to show how to calculate error probabilities
+    using mean0,mean1,var0,var1
+    you can change mean0,mean1,var0,var1 as you want
+    """
     mean0 = 0
     var0 = 0.2
     mean1 = 1
     var1 = 0.5
     Prob_D,Prob_FA,Prob_M,Prob_CR =  error_prob(mean0,mean1,var0,var1)
+    return Prob_D,Prob_FA,Prob_M,Prob_CR
+            
+if __name__ == '__main__':
+    Prob_D,Prob_FA,Prob_M,Prob_CR = example1()
   
     
     
