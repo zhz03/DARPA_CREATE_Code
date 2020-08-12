@@ -9,7 +9,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import multivariate_normal
 
-
 def gaussian(x, mu, delta):
     exp = np.exp(- np.power(x - mu, 2) / (2 * np.power(delta, 2)))
     c = 1 / (delta * np.sqrt(2 * np.pi))
