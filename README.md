@@ -12,9 +12,10 @@ To run all the code in this repository, your system need to meet the following r
 
 - Python 3.7
 - [os](https://docs.python.org/3/library/os.html) library
-
 - [sys](https://docs.python.org/3/library/sys.html) library
-- 
+- numpy library
+- scipy library
+- copy
 
 ### Prerequisite
 
