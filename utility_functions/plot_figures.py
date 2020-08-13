@@ -7,7 +7,7 @@ Created on Mon Jul 13 16:11:29 2020
 import numpy as np
 import matplotlib.pyplot as plt
 import random as rnd
-from statis import multivariate_gaussian,plot_covariance_ellipse
+from utility_functions.statis import multivariate_gaussian,plot_covariance_ellipse
 
 """ 1d """
 def plot_filter_error(xs,var=None):
@@ -22,7 +22,7 @@ def plot_filter_error(xs,var=None):
     plt.plot(xs, ys-std, linestyle=':', color='k', lw=2)
     plt.fill_between(xs, std_btm, std_top,facecolor='orange', alpha=0.2)
 
-def kf_plot_1d_1obj(data,label = 'series',name = None):
+def kf_plot_1d_1obj(data,label = 'state',name = None):
     labelname = label + '_' + name
     if name == None:
         raise ValueError("Please specify which data you want to plot")
@@ -34,14 +34,14 @@ def kf_plot_1d_1obj(data,label = 'series',name = None):
         plt.plot(range(len(data)), data, 'r',label = labelname)
     
     
-def kf_plot_1d(measurements,ground_truth,clr='r',mkr='v',label='series1'):
+def kf_plot_1d(measurements,ground_truth,clr='r',mkr='v',label='state1'):
     mea_name = label + '_measurement'
     gtru_name = label + '_ground_truth'
     plt.scatter(range(len(measurements)), measurements,color = clr,s=10, label = mea_name)
     plt.plot(range(len(ground_truth)), ground_truth,color=clr,marker=mkr,label = gtru_name)
     plt.legend()
 
-def kf_plot_1d_loop(measurements,ground_truth,mkr='v',label='series1'):
+def kf_plot_1d_loop(measurements,ground_truth,mkr='v',label='state1'):
     mea_name = label + '_measurement'
     gtru_name = label + '_ground_truth'
     plt.scatter(range(len(measurements)), measurements,s=10, label = mea_name)
@@ -94,7 +94,7 @@ def multiKf_plot(mea,gtru,esti = None,kfest_flag = False):
         plt.figure()
         esti_name = '_KF estimate'
         for i in range(n):
-            label = 'series' + str(i)
+            label = 'state' + str(i)
             kf_plot_1d_loop(mea[i],gtru[i],mkr='v',label=label)  
         plt.xlabel('timesteps')
         plt.ylabel('physical quantity')
@@ -104,7 +104,7 @@ def multiKf_plot(mea,gtru,esti = None,kfest_flag = False):
         plt.figure()
         esti_name = '_KF estimate'
         for i in range(n):
-            label = 'series' + str(i)
+            label = 'state' + str(i)
             kf_plot_1d_loop(mea[i],gtru[i],mkr='v',label=label)  
             plt.plot(range(len(esti[i])), esti[i], 'r' ,label = label + esti_name)
         plt.xlabel('timesteps')
@@ -124,10 +124,10 @@ def multiKf_plot_dxdz(mea,gtru,esti = None,kfest_flag = False):
         plt.figure()
         
         for i in range(m):
-            label = 'series' + str(i)
+            label = 'state' + str(i)
             kf_plot_1d_1obj(mea[i],label = label,name = 'measurements')
         for i in range(n):
-            label = 'series' + str(i)
+            label = 'state' + str(i)
             kf_plot_1d_1obj(gtru[i],label = label,name = 'ground_truth')
         plt.xlabel('timesteps')
         plt.ylabel('physical quantity')
@@ -136,10 +136,10 @@ def multiKf_plot_dxdz(mea,gtru,esti = None,kfest_flag = False):
     elif kfest_flag == True:
         plt.figure()
         for i in range(m):
-            label = 'series' + str(i)
+            label = 'state' + str(i)
             kf_plot_1d_1obj(mea[i],label = label,name = 'measurements')
         for i in range(n):
-            label = 'series' + str(i)
+            label = 'state' + str(i)
             kf_plot_1d_1obj(gtru[i],label = label,name = 'ground_truth')
             kf_plot_1d_1obj(esti[i],label = label,name = 'estimates')
         plt.xlabel('timesteps')
