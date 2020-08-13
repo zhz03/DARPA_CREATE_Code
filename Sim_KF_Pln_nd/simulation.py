@@ -205,7 +205,7 @@ def generate_seq_data(A,B,H,Q,R,x0,ut_sq):
     timesteps = len(ut_sq)
     gx = [] 
     zt = []
-    sim_n = Simulation(
+    sim_1 = Simulation(
         x0=x0, 
         maneuver=ut_sq[0], 
         R=R, 
@@ -214,18 +214,24 @@ def generate_seq_data(A,B,H,Q,R,x0,ut_sq):
         B = B,
         H = H)
     for i in range(timesteps):
-        xzs_new = [sim_n.transfer_and_sense()]
-        gxi,zti = seperate_x_z(xzs_new)
-        gx.append(gxi[0])
-        zt.append(zti[0])
-        sim_n = Simulation(
-            x0=gx[-1], 
-            maneuver=ut_sq[i], 
-            R=R, 
-            Q=Q, 
-            A = A,
-            B = B,
-            H = H)
+        if i==0:
+            xzs_new = [sim_1.transfer_and_sense()]
+            gxi,zti = seperate_x_z(xzs_new)
+            gx.append(gxi[0])
+            zt.append(zti[0])
+        else:
+            sim_n = Simulation(
+                x0=gx[-1], 
+                maneuver=ut_sq[i], 
+                R=R, 
+                Q=Q, 
+                A = A,
+                B = B,
+                H = H)
+            xzs_new = [sim_n.transfer_and_sense()]
+            gxi,zti = seperate_x_z(xzs_new)
+            gx.append(gxi[0])
+            zt.append(zti[0])
     return gx,zt
 
 """ Examples """    
