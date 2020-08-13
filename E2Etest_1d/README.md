@@ -1,4 +1,4 @@
-This folder is only for testing End-to-end(E2E) process in 1d state. 
+This folder is only for testing the End-to-end(E2E) process in 1d state. 
 
 There are several core functions. 
 
