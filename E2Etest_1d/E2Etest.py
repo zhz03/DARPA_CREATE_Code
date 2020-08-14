@@ -288,9 +288,15 @@ def example_E2E_error_prob():
     a = 1
     h = 1
     b = 1
+    A = np.array([a]).reshape(dx, dx)
+    H = np.array([h]).reshape(dz, dx)
+    B = np.array([b]).reshape(dx, 1)
+    Q = np.array([q * q]).reshape(dx, dx)
+    R = np.array([r * r]).reshape(dz, dz)
     x0 = np.array([[0]]).reshape(dx, 1)
     uts = [0,1]
     ts = [100,1]
+    
     Prob_D,Prob_FA,Prob_M,Prob_CR = E2E_error_prob(A,B,H,Q,R,x0,uts,ts)
     return Prob_D,Prob_FA,Prob_M,Prob_CR
         
