@@ -20,7 +20,7 @@ $ts$ is time duration for inputs
 
 $sam_{numb}$ is the sample numbers = 1000
 
-- This function outputs statistical error probabilities: $Prob_D^{stats},Prob_{FA}^{stats},Prob_M^{stats},Prob_{CR}^{stats}$ 
+- This function outputs statistical error probabilities: $Prob_D^{stats}$, $Prob_{FA}^{stats}$,$Prob_M^{stats}$,$Prob_{CR}^{stats}$ 
 
 ### 2 E2E_error_prob function
 
@@ -36,3 +36,4 @@ $sam_{numb}$ is the sample numbers = 1000
 $$
 error_{D,FA,M,CR} = Prob_{D,FA,M,CR}^{stats} - Prob_{D,FA,M,CR}
 $$
+
