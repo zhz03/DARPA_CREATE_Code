@@ -279,10 +279,33 @@ def E2E_Comptest():
     print(np.mean(Error_CR))
     return Error_D,Error_FA,Error_M,Error_CR
 
+def example_E2E_error_prob():
+    dx = 1
+    dz = 1
+    # system matrices parameters
+    q = 0.2
+    r = 0.1
+    a = 1
+    h = 1
+    b = 1
+    x0 = np.array([[0]]).reshape(dx, 1)
+    uts = [0,1]
+    ts = [100,1]
+    Prob_D,Prob_FA,Prob_M,Prob_CR = E2E_error_prob(A,B,H,Q,R,x0,uts,ts)
+    return Prob_D,Prob_FA,Prob_M,Prob_CR
+        
 if __name__ == '__main__':
-    mean_error0,var_error0,mean_error1,var_error1 = verify_Usample_H01()
+    # one example to show how to calcualte E2E error probabilities
+    Prob_D,Prob_FA,Prob_M,Prob_CR = example_E2E_error_prob()
+    """
+    Uncomment next two lines of code to varify HT_generate_Usample_H01 
+    and HT_generate_Usample
+    """
+    #mean_error0,var_error0,mean_error1,var_error1 = verify_Usample_H01()
     #mean_error,var_error = verify_Usample()
     """
+    Uncomment next line of code to run 
+    comprehensive End2End 1d binary hypothesis testing
     This comprehensive test will be running very slow, please be patient
     """
     #Error_D,Error_FA,Error_M,Error_CR = E2E_Comptest()
