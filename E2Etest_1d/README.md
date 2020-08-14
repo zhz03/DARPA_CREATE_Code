@@ -20,7 +20,7 @@ $ts$ is time duration for inputs
 
 $sam_{numb}$ is the sample numbers = 1000
 
-- This function outputs statistical error probabilities: $Prob_D^{stats}$, $Prob_{FA}^{stats}$,$Prob_M^{stats}$,$Prob_{CR}^{stats}$ 
+- This function outputs statistical error probabilities: $Prob_D^{stats}$, $Prob_{FA}^{stats}$, $Prob_M^{stats}$, $Prob_{CR}^{stats}$ 
 
 ### 2 E2E_error_prob function
 
