@@ -1,10 +1,10 @@
-This folder is only for testing the End-to-end(E2E) process in 1d state. 
+The CREATE-SP-flowchart.pdf illustrate the workflow of this E2E-1d folder.
 
-There are several core functions. 
+There are several core functions in this folder.  
 
 ## Core functions
 
-### 1 E2E_stats_error_prob function
+### 1 Simulation_validation 
 
 - This function takes $A,B,H,Q,R,x_0,uts,ts,sam_{numb}$ as inputs.
 
@@ -22,14 +22,14 @@ $sam_{numb}$ is the sample numbers = 1000
 
 - This function outputs statistical error probabilities: $Prob_D^{stats}$, $Prob_{FA}^{stats}$, $Prob_M^{stats}$, $Prob_{CR}^{stats}$ 
 
-### 2 E2E_error_prob function
+### 2 Sensor_planner (This can be directly integrated with other groups)
 
-- This function takes $A,B,H,Q,R,x_0,uts,ts$ as inputs.
+- This function takes $A,B,H,Q,R,uts,ts$ as inputs.
 - This function outputs theoretical error probabilities:  $Prob_D,Prob_{FA},Prob_M,Prob_{CR}$ 
 
-### 3 E2E_comp function
+### 3 E2E_validation
 
-- This function  takes $A,B,H,Q,R,x_0,uts,ts,sam_{numb}$ as inputs.
+- This function takes $A,B,H,Q,R,x_0,uts,ts,sam_{numb}$ as inputs.
 
 - Compare the difference between statistical error probabilities and theoretical error probabilities in order to verify this End-to-End pipeline: 
 
