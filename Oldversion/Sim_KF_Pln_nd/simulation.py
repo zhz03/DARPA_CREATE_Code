@@ -29,7 +29,8 @@ class Simulation(object):
         self.B = B
         self.H = H
         self.n = A.shape[1]
-        self.m = H.shape[1]     
+        self.m = H.shape[1]  
+        
     def convert_var2noise(self, M, dt=1.0):
         n = M.shape[1]
         rnd = norm.rvs(size=(n, int(dt)))
@@ -320,6 +321,6 @@ def example_generate_data_seq_ut_nd():
     return gx,zt
     
 if __name__ == '__main__':
-    #gx,zt  = example_1d_generate_fake()
+
     gx1,zt1 = example_generate_data_seq_ut_1d()    
     gx,zt = example_generate_data_seq_ut_nd()

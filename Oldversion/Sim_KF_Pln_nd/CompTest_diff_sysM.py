@@ -408,7 +408,7 @@ def comprehensive_test_H_dx2dz3():
     This is a comprehensive test of the different range of 
     the H matrix in dx:2 dz:3 case.
     If you want to try dx:2,dz:1 case
-    then you'll need to change line 453 to
+    then you'll need to change line 455 to
     H = np.array([[h11,h12]]).reshape(dz, dx)
     and dz = 1
     """    
@@ -497,9 +497,9 @@ def comprehensive_test_H_dx2dz3():
 
 if __name__ == '__main__':
     """
-    The function name that start with comprehensive_test_xxx
+    The function name that starts with comprehensive_test_xxx
     will be runing slow, please be patient.
-    Comprehensive test will run 1000 trials accross 
+    Comprehensive test will run 1000 trials across 
     all test parameters space. 
     """
     error_mean_p_stat,error_var_p_stat = example_test_M22()

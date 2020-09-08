@@ -97,8 +97,8 @@ def example_2d():
     Q = np.dot(q,q.T)
     R = np.dot(r,r.T)
     x0 = np.array([[0],[0]]).reshape(dx, 1)
-    uts = [0]
-    ts = [1000]
+    uts = [0,1]
+    ts = [100,20]
     
     ut_sq = sim1.generate_sequential_ut(uts,ts)
     ground_truth,measurements = sim1.generate_seq_data(A,B,H,Q,R,x0,ut_sq)
@@ -110,5 +110,6 @@ def example_2d():
     predict = cnvdata.convert_array2list_nd(predict,dz)
     plotfgs.multiKf_plot(measurements,ground_truth,estimates,kfest_flag = True)
 if __name__ == '__main__':
-    example_1d()
+    example_2d()
+
     

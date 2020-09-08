@@ -12,7 +12,7 @@ from scipy import linalg
 def solve_discrete_riccati(A, H, Q, R):
     """
     This function is to calculate the discrete steady-state sigma
-    Using the linalg function from scipy library
+    using the linalg function from scipy library
     """
     Sigma = linalg.solve_discrete_are(A.T, H.T, Q, R)
     return Sigma
