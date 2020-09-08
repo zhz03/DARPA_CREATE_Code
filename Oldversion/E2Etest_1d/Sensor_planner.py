@@ -22,7 +22,7 @@ def Sensor_planner(A,B,H,Q,R,uts,ts):
     This function outputs sensor planning error probabilities
     """
     USigma0 = kfpln.KF_planning_Uz(A, B, H, Q, R,ts[0])
-    USigma1 = kfpln.KF_planning_Uz(A, B, H, Q, R,sum(ts))
+    USigma1 = kfpln.KF_planning_Uz(A, B, H, Q, R,ts[0])
     mean_1 = np.dot(H,B)*uts[1]
     mean_0 = np.dot(H,B)*uts[0]
 
@@ -39,9 +39,9 @@ if __name__ == "__main__":
     R = np.array([0.5 * 0.5]).reshape(dz, dz)
     # here 0 stands for no event happens, 1 stands for event happens 
     uts = [0,1] 
-    # The first 100 time steps correspond to no events occurring, 
-    # event happens at 101 = 100 + 1 timestep
-    ts = [100,1]
+    # a particular timestep. 
+    # we need to use the planner to determine the error probabilities at that time step.
+    ts = [100]
     
     Prob_D,Prob_FA,Prob_M,Prob_CR = Sensor_planner(A,B,H,Q,R,uts,ts)    
     
