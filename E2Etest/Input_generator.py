@@ -19,12 +19,21 @@ def inputs_generator_1d():
     hn = [0.1,0.2,0.4,0.5,0.7,0.8,1,1.1,1.5,1.6,1.9,2.0]
     bn = 1
     """
+    # 2304
+    """
     an = [0.1,0.4,0.8,1,1.6,2.0]
     hn = [0.1,0.4,0.8,1,1.6,2.0]
     b = 1
     qn = [0.1,0.5,0.7,1.0,1.5,2,3,4]
     rn = [0.1,0.5,0.7,1.0,1.5,2,3,4]
-        
+    """
+    #test
+    an = [0.1,1.0]
+    hn = [0.1,1.1]
+    b = 1
+    qn = [0.1,0.7]
+    rn = [0.1,0.5]
+    
     As = []
     Hs = []
     Bs = []
@@ -62,6 +71,8 @@ def inputs_generator_1d():
     
 if __name__ == '__main__':
     As,Hs,Bs,Qs,Rs,T,uts,ts,ut,trials = inputs_generator_1d()
+    System_model = [As,Hs,Bs,Qs,Rs]
+    
     """
     start = 0
     stop = 10
