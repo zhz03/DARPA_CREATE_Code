@@ -199,7 +199,10 @@ def visulize_SM_data(System_model):
         
         ax.scatter(x, y, z,color=(random.random(), random.random(), random.random()),label=label_name)
         plt.legend()
-        ax.set_title('Parameters space',fontsize=12,color='k',loc="left")
+        #ax.set_title('',fontsize=12,color='k',horizontalalignment='center')
+        
+    plt.title("Parameters space")
+    plt.show()
 
 
 
