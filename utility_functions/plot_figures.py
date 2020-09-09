@@ -6,6 +6,7 @@ Created on Mon Jul 13 16:11:29 2020
 """
 import numpy as np
 import matplotlib.pyplot as plt
+import random
 import random as rnd
 from utility_functions.statis import multivariate_gaussian,plot_covariance_ellipse
 
@@ -169,6 +170,37 @@ def plot_1d_var(mean,U_sigma,newflag = True):
                             std=[1, 2, 3],
                             title='2D Error(between ground truth and estimate) distribution')
         plt.gca().grid(b=False)
+
+def visulize_SM_data(System_model):
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    num = len(System_model)
+    for i in range(num):
+        x = System_model[i]
+        if i+2<=4:
+            y = System_model[i+1]
+            z = System_model[i+2]
+        elif i+2>4:
+            z = System_model[i+2-4]
+        elif i+1>4:
+            y = System_model[i+1-4]
+            z = System_model[i+2-4]
+        print(i)
+        if i ==0:
+            label_name = 'A,H,B'
+        elif i == 1:
+            label_name = 'H,B,Q'
+        elif i ==2:
+            label_name = 'B,Q,R'
+        elif i == 3:
+            label_name = 'Q,R,A'
+        elif i == 4:
+            label_name = 'R,A,H'
+        
+        ax.scatter(x, y, z,color=(random.random(), random.random(), random.random()),label=label_name)
+        plt.legend()
+        ax.set_title('Parameters space',fontsize=12,color='r')
+
 
 if __name__ =="__main__":
     mean1 = [1,1]
