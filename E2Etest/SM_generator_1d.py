@@ -6,17 +6,17 @@ Created on Tue Sep  8 11:33:58 2020
 """
 
 import numpy as np
-import random
+
 import utility_functions.plot_figures as plf
 import matplotlib.pyplot as plt
 
 def inputs_generator_1d():
     dx = 1
     dz = 1
-    # system matrices parameters
     
-    qn = [0.1,0.3,0.5,0.7,0.9,1.0,1.3,1.6,1.8,2,3,4]
-    rn = [0.1,0.3,0.5,0.7,0.9,1.0,1.3,1.6,1.8,2,3,4]
+    # system matrices parameters
+    qn = [0.1,0.3,0.5,0.7,0.9,1.0,1.3,1.6,1.8,2]
+    rn = [0.1,0.3,0.5,0.7,0.9,1.0,1.3,1.6,1.8,2]
     an = [0.1,0.2,0.4,0.5,0.7,0.8,1,1.1,1.5,1.6,1.9,2.0]
     hn = [0.1,0.2,0.4,0.5,0.7,0.8,1,1.1,1.5,1.6,1.9,2.0]
     b = 1
@@ -71,35 +71,7 @@ def inputs_generator_1d():
     
 if __name__ == '__main__':
     System_model = inputs_generator_1d()
-    #plf.visulize_SM_data(System_model)
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
-    
-    num = len(System_model)
-    for i in range(num):
-        x = System_model[i]
-        if i+2<=4:
-            y = System_model[i+1]
-            z = System_model[i+2]
-        elif i+2>4:
-            z = System_model[i+2-4]
-        elif i+1>4:
-            y = System_model[i+1-4]
-            z = System_model[i+2-4]
-        print(i)
-        if i ==0:
-            label_name = 'A,H,B'
-        elif i == 1:
-            label_name = 'H,B,Q'
-        elif i ==2:
-            label_name = 'B,Q,R'
-        elif i == 3:
-            label_name = 'Q,R,A'
-        elif i == 4:
-            label_name = 'R,A,H'
-        
-        ax.scatter(x, y, z,color=(random.random(), random.random(), random.random()),label=label_name)
-        plt.legend()
+    plf.visulize_SM_data(System_model)
     
     """
     start = 0
