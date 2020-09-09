@@ -4,6 +4,7 @@ Created on Wed Sep  9 14:09:33 2020
 
 @author: Zhaoliang
 """
+import numpy as np
 
 def System_setup_generator():
     T = 101
@@ -11,8 +12,9 @@ def System_setup_generator():
     ts = [100,1]
     ut = [0,1]
     trials = 1000
-
-    return T,uts,ts,ut,trials
+    dx = 1
+    x0 = np.array([[0]]).reshape(dx, 1)
+    return T,uts,ts,ut,trials,x0
 
 if __name__ == '__main__':
-    T,uts,ts,ut,trials = System_setup_generator()
+    T,uts,ts,ut,trials,x0 = System_setup_generator()
