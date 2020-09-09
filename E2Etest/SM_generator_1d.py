@@ -61,17 +61,13 @@ def inputs_generator_1d():
                     Rs.append(R)
                     Qs.append(Q)
 
-    uts = [0,1]
-    ts = [100,1]
-    ut = [0,1]
-    trials = 1000
-    T = 101
+
     # Stack a set of ABHQR as system models  (SM)
     SM = [As,Hs,Bs,Qs,Rs]
-    return SM,T,uts,ts,ut
+    return SM
     
 if __name__ == '__main__':
-    System_model,T,uts,ts,ut = inputs_generator_1d()
+    System_model = inputs_generator_1d()
 
     
     """
