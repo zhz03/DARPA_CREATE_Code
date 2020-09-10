@@ -15,12 +15,12 @@ import Estimator.estimator as Estr
 import utility_functions.plot_figures as plotfgs
 import utility_functions.convert_data as cnvdata
 
-def simulation(A,B,H,Q,R,x0,uts,ts,ut,trials):
+def simulation(SM,x0,uts,ts,ut,trials):
     u_T_D = []
     for i in range(trials):
         u = Gsequ.generate_sequential_ut(uts,ts)
-        y,z = Simu.Simulator(A,B,H,Q,R,x0,u)
-        u_D = Estr.estimator(A,B,H,Q,R,z,ut)
+        y,z = Simu.Simulator(SM,x0,u)
+        u_D = Estr.estimator(SM,z,ut)
         u_T = u[-1]
         u_td = [u_T,u_D]
         u_T_D.append(u_td)
@@ -45,6 +45,7 @@ if __name__ == '__main__':
     ts = [100,10]
     ut = [0,1] 
     trials = 100
-    u_T_D = simulation(A,B,H,Q,R,x0,uts,ts,ut,trials)
+    SM = [A,B,H,Q,R]
+    u_T_D = simulation(SM,x0,uts,ts,ut,trials)
     
 
