@@ -5,22 +5,40 @@ Created on Mon Aug 24 22:49:51 2020
 @author: Zhaoliang
 """
 import numpy as np
+from scipy.linalg import eigh
 from scipy.stats import norm, multivariate_normal
 import utility_functions.plot_figures as plotfgs
 import utility_functions.convert_data as cnvdata
 import matplotlib.pyplot as plt
 
 def HT_2d(mean0,mean1,Sigma0,Sigma1):
-    plotfgs.plot_multi_var(mean1,mean0,Sigma1,Sigma0)    
+    plotfgs.plot_multi_var(mean1,mean0,Sigma1,Sigma0)
+    diag_Sigma0 = np.diag(Sigma0)
+    diag_Sigma1 = np.diag(Sigma1)
+    #if np.sum(diag_Sigma0) > np.sum(diag_Sigma1):
+        
+        
 
 if __name__ == "__main__":
+    mean0 = np.array([0,0]).reshape(2,1)
+    mean1 = np.array([1,1]).reshape(2,1)
+    Sigma0 = np.array([[2,-1],[-1,2]]).reshape(2, 2)
+    Sigma1 = np.array([[3,0.1],[0.1,3]]).reshape(2, 2)
+    HT_2d(mean0,mean1,Sigma0,Sigma1)
     
+    x = np.array([4.3,0]).reshape(2,1)
+    xmu = x - mean0
+    d_sq = np.dot(np.dot(xmu.T,np.linalg.inv(Sigma0)),xmu)
+    d = np.sqrt(d_sq)
+    """
     mean0 = [0,0]
     mean1 = [1,1]
     Sigma0 = np.array([[2,-0.4],[-0.4,2]]).reshape(2, 2)
     Sigma1 = np.array([[.2,0.1],[0.1,.2]]).reshape(2, 2)
     plotfgs.plot_multi_var(mean1,mean0,Sigma1,Sigma0)
     
+    evals, evecs = eigh(Sigma0)
+    C = np.dot(evecs, np.diag(np.sqrt(evals)))
 
     xrange = np.arange(-1.5, 2.5, 0.01)
     yrange = np.arange(-1.5, 2.5, 0.01)
@@ -57,3 +75,4 @@ if __name__ == "__main__":
     Prob_CR = 1 - Prob_FA
     
     plt.plot(intersectx,intersecty,'r.')
+    """

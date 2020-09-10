@@ -16,7 +16,7 @@ class Compare_pln2statis_hist(object):
     def __init__(self, mean_pln = None, Sigma_pln = None,name = 'plan'):
         if(mean_pln is None or Sigma_pln is None):
             raise ValueError("Set proper statistics.")
-       
+        
         self.mean_Pln =  mean_pln
         self.Sigma_Pln = Sigma_pln
         self.name = name

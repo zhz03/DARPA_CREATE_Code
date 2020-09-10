@@ -10,7 +10,12 @@ import Simulation.Binary_stat_hypothesis_testing_1d as BstatHT1d
 import Simulation.Simulation as Sim
 import E2Etest.Error_prob_comparison as EPComp
 
-def E2E_validation(A,B,H,Q,R,T,ut,uts,ts,trials):
+def E2E_validation(SM,T,ut,uts,ts,trials):
+    A = SM[0]
+    B = SM[1]
+    H = SM[2]
+    Q = SM[3]
+    R = SM[4]
     Pr_D,Pr_FA,Pr_M,Pr_CR = Spr.Sensor_planner_1d(A,B,H,Q,R,T,ut)
     x0 =  np.array([[0]]).reshape(1, 1)
     u_T_D = Sim.simulation(A,B,H,Q,R,x0,uts,ts,ut,trials)
@@ -32,6 +37,7 @@ if __name__ == '__main__':
     B = np.array([b]).reshape(dx, 1)
     Q = np.array([q * q]).reshape(dx, dx)
     R = np.array([r * r]).reshape(dz, dz)
+    SM = [A,B,H,Q,R]
     x0 = np.array([[0]]).reshape(dx, 1)
     uts = [0,1]
     ts = [100,1]
@@ -39,7 +45,7 @@ if __name__ == '__main__':
     trials = 1000
     T = 101
     
-    error_D,error_FA,error_M,error_CR = E2E_validation(A,B,H,Q,R,T,ut,uts,ts,trials)
+    error_D,error_FA,error_M,error_CR = E2E_validation(SM,T,ut,uts,ts,trials)
 
     #Pr_D,Pr_FA,Pr_M,Pr_CR = Spr.Sensor_planner_1d(A,B,H,Q,R,T,ut)
     #u_T_D = Sim.simulation(A,B,H,Q,R,x0,uts,ts,ut,trials)

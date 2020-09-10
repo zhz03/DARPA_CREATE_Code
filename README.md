@@ -34,7 +34,7 @@ Before you execute any code in the subfolder, you'll need to run '*addpath.py*' 
   - Compare the above two error probabilities and do comprehensive test across different parameters space. 
 - **utility_functions**: this folder contains some utility functions that could help in data converting, plotting and visualization. 
 
-- **E2Etest_1d**: this folder only contains one program, which can do end-to-end calculation (inputs $A,B,H,Q,R,x0,ts,uts$, outputs $Prob_D,Prob_{FA},Prob_M,Prob_{CR}$) as well as end-to-end comprehensive validation and testing. 
+- **E2Etest_1d**: this folder only contains four program, which can do end-to-end calculation (inputs $A,B,H,Q,R,x0,ts,uts$, outputs $Prob_D,Prob_{FA},Prob_M,Prob_{CR}$) as well as end-to-end comprehensive validation and testing. The **Sensor_planner** program can be directly integrated with other groups. 
 
 In each folder, there is another README.md to explain more details about each program. And in each program, there are comments and example functions to show how to use and run the code.
 

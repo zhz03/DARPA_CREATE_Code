@@ -6,21 +6,21 @@ Created on Tue Sep  8 11:33:58 2020
 """
 
 import numpy as np
-
 import utility_functions.plot_figures as plf
-import matplotlib.pyplot as plt
+
 
 def inputs_generator_1d():
     dx = 1
     dz = 1
     
     # system matrices parameters
+    """
     qn = [0.1,0.3,0.5,0.7,0.9,1.0,1.3,1.6,1.8,2]
     rn = [0.1,0.3,0.5,0.7,0.9,1.0,1.3,1.6,1.8,2]
     an = [0.1,0.2,0.4,0.5,0.7,0.8,1,1.1,1.5,1.6,1.9,2.0]
     hn = [0.1,0.2,0.4,0.5,0.7,0.8,1,1.1,1.5,1.6,1.9,2.0]
     b = 1
-    
+    """
     # 2304
     """
     an = [0.1,0.4,0.8,1,1.6,2.0]
@@ -30,13 +30,13 @@ def inputs_generator_1d():
     rn = [0.1,0.5,0.7,1.0,1.5,2,3,4]
     """
     #test
-    """
+    
     an = [0.1,1.0]
     hn = [0.1,1.1]
     b = 1
-    qn = [0.1,0.7]
-    rn = [0.1,0.5]
-    """
+    qn = [0.3,0.7]
+    rn = [0.2,0.5]
+    
     As = []
     Hs = []
     Bs = []
@@ -66,7 +66,7 @@ def inputs_generator_1d():
 
 
     # Stack a set of ABHQR as system models  (SM)
-    SM = [As,Hs,Bs,Qs,Rs]
+    SM = [As,Bs,Hs,Qs,Rs]
     return SM
     
 if __name__ == '__main__':
