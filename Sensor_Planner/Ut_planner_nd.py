@@ -8,8 +8,12 @@ Created on Mon Sep  7 21:50:12 2020
 import numpy as np
 import Sensor_Planner.KF_planner_nd as kfplnnd
 
-def Ut_planner_nd(A, B, H, Q, R,Sigma_xhat):
-    
+def Ut_planner_nd(SM,Sigma_xhat):
+    A = SM[0]
+    B = SM[1]
+    H = SM[2]
+    Q = SM[3]
+    R = SM[4]
     S = np.dot(np.dot(A,Sigma_xhat),A.T)+Q
     U_sigma = np.dot(np.dot(H,S),H.T)+R
     return U_sigma

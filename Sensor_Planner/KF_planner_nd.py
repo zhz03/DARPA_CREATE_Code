@@ -32,11 +32,16 @@ class kf_dead_reckoning(object):
         self.P = self.P - np.dot(np.dot(K,self.H),self.P)
         return self.P    
 
-def KF_planner(A, B, H, Q, R,dt):
+def KF_planner(SM,dt):
     """
     A,B,H,Q,R are the system matrices
     dt is the timestep, dt is a scaler
     """
+    A = SM[0]
+    B = SM[1]
+    H = SM[2]
+    Q = SM[3]
+    R = SM[4]
     kfdr = kf_dead_reckoning(A = A, B=B, H =H, Q = Q, R=R)
     if dt == 0:
         Sigma_xhat = kfdr.initial()

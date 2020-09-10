@@ -12,8 +12,8 @@ import Sensor_Planner.Ut_planner_nd as Uplnnd
 import Sensor_Planner.Binary_hypothesis_testing_1d as Bht1d
 
 def Sensor_planner_1d(SM,T,ut):
-    Sigma_xhat = kfplnnd.KF_planner(A, B, H, Q, R,T)
-    Sigma_ut = Uplnnd.Ut_planner_nd(A, B, H, Q, R,Sigma_xhat)
+    Sigma_xhat = kfplnnd.KF_planner(SM,T)
+    Sigma_ut = Uplnnd.Ut_planner_nd(SM,Sigma_xhat)
     Sigma_uts = [Sigma_ut,Sigma_ut]
     Prob_D,Prob_FA,Prob_M,Prob_CR = Bht1d.Bin_Hyp_test_1d(Sigma_uts,ut)
     return Prob_D,Prob_FA,Prob_M,Prob_CR    
