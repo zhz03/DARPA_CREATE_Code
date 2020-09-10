@@ -41,7 +41,12 @@ class KalmanFilter(object):
         self.P = self.P - np.dot(np.dot(K,self.H),self.P)
         return self.P,self.x
       
-def KF_estimator(A,B,H,Q,R,measurements):
+def KF_estimator(SM,measurements):
+    A = SM[0]
+    B = SM[1]
+    H = SM[2]
+    Q = SM[3]
+    R = SM[4]
     
     kf = KalmanFilter(A=A,B=B,H=H,Q=Q,R=R)
     
@@ -67,9 +72,10 @@ if __name__ == '__main__':
     x0 = np.array([[0],[0]]).reshape(dx, 1)
     uts = [0,1,0,2]
     ts = [100,10,20,10]
+    SM = [A,B,H,Q,R]
     u = Gsequ.generate_sequential_ut(uts,ts)
-    y,z = Simu.Simulator(A,B,H,Q,R,x0,u)
-    Sigma,estimates = KF_estimator(A,B,H,Q,R,z)
+    y,z = Simu.Simulator(SM,x0,u)
+    Sigma,estimates = KF_estimator(SM,z)
     
     # Plot figure
     ground_truth = cnvdata.convert_array2list_nd(y,dx)
