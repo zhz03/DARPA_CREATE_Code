@@ -87,7 +87,12 @@ def seperate_x_z(zs):
         zt.append(zs[i][1])
     return gx,zt
 
-def Simulator(A,B,H,Q,R,x0,ut_sq):
+def Simulator(SM,x0,ut_sq):
+    A = SM[0]
+    B = SM[1]
+    H = SM[2]
+    Q = SM[3]
+    R = SM[4]
     timesteps = len(ut_sq)
     y = [] 
     z = []
@@ -132,7 +137,8 @@ if __name__ == '__main__':
     uts = [0,1,0,2]
     ts = [100,10,20,10]
     u = Gsequ.generate_sequential_ut(uts,ts)
-    y,z = Simulator(A,B,H,Q,R,x0,u)
+    SM = [A,B,H,Q,R]
+    y,z = Simulator(SM,x0,u)
     
     ground_truth = cnvdata.convert_array2list_nd(y,dx)
     measurements = cnvdata.convert_array2list_nd(z,dx)
