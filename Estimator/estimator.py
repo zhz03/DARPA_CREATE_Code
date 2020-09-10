@@ -12,9 +12,9 @@ import Estimator.Decision_making as DM
 import Simulation.Generate_seq_u as Gsequ
 import Simulation.Simulator as Simu
 
-def estimator(A,B,H,Q,R,z,ut):
-    Sigma,estimates = KF_est.KF_estimator(A,B,H,Q,R,z)
-    ut_zt,Sigma_ut_zt = BA.Bayesian_analysis(A, B, H, Q, R,Sigma,estimates,z)
+def estimator(SM,z,ut):
+    Sigma,estimates = KF_est.KF_estimator(SM,z)
+    ut_zt,Sigma_ut_zt = BA.Bayesian_analysis(SM,Sigma,estimates,z)
     u_D = DM.Decision_making(ut,ut_zt,Sigma_ut_zt)
     return u_D
 
@@ -36,8 +36,8 @@ if __name__ == '__main__':
     uts = [0,1]
     ts = [100,10]
     ut = [0,1]
-    
+    SM = [A,B,H,Q,R]
     u = Gsequ.generate_sequential_ut(uts,ts)
-    y,z = Simu.Simulator(A,B,H,Q,R,x0,u)
-    u_D = estimator(A,B,H,Q,R,z,ut)
+    y,z = Simu.Simulator(SM,x0,u)
+    u_D = estimator(SM,z,ut)
     
