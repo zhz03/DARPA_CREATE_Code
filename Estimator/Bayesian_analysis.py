@@ -11,7 +11,12 @@ import Simulation.Generate_seq_u as Gsequ
 import Simulation.Simulator as Simu
 import utility_functions.convert_data as cnvdata
 
-def Bayesian_analysis(A, B, H, Q, R,Sigma,estimates,measurements):
+def Bayesian_analysis(SM,Sigma,estimates,measurements):
+    A = SM[0]
+    B = SM[1]
+    H = SM[2]
+    Q = SM[3]
+    R = SM[4]
     ut_zt = measurements[-1] - np.dot(H,np.dot(A,estimates[-2]))
     Sigma_t = Sigma[-1]
     S = np.dot(np.dot(A,Sigma_t),A.T)+Q
@@ -36,13 +41,14 @@ if __name__ == '__main__':
     uts = [0,1]
     ts = [100,10]
     u = Gsequ.generate_sequential_ut(uts,ts)
-    y,z = Simu.Simulator(A,B,H,Q,R,x0,u)
-    Sigma,estimates = KF_est.KF_estimator(A,B,H,Q,R,z)
+    SM = [A,B,H,Q,R]
+    y,z = Simu.Simulator(SM,x0,u)
+    Sigma,estimates = KF_est.KF_estimator(SM,z)
     
     """
     ground_truth = cnvdata.convert_array2list_nd(y,dx)
     measurements = cnvdata.convert_array2list_nd(z,dx) 
     estimates = cnvdata.convert_array2list_nd(estimates,dx)
     """
-    ut_zt,Sigma_ut_zt = Bayesian_analysis(A, B, H, Q, R,Sigma,estimates,z)
+    ut_zt,Sigma_ut_zt = Bayesian_analysis(SM,Sigma,estimates,z)
     
