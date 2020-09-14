@@ -36,17 +36,22 @@ def filter_lambda(Lambda):
     flambda = []
     d = len(Lambda)
     if d==1:
-        return Lambda
-    else:
+        flambda = Lambda
+    elif d!=1:
         for i in range(d-1):
             sumlambda = []
             if np.abs(Lambda[i]-Lambda[i+1]) > 0.02:
                 flambda.append(Lambda[i])
+                if i+1 == d-1:
+                    flambda.append(Lambda[i+1])
             else:
                 sumlambda.append(Lambda[i])
-        flambda.append(np.mean(sumlambda))
+                #print(i)
+                #print(Lambda[i])
+        if len(sumlambda)!=0:
+            flambda.append(np.mean(sumlambda))
         flambda.sort()
-        return flambda        
+    return flambda        
 
 def generate_x(mean0,mean1,var0,var1):
     std0 = np.sqrt(var0)
@@ -140,8 +145,16 @@ if __name__ == '__main__':
     
     plot_2_Gaussian(mean0,mean1,var0,var1)
     x = generate_x(mean0,mean1,var0,var1)
-    Lambda = check_intersect_new(mean0,mean1,var0,var1)
-    Prob_D,Prob_FA,Prob_M,Prob_CR =  error_prob(mean0,mean1,var0,var1)
+    y1 = gaussian(x, mean0, np.sqrt(var0))
+    y2 = gaussian(x, mean1, np.sqrt(var1))
+    
+    Lambda = pre_check_interect(x,y1,y2)
+    
+    Lambda1 = filter_lambda(Lambda)
+    
+
+    
+    #Prob_D,Prob_FA,Prob_M,Prob_CR =  error_prob(mean0,mean1,var0,var1)
     
 
     
