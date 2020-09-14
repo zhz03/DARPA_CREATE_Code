@@ -134,9 +134,9 @@ def example1():
 if __name__ == '__main__':
     #Prob_D,Prob_FA,Prob_M,Prob_CR = example1()
     mean0 = 0
-    var0 = 10
+    var0 = 9
     mean1 = 1
-    var1 = 10
+    var1 = 9
     Lambda = check_intersect_new(mean0,mean1,var0,var1)
     plot_2_Gaussian(mean0,mean1,var0,var1)
     #Prob_D,Prob_FA,Prob_M,Prob_CR =  error_prob(mean0,mean1,var0,var1,True)  
