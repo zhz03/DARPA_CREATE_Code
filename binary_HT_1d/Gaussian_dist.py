@@ -19,6 +19,11 @@ def plotGaussian(x,mean,var,Color,Label):
     plt.plot(x, y,Color,label=Label)
     plt.legend()
 
+def plot_2_Gaussian(mean0,mean1,var0,var1):
+    x = generate_x(mean0,mean1,var0,var1)    
+    plotGaussian(x,mean0,var0,'r.','mean={},var={}'.format(mean0,var0))
+    plotGaussian(x,mean1,var1,'b.','mean={},var={}'.format(mean1,var1))  
+    
 def pre_check_interect(x,y1,y2):
     dnx = len(x)
     Lambda = []
@@ -78,7 +83,7 @@ def cdfd(start,end,mean,var):
     cdf2 = multivariate_normal(mean=mean,cov=var).cdf(end)
     return cdf2 -cdf1
     
-def error_prob(mean0,mean1,var0,var1,Plotflag = False):
+def error_prob(mean0,mean1,var0,var1):
     """ This function is to calculate four possibilities:
         1.  𝐻_1 is true, decide 𝐻_1 : Prob_D
         2. 𝐻_0 is true, decide 𝐻_1 : Prob_FA
@@ -108,11 +113,7 @@ def error_prob(mean0,mean1,var0,var1,Plotflag = False):
         Prob_CR = cdfd(Lambda[0],Lambda[1],mean0,var0)
         Prob_D = 1 - Prob_M
         Prob_FA = 1 - Prob_CR
-    
-    if Plotflag == True:    
-        x = generate_x(mean0,mean1,var0,var1)    
-        plotGaussian(x,mean0,var0,'r.','mean={},var={}'.format(mean0,var0))
-        plotGaussian(x,mean1,var1,'b.','mean={},var={}'.format(mean1,var1))
+
     
     Pr_D,Pr_FA,Pr_M,Pr_CR = Prob_D,Prob_FA,Prob_M,Prob_CR
     return Pr_D,Pr_FA,Pr_M,Pr_CR 
@@ -127,12 +128,18 @@ def example1():
     var0 = 10
     mean1 = 1
     var1 = 10
-    Prob_D,Prob_FA,Prob_M,Prob_CR =  error_prob(mean0,mean1,var0,var1,True)
+    Prob_D,Prob_FA,Prob_M,Prob_CR =  error_prob(mean0,mean1,var0,var1)
     return Prob_D,Prob_FA,Prob_M,Prob_CR
             
 if __name__ == '__main__':
-    Prob_D,Prob_FA,Prob_M,Prob_CR = example1()
-  
+    #Prob_D,Prob_FA,Prob_M,Prob_CR = example1()
+    mean0 = 0
+    var0 = 10
+    mean1 = 1
+    var1 = 10
+    Lambda = check_intersect_new(mean0,mean1,var0,var1)
+    plot_2_Gaussian(mean0,mean1,var0,var1)
+    #Prob_D,Prob_FA,Prob_M,Prob_CR =  error_prob(mean0,mean1,var0,var1,True)  
     
     
     
