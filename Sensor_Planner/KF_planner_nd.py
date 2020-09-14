@@ -63,6 +63,6 @@ if __name__ == '__main__':
     Q = np.dot(q,q.T)
     R = np.dot(r,r.T)
     x0 = np.array([[0],[0]]).reshape(dx, 1)
-
-    T = 100  
-    Sigma_xhat = KF_planner(A, B, H, Q, R,T)
+    SM = [A,B,H,Q,R]
+    T = 30  
+    Sigma_xhat = KF_planner(SM,T)
