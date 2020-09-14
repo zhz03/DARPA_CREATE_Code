@@ -52,11 +52,11 @@ def KF_planner(SM,dt):
     return Sigma_xhat
 
 if __name__ == '__main__':
+    """
     dx = 2
     dz = 2
     q = np.array([[0.2,0.4],[0.4,0.2]]).reshape(dx, dx)
     r = np.array([[0.2,0],[0,0.2]]).reshape(dz, dz)
-    
     A = np.array([[1,0],[0,1]]).reshape(dx, dx)
     B = np.array([[1],[1]]).reshape(dx, 1) 
     H = np.array([[1,0],[0,1]]).reshape(dz, dx)
@@ -64,5 +64,20 @@ if __name__ == '__main__':
     R = np.dot(r,r.T)
     x0 = np.array([[0],[0]]).reshape(dx, 1)
     SM = [A,B,H,Q,R]
-    T = 30  
+    """
+    dx = 1
+    dz = 1
+    # system matrices parameters
+    q = 2.0
+    r = 1.0
+    a = 1
+    h = 1
+    b = 1
+    A = np.array([a]).reshape(dx, dx)
+    H = np.array([h]).reshape(dz, dx)
+    B = np.array([b]).reshape(dx, 1)
+    Q = np.array([q * q]).reshape(dx, dx)
+    R = np.array([r * r]).reshape(dz, dz)
+    SM = [A,B,H,Q,R]    
+    T = 10 
     Sigma_xhat = KF_planner(SM,T)
