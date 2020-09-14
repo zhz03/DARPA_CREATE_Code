@@ -29,8 +29,9 @@ if __name__ == '__main__':
     H = np.array([[1,0],[0,1]]).reshape(dz, dx)
     Q = np.dot(q,q.T)
     R = np.dot(r,r.T)
+    SM = [A,B,H,Q,R]
     x0 = np.array([[0],[0]]).reshape(dx, 1)
 
     T = 100  
-    Sigma_xhat = kfplnnd.KF_planner(A, B, H, Q, R,T)
-    Sigma_ut= Ut_planner_nd(A, B, H, Q, R,Sigma_xhat)
+    Sigma_xhat = kfplnnd.KF_planner(SM,T)
+    Sigma_ut= Ut_planner_nd(SM,Sigma_xhat)
