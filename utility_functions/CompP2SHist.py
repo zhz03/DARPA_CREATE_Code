@@ -13,13 +13,14 @@ import binary_HT_1d.Gaussian_dist as Gd
 
 class Compare_pln2statis_hist(object):
     
-    def __init__(self, mean_pln = None, Sigma_pln = None,name = 'plan'):
-        if(mean_pln is None or Sigma_pln is None):
-            raise ValueError("Set proper statistics.")
+    def __init__(self, mean_pln = None, Sigma_pln = None,name = 'plan',bins = None):
+        #if(mean_pln is None or Sigma_pln is None):
+        #    raise ValueError("Set proper statistics.")
         
-        self.mean_Pln =  mean_pln
-        self.Sigma_Pln = Sigma_pln
+        self.mean_Pln = 0 if mean_pln is None else mean_pln
+        self.Sigma_Pln = 1 if Sigma_pln is None else Sigma_pln
         self.name = name
+        self.bins = 100 if bins is None else bins 
     
     def calculate_stat(self,data):
         mean_stat = np.mean(data)
@@ -49,6 +50,23 @@ class Compare_pln2statis_hist(object):
         Gd.plotGaussian(x_pln,self.mean_Pln,self.Sigma_Pln,'.-r','mean=$\mu_{%s}$, var=$Sigma_{%s}$'%(self.name,self.name))
         plt.legend()
         plt.title("Statistical histogram vs. planning mean and variance")
-
+        
+    def visualization_self(self,data,nflg = False):
+        mean_stat,var_stat = self.calculate_stat(data)
+        bins = self.bins
+        x_stat = np.linspace(np.min(data)-1,np.max(data)+1,bins)
+        plt.figure()
+        plt.title("Data histogram")
+        plt.hist(data, bins=int(bins), normed=True, alpha=1, histtype='stepfilled',
+             color='steelblue', edgecolor='none')
+        plt.ylabel("Frequency")
+        plt.xlabel("bins")
+        if nflg == True:
+            Gd.plotGaussian(x_stat,mean_stat,var_stat,'-g','mean=$\mu_{data}$,var=$Sigma_{data}$')
   
-#if __name__ == '__main__':
+if __name__ == '__main__':
+    x = [rnd.random() for i in range(1000)]
+    CpH = Compare_pln2statis_hist()
+    CpH.visualization_self(x)
+    y = [np.random.normal(0,1) for i in range(1000)]
+    CpH.visualization_self(y,True)
