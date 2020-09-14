@@ -22,7 +22,7 @@ if __name__ == '__main__':
     dx = 1
     dz = 1
     # system matrices parameters
-    q = 1.5
+    q = 2.0
     r = 1.0
     a = 1
     h = 1
