@@ -22,7 +22,7 @@ if __name__ == '__main__':
     dx = 1
     dz = 1
     # system matrices parameters
-    q = 1.0
+    q = 1.5
     r = 1.0
     a = 1
     h = 1
@@ -40,10 +40,10 @@ if __name__ == '__main__':
     trials = 1000
     T = 101
     
-    error_D,error_FA,error_M,error_CR = E2E_validation(SM,T,ut,x0,uts,ts,trials)
+    #error_D,error_FA,error_M,error_CR = E2E_validation(SM,T,ut,x0,uts,ts,trials)
 
-    #Pr_D,Pr_FA,Pr_M,Pr_CR = Spr.Sensor_planner_1d(A,B,H,Q,R,T,ut)
-    #u_T_D = Sim.simulation(A,B,H,Q,R,x0,uts,ts,ut,trials)
-    #Pr_D_stat,Pr_FA_stat,Pr_M_stat,Pr_CR_stat = BstatHT1d.Bin_stat_hyp_test_1d(u_T_D)
-    #error_D,error_FA,error_M,error_CR = EPComp.Error_prob_Comp(Pr_D,Pr_FA,Pr_M,Pr_CR,Pr_D_stat,Pr_FA_stat,Pr_M_stat,Pr_CR_stat)
+    Pr_D,Pr_FA,Pr_M,Pr_CR = Spr.Sensor_planner_1d(SM,T,ut)
+    u_T_D = Sim.simulation(SM,x0,uts,ts,ut,trials)
+    Pr_D_stat,Pr_FA_stat,Pr_M_stat,Pr_CR_stat = BstatHT1d.Bin_stat_hyp_test_1d(u_T_D)
+    error_D,error_FA,error_M,error_CR = EPComp.Error_prob_Comp(Pr_D,Pr_FA,Pr_M,Pr_CR,Pr_D_stat,Pr_FA_stat,Pr_M_stat,Pr_CR_stat)
     
