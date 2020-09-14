@@ -18,6 +18,6 @@ def Bin_Hyp_test_1d(Sigma_ut,ut):
     return Pr_D,Pr_FA,Pr_M,Pr_CR
 
 if __name__ == "__main__":
-    Sigma_ut = [8,8]
+    Sigma_ut = [10,10]
     ut = [0,1]
     Prob_D,Prob_FA,Prob_M,Prob_CR = Bin_Hyp_test_1d(Sigma_ut,ut)
