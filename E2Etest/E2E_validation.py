@@ -22,8 +22,8 @@ if __name__ == '__main__':
     dx = 1
     dz = 1
     # system matrices parameters
-    q = 0.5
-    r = 0.5
+    q = 1.0
+    r = 1.0
     a = 1
     h = 1
     b = 1
