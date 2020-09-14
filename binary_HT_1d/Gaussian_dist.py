@@ -28,7 +28,7 @@ def pre_check_interect(x,y1,y2):
     dnx = len(x)
     Lambda = []
     for i in range(dnx):
-        if y1[i] > 0.01 and y2[i] > 0.01 and np.abs(y1[i] - y2[i]) < 0.01:
+        if y1[i] > 0.01 and y2[i] > 0.01 and np.abs(y1[i] - y2[i]) < 0.001:
             Lambda.append(x[i])
     return Lambda
 
@@ -134,13 +134,19 @@ def example1():
 if __name__ == '__main__':
     #Prob_D,Prob_FA,Prob_M,Prob_CR = example1()
     mean0 = 0
-    var0 = 9
+    var0 = 10
     mean1 = 1
-    var1 = 9
-    Lambda = check_intersect_new(mean0,mean1,var0,var1)
+    var1 = 10
+    
     plot_2_Gaussian(mean0,mean1,var0,var1)
-    #Prob_D,Prob_FA,Prob_M,Prob_CR =  error_prob(mean0,mean1,var0,var1,True)  
+    #Prob_D,Prob_FA,Prob_M,Prob_CR =  error_prob(mean0,mean1,var0,var1)
     
+    #Lambda = check_intersect_new(mean0,mean1,var0,var1)    
+    x = generate_x(mean0,mean1,var0,var1)
+    y1 = gaussian(x, mean0, np.sqrt(var0))
+    y2 = gaussian(x, mean1, np.sqrt(var1))
     
+    Lambda = pre_check_interect(x,y1,y2)
+    Lambda1 = filter_lambda(Lambda)
     
     
