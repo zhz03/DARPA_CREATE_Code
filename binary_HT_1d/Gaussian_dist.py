@@ -98,12 +98,12 @@ def error_prob(mean0,mean1,var0,var1,Plotflag = False):
         Prob_FA = cdfd(Lambda[0],INF,mean0,var0)
         Prob_M = 1 - Prob_D
         Prob_CR = 1 - Prob_FA
-    elif var0 > var1:
+    elif dlm!= 1 and var0 > var1:
         Prob_D = cdfd(Lambda[0],Lambda[1],mean1,var1)
         Prob_FA = cdfd(Lambda[0],Lambda[1],mean0,var0)
         Prob_M = 1 - Prob_D
         Prob_CR = 1 - Prob_FA
-    elif var1 > var0:
+    elif dlm != 1 and var1 > var0:
         Prob_M = cdfd(Lambda[0],Lambda[1],mean1,var1)
         Prob_CR = cdfd(Lambda[0],Lambda[1],mean0,var0)
         Prob_D = 1 - Prob_M
@@ -113,8 +113,9 @@ def error_prob(mean0,mean1,var0,var1,Plotflag = False):
         x = generate_x(mean0,mean1,var0,var1)    
         plotGaussian(x,mean0,var0,'r.','mean={},var={}'.format(mean0,var0))
         plotGaussian(x,mean1,var1,'b.','mean={},var={}'.format(mean1,var1))
-     
-    return Prob_D,Prob_FA,Prob_M,Prob_CR
+    
+    Pr_D,Pr_FA,Pr_M,Pr_CR = Prob_D,Prob_FA,Prob_M,Prob_CR
+    return Pr_D,Pr_FA,Pr_M,Pr_CR 
 
 def example1():
     """
@@ -123,10 +124,10 @@ def example1():
     you can change mean0,mean1,var0,var1 as you want
     """
     mean0 = 0
-    var0 = 0.2
+    var0 = 10
     mean1 = 1
-    var1 = 0.5
-    Prob_D,Prob_FA,Prob_M,Prob_CR =  error_prob(mean0,mean1,var0,var1)
+    var1 = 10
+    Prob_D,Prob_FA,Prob_M,Prob_CR =  error_prob(mean0,mean1,var0,var1,True)
     return Prob_D,Prob_FA,Prob_M,Prob_CR
             
 if __name__ == '__main__':
