@@ -38,16 +38,20 @@ def filter_lambda(Lambda):
     if d==1:
         flambda = Lambda
     elif d!=1:
+        sumlambda = []
         for i in range(d-1):
-            sumlambda = []
+            
             if np.abs(Lambda[i]-Lambda[i+1]) > 0.02:
-                flambda.append(Lambda[i])
+                if len(sumlambda)==0: 
+                    flambda.append(Lambda[i])
+                    sumlambda = []
+                else:
+                    flambda.append(np.mean(sumlambda))
+                    sumlambda = []
                 if i+1 == d-1:
                     flambda.append(Lambda[i+1])
             else:
                 sumlambda.append(Lambda[i])
-                #print(i)
-                #print(Lambda[i])
         if len(sumlambda)!=0:
             flambda.append(np.mean(sumlambda))
         flambda.sort()
@@ -150,10 +154,8 @@ if __name__ == '__main__':
     
     Lambda = pre_check_interect(x,y1,y2)
     
-    Lambda1 = filter_lambda(Lambda)
-    
 
-    
+    Lambda1 = filter_lambda(Lambda)
     #Prob_D,Prob_FA,Prob_M,Prob_CR =  error_prob(mean0,mean1,var0,var1)
     
 
