@@ -61,7 +61,7 @@ def generate_x(mean0,mean1,var0,var1):
     if mean0 > mean1:
         range_s = mean1 - 3 * std
         range_e = mean0 + 3 * std
-    space_se = (range_e-range_s)/0.01
+    space_se = (range_e-range_s)/0.001
     x = np.linspace(range_s,range_e,int(space_se))
     return x
 
@@ -125,28 +125,24 @@ def example1():
     you can change mean0,mean1,var0,var1 as you want
     """
     mean0 = 0
-    var0 = 10
+    var0 = 0.1
     mean1 = 1
-    var1 = 10
+    var1 = 1
     Prob_D,Prob_FA,Prob_M,Prob_CR =  error_prob(mean0,mean1,var0,var1)
     return Prob_D,Prob_FA,Prob_M,Prob_CR
             
 if __name__ == '__main__':
     #Prob_D,Prob_FA,Prob_M,Prob_CR = example1()
     mean0 = 0
-    var0 = 10
+    var0 = 0.1
     mean1 = 1
-    var1 = 10
+    var1 = 1
     
     plot_2_Gaussian(mean0,mean1,var0,var1)
-    #Prob_D,Prob_FA,Prob_M,Prob_CR =  error_prob(mean0,mean1,var0,var1)
-    
-    #Lambda = check_intersect_new(mean0,mean1,var0,var1)    
     x = generate_x(mean0,mean1,var0,var1)
-    y1 = gaussian(x, mean0, np.sqrt(var0))
-    y2 = gaussian(x, mean1, np.sqrt(var1))
+    Lambda = check_intersect_new(mean0,mean1,var0,var1)
+    Prob_D,Prob_FA,Prob_M,Prob_CR =  error_prob(mean0,mean1,var0,var1)
     
-    Lambda = pre_check_interect(x,y1,y2)
-    Lambda1 = filter_lambda(Lambda)
+
     
     
