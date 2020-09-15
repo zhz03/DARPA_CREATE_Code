@@ -15,6 +15,9 @@ import Simulation.Simulator as Simu
 def estimator(SM,z,ut):
     Sigma,estimates = KF_est.KF_estimator(SM,z)
     ut_zt,Sigma_ut_zt = BA.Bayesian_analysis(SM,Sigma,estimates,z)
+    H = SM[2]
+    B = SM[1]
+    ut = [np.dot(H,B)*ut[0],np.dot(H,B)*ut[1]]
     u_D = DM.Decision_making(ut,ut_zt,Sigma_ut_zt)
     return u_D
 
@@ -22,10 +25,10 @@ if __name__ == '__main__':
     dx = 1
     dz = 1
     # system matrices parameters
-    q = 0.5
-    r = 0.5
+    q = 0.3
+    r = 0.2
     a = 1
-    h = 1
+    h = .1
     b = 1
     A = np.array([a]).reshape(dx, dx)
     H = np.array([h]).reshape(dz, dx)
@@ -34,7 +37,7 @@ if __name__ == '__main__':
     R = np.array([r * r]).reshape(dz, dz)
     x0 = np.array([[0]]).reshape(dx, 1)
     uts = [0,1]
-    ts = [100,10]
+    ts = [100,1]
     ut = [0,1]
     SM = [A,B,H,Q,R]
     u = Gsequ.generate_sequential_ut(uts,ts)
