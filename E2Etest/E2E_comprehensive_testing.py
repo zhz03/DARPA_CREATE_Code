@@ -20,7 +20,7 @@ def E2E_com_test():
     Error_FA = []
     Error_M = []
     Error_CR = []
-    for i in range(3):
+    for i in range(SM_num):
         A = System_models[0][i]
         B = System_models[1][i]
         H = System_models[2][i]
