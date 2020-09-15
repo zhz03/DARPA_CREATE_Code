@@ -29,7 +29,7 @@ $$
 
 ### Code implementation
 
-![fig1](figs/fig1.png)
+![Figure_0](figs/Figure_0.png)
 
 ## Program 2
 
