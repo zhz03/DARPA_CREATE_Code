@@ -59,7 +59,7 @@ def KF_estimator(SM,measurements):
         estimates.append(x)
         Sigma.append(P)
 
-    return Sigma,estimates
+    return Sigma,estimates#,predictions
 
 if __name__ == '__main__':
     """
@@ -81,7 +81,7 @@ if __name__ == '__main__':
     q = 0.3
     r = 0.2
     a = 1
-    h = .5
+    h = .1
     b = 1
     A = np.array([a]).reshape(dx, dx)
     H = np.array([h]).reshape(dz, dx)
@@ -90,7 +90,7 @@ if __name__ == '__main__':
     R = np.array([r * r]).reshape(dz, dz)
     x0 = np.array([[0]]).reshape(dx, 1)
     uts = [0,1]
-    ts = [100,2]
+    ts = [100,1]
     ut = [0,1] 
     trials = 1000
     SM = [A,B,H,Q,R]
@@ -105,6 +105,6 @@ if __name__ == '__main__':
     ground_truth = cnvdata.convert_array2list_nd(y,dx)
     measurements = cnvdata.convert_array2list_nd(z,dx) 
     estimates = cnvdata.convert_array2list_nd(estimates,dx)
-    predictions = cnvdata.convert_array2list_nd(predictions,dx)
+    #predictions = cnvdata.convert_array2list_nd(predictions,dx)
     plotfgs.multiKf_plot(measurements,ground_truth,estimates,kfest_flag = True)
     
