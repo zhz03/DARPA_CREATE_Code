@@ -14,4 +14,5 @@ def M_Cov_Analy(data):
     
 if __name__ =="__main__":
     x = [np.random.normal(0,1) for i in range(1000)]
-    x_mean,x_var = M_Cov_Analy(x)
+    Error_D = np.load('Error_D.npy')
+    x_mean,x_var = M_Cov_Analy(Error_D)
