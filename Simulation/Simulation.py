@@ -31,10 +31,10 @@ if __name__ == '__main__':
     dx = 1
     dz = 1
     # system matrices parameters
-    q = 0.1
-    r = 0.1
+    q = 0.3
+    r = 0.2
     a = 1
-    h = 1
+    h = .1
     b = 1
     A = np.array([a]).reshape(dx, dx)
     H = np.array([h]).reshape(dz, dx)
@@ -47,7 +47,7 @@ if __name__ == '__main__':
     ut = [0,1] 
     trials = 1000
     SM = [A,B,H,Q,R]
-    u_T_D = simulation(SM,x0,uts,ts,ut,trials)
+    u_T_D1 = simulation(SM,x0,uts,ts,ut,trials)
     Pr_D_stat,Pr_FA_stat,Pr_M_stat,Pr_CR_stat = BstatHT1d.Bin_stat_hyp_test_1d(u_T_D)
     
 

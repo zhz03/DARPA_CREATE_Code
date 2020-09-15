@@ -53,9 +53,10 @@ if __name__ == '__main__':
     SM = [A,B,H,Q,R]
     T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator()
     #error_D,error_FA,error_M,error_CR = E2E_validation(SM,T,ut,x0,uts,ts,trials)
-    """
+    
     Pr_D,Pr_FA,Pr_M,Pr_CR = Spr.Sensor_planner_1d(SM,T,ut)
     u_T_D = Sim.simulation(SM,x0,uts,ts,ut,trials)
+    """
     Pr_D_stat,Pr_FA_stat,Pr_M_stat,Pr_CR_stat = BstatHT1d.Bin_stat_hyp_test_1d(u_T_D)
     error_D,error_FA,error_M,error_CR = EPComp.Error_prob_Comp(Pr_D,Pr_FA,Pr_M,Pr_CR,Pr_D_stat,Pr_FA_stat,Pr_M_stat,Pr_CR_stat)
     """
