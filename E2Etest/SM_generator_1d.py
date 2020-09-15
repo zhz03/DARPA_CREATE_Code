@@ -9,7 +9,7 @@ import numpy as np
 import utility_functions.plot_figures as plf
 
 
-def inputs_generator_1d():
+def SM_generator_1d():
     dx = 1
     dz = 1
     
