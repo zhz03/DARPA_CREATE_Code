@@ -134,7 +134,7 @@ def example1():
     you can change mean0,mean1,var0,var1 as you want
     """
     mean0 = 0
-    var0 = 0.1
+    var0 = 1
     mean1 = 1
     var1 = 1
     Prob_D,Prob_FA,Prob_M,Prob_CR =  error_prob(mean0,mean1,var0,var1)
@@ -144,8 +144,8 @@ if __name__ == '__main__':
     #Prob_D,Prob_FA,Prob_M,Prob_CR = example1()
     mean0 = 0
     var0 = 0.1
-    mean1 = 1
-    var1 = 1
+    mean1 = 2
+    var1 = 2
     
     plot_2_Gaussian(mean0,mean1,var0,var1)
     x = generate_x(mean0,mean1,var0,var1)
@@ -153,10 +153,11 @@ if __name__ == '__main__':
     y2 = gaussian(x, mean1, np.sqrt(var1))
     
     Lambda = pre_check_interect(x,y1,y2)
-    
 
     Lambda1 = filter_lambda(Lambda)
-    #Prob_D,Prob_FA,Prob_M,Prob_CR =  error_prob(mean0,mean1,var0,var1)
+    Lambda2 = check_intersect_new(mean0,mean1,var0,var1)
+    
+    Prob_D,Prob_FA,Prob_M,Prob_CR =  error_prob(mean0,mean1,var0,var1)
     
 
     
