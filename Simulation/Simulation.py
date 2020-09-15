@@ -34,7 +34,7 @@ if __name__ == '__main__':
     q = 0.3
     r = 0.2
     a = 1
-    h = .1
+    h = .5
     b = 1
     A = np.array([a]).reshape(dx, dx)
     H = np.array([h]).reshape(dz, dx)
