@@ -70,9 +70,14 @@ def SM_generator_1d():
     return SM
     
 if __name__ == '__main__':
-    System_model = SM_generator_1d()
-    plf.visulize_SM_data(System_model)
-    
+    System_models = SM_generator_1d()
+    plf.visulize_SM_data(System_models)
+    A = System_models[0][0]
+    B = System_models[1][0]
+    H = System_models[2][0]
+    Q = System_models[3][0]
+    R = System_models[4][0]
+    SM = [A,B,H,Q,R]
     """
     start = 0
     stop = 10
