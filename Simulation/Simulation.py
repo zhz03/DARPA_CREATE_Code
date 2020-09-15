@@ -14,6 +14,7 @@ import Estimator.Decision_making as DM
 import Estimator.estimator as Estr
 import utility_functions.plot_figures as plotfgs
 import utility_functions.convert_data as cnvdata
+import Simulation.Binary_stat_hypothesis_testing_1d as BstatHT1d
 
 def simulation(SM,x0,uts,ts,ut,trials):
     u_T_D = []
@@ -30,8 +31,8 @@ if __name__ == '__main__':
     dx = 1
     dz = 1
     # system matrices parameters
-    q = 0.5
-    r = 0.5
+    q = 0.1
+    r = 0.1
     a = 1
     h = 1
     b = 1
@@ -42,10 +43,11 @@ if __name__ == '__main__':
     R = np.array([r * r]).reshape(dz, dz)
     x0 = np.array([[0]]).reshape(dx, 1)
     uts = [0,1]
-    ts = [100,10]
+    ts = [100,1]
     ut = [0,1] 
-    trials = 100
+    trials = 1000
     SM = [A,B,H,Q,R]
     u_T_D = simulation(SM,x0,uts,ts,ut,trials)
+    Pr_D_stat,Pr_FA_stat,Pr_M_stat,Pr_CR_stat = BstatHT1d.Bin_stat_hyp_test_1d(u_T_D)
     
 
