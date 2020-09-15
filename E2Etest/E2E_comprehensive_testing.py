@@ -47,9 +47,9 @@ if __name__ == "__main__":
     starttime = datetime.datetime.now()
 
     Error_D,Error_FA,Error_M,Error_CR = E2E_com_test()
-    np.save('Error_D.npy', Error_D)
-    np.save('Error_FA.npy', Error_FA)
-    np.save('Error_M.npy', Error_M)
-    np.save('Error_CR.npy', Error_CR)
+    np.save('3_Error_D.npy', Error_D)
+    np.save('3_Error_FA.npy', Error_FA)
+    np.save('3_Error_M.npy', Error_M)
+    np.save('3_Error_CR.npy', Error_CR)
     endtime = datetime.datetime.now()
     print ((endtime - starttime).seconds)
