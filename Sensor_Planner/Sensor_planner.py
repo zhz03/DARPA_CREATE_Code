@@ -15,6 +15,9 @@ def Sensor_planner_1d(SM,T,ut):
     Sigma_xhat = kfplnnd.KF_planner(SM,T)
     Sigma_ut = Uplnnd.Ut_planner_nd(SM,Sigma_xhat)
     Sigma_uts = [Sigma_ut,Sigma_ut]
+    H = SM[2]
+    B = SM[1]
+    ut = [np.dot(H,B)*ut[0],np.dot(H,B)*ut[1]]
     Prob_D,Prob_FA,Prob_M,Prob_CR = Bht1d.Bin_Hyp_test_1d(Sigma_uts,ut)
     return Prob_D,Prob_FA,Prob_M,Prob_CR    
 
@@ -23,15 +26,23 @@ if __name__ == '__main__':
     dx = 1
     dz = 1
     A = np.array([1]).reshape(dx, dx)
-    H = np.array([1]).reshape(dz, dx)
+    H = np.array([.1]).reshape(dz, dx)
     B = np.array([1]).reshape(dx, 1)
-    Q = np.array([0.5 * 0.5]).reshape(dx, dx)
-    R = np.array([0.5 * 0.5]).reshape(dz, dz)
+    Q = np.array([0.3 * 0.3]).reshape(dx, dx)
+    R = np.array([0.2 * 0.2]).reshape(dz, dz)
     # timestep
     T = 100
     # ut
     ut = [0,1]
     SM = [A,B,H,Q,R]
-    Prob_D,Prob_FA,Prob_M,Prob_CR = Sensor_planner_1d(SM,T,ut)
+    Sigma_xhat = kfplnnd.KF_planner(SM,T)
+    Sigma_ut = Uplnnd.Ut_planner_nd(SM,Sigma_xhat)
+    Sigma_uts = [Sigma_ut,Sigma_ut]
+    H = SM[2]
+    B = SM[1]
+    ut = [np.dot(H,B)*ut[0],np.dot(H,B)*ut[1]]
+    Prob_D,Prob_FA,Prob_M,Prob_CR = Bht1d.Bin_Hyp_test_1d(Sigma_uts,ut)
+    
+    #Prob_D,Prob_FA,Prob_M,Prob_CR = Sensor_planner_1d(SM,T,ut)
 
     
