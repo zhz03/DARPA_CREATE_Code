@@ -62,6 +62,7 @@ def KF_estimator(SM,measurements):
     return Sigma,estimates
 
 if __name__ == '__main__':
+    """
     dx = 2
     dz = 2
     A = np.array([[1,0],[0,1]]).reshape(dx, dx)
@@ -73,12 +74,37 @@ if __name__ == '__main__':
     uts = [0,1,0,2]
     ts = [100,10,20,10]
     SM = [A,B,H,Q,R]
+    """
+    dx = 1
+    dz = 1
+    # system matrices parameters
+    q = 0.3
+    r = 0.2
+    a = 1
+    h = .5
+    b = 1
+    A = np.array([a]).reshape(dx, dx)
+    H = np.array([h]).reshape(dz, dx)
+    B = np.array([b]).reshape(dx, 1)
+    Q = np.array([q * q]).reshape(dx, dx)
+    R = np.array([r * r]).reshape(dz, dz)
+    x0 = np.array([[0]]).reshape(dx, 1)
+    uts = [0,1]
+    ts = [100,2]
+    ut = [0,1] 
+    trials = 1000
+    SM = [A,B,H,Q,R]
+    
     u = Gsequ.generate_sequential_ut(uts,ts)
     y,z = Simu.Simulator(SM,x0,u)
     Sigma,estimates = KF_estimator(SM,z)
-    
+    ut_zt = z[-1] - np.dot(H,np.dot(A,estimates[-2]))
+    #ut_zt1 = z[-1] - np.dot(H,predictions[-2])
     # Plot figure
+    
     ground_truth = cnvdata.convert_array2list_nd(y,dx)
     measurements = cnvdata.convert_array2list_nd(z,dx) 
     estimates = cnvdata.convert_array2list_nd(estimates,dx)
+    predictions = cnvdata.convert_array2list_nd(predictions,dx)
     plotfgs.multiKf_plot(measurements,ground_truth,estimates,kfest_flag = True)
+    
