@@ -23,7 +23,7 @@ def error_comp(mean0,mean1,var0,var1,sam_numb):
     Prob_CR_sta = Prob_sta[3]
     
     # If you want to see the Plot, change Plotflag = True
-    Prob_D,Prob_FA,Prob_M,Prob_CR =  Gd.error_prob(mean0,mean1,var0,var1,Plotflag = False)
+    Prob_D,Prob_FA,Prob_M,Prob_CR =  Gd.error_prob(mean0,mean1,var0,var1)
     
     error_D = Prob_D_sta - Prob_D
     error_FA = Prob_FA_sta - Prob_FA
@@ -116,8 +116,8 @@ def comprehensive_test2():
     return D_Emean,D_Ecov,FA_Emean,FA_Ecov,M_Emean,M_Ecov,CR_Emean,CR_Ecov
         
 if __name__ == '__main__':
-    error_D,error_FA,error_M,error_CR  = error_comp_example()
-    # D_Emean,D_Ecov,FA_Emean,FA_Ecov,M_Emean,M_Ecov,CR_Emean,CR_Ecov = comprehensive_test2()
+    #error_D,error_FA,error_M,error_CR  = error_comp_example()
+    D_Emean,D_Ecov,FA_Emean,FA_Ecov,M_Emean,M_Ecov,CR_Emean,CR_Ecov = comprehensive_test2()
     
 
     
