@@ -143,9 +143,9 @@ def example1():
 if __name__ == '__main__':
     #Prob_D,Prob_FA,Prob_M,Prob_CR = example1()
     mean0 = 0
-    var0 = 0.5
-    mean1 = 3
-    var1 = 0.5
+    var0 = 0.2
+    mean1 = 5
+    var1 = 0.3
     
     plot_2_Gaussian(mean0,mean1,var0,var1)
     x = generate_x(mean0,mean1,var0,var1)
