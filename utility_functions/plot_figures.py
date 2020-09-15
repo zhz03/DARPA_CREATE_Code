@@ -8,6 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 import random as rnd
+from mpl_toolkits.mplot3d import Axes3D
 from utility_functions.statis import multivariate_gaussian,plot_covariance_ellipse
 
 """ 1d """
@@ -218,6 +219,14 @@ if __name__ =="__main__":
     mu1 = [0,0]
     mu2 = [3,0]
     plot_multi_var(mu1,mu2,Sigma1,Sigma2)
+    
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    x = [[1],[2],[3],[4],[5]]
+    y = [[1],[2],[3],[4],[5]]
+    z = [[1],[2],[3],[4],[5]]
+    ax.scatter(x, y, z,color=(random.random(), random.random(), random.random()),label="test")
+    plt.legend()
 
     
     
