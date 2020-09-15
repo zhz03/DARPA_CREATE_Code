@@ -70,7 +70,7 @@ def SM_generator_1d():
     return SM
     
 if __name__ == '__main__':
-    System_model = inputs_generator_1d()
+    System_model = SM_generator_1d()
     plf.visulize_SM_data(System_model)
     
     """
