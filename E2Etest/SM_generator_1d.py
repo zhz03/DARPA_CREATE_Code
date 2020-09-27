@@ -110,11 +110,11 @@ if __name__ == '__main__':
     b = random.random()
     ab = a * b
     """
-    Arange = [0,2]
-    Brange = [0,2]
-    Hrange = [0,2]
-    Qrange = [0,2]    
-    Rrange = [0,2]
+    Arange = [0,4]
+    Brange = [0,4]
+    Hrange = [0,4]
+    Qrange = [0,4]    
+    Rrange = [0,4]
     num = 1000
     System_models = SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange)
     plf.visulize_SM_data(System_models)
