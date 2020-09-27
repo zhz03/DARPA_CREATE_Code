@@ -69,8 +69,27 @@ def SM_generator_1d_old():
     SM = [As,Bs,Hs,Qs,Rs]
     return SM
 
-#def SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange):
-    
+def SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange):
+    dx = 1
+    dz = 1
+    As = []
+    Hs = []
+    Bs = []
+    Qs = []
+    Rs = []    
+    for i in range(num):
+        A = np.array([random.uniform(Arange[0],Arange[1])]).reshape(dx,dx)
+        B = np.array([random.uniform(Brange[0],Brange[1])]).reshape(dx,dx)
+        H = np.array([random.uniform(Hrange[0],Hrange[1])]).reshape(dz,dx)
+        Q = np.array([random.uniform(Qrange[0],Qrange[1])]).reshape(dx,dx)
+        R = np.array([random.uniform(Rrange[0],Rrange[1])]).reshape(dz,dz)
+        As.append(A)
+        Bs.append(B)
+        Hs.append(H)
+        Rs.append(R)
+        Qs.append(Q)        
+    SM = [As,Bs,Hs,Qs,Rs]
+    return SM    
         
 if __name__ == '__main__':
     #System_models = SM_generator_1d()
@@ -92,5 +111,12 @@ if __name__ == '__main__':
     ab = a * b
     """
     Arange = [0,2]
-    a = random.uniform(Arange(0),Arange(1))
+    Brange = [0,2]
+    Hrange = [0,2]
+    Qrange = [0,2]    
+    Rrange = [0,2]
+    num = 1000
+    System_models = SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange)
+    plf.visulize_SM_data(System_models)
+    #a = random.uniform(Arange[0],Arange[1])
     
