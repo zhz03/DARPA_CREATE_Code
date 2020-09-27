@@ -7,9 +7,9 @@ Created on Tue Sep  8 11:33:58 2020
 
 import numpy as np
 import utility_functions.plot_figures as plf
+import random
 
-
-def SM_generator_1d():
+def SM_generator_1d_old():
     dx = 1
     dz = 1
     
@@ -68,9 +68,13 @@ def SM_generator_1d():
     # Stack a set of ABHQR as system models  (SM)
     SM = [As,Bs,Hs,Qs,Rs]
     return SM
+
+#def SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange):
     
+        
 if __name__ == '__main__':
-    System_models = SM_generator_1d()
+    #System_models = SM_generator_1d()
+    """
     plf.visulize_SM_data(System_models)
     A = System_models[0][0]
     B = System_models[1][0]
@@ -79,6 +83,7 @@ if __name__ == '__main__':
     R = System_models[4][0]
     SM = [A,B,H,Q,R]
     """
+    """
     start = 0
     stop = 10
     step =0.1
@@ -86,3 +91,6 @@ if __name__ == '__main__':
     b = random.random()
     ab = a * b
     """
+    Arange = [0,2]
+    a = random.uniform(Arange(0),Arange(1))
+    
