@@ -46,8 +46,8 @@ def kf_plot_1d(measurements,ground_truth,clr='r',mkr='v',label='observation1'):
 def kf_plot_1d_loop(measurements,ground_truth,mkr='v',label='observation1'):
     mea_name = label + '_measurement'
     gtru_name = label + '_ground_truth'
-    plt.plot(range(len(ground_truth)), ground_truth,marker=mkr,'g',label = gtru_name)
-    plt.scatter(range(len(measurements)), measurements,s=10,'b',label = mea_name)
+    plt.scatter(range(len(measurements)), measurements,s=10,color='b',label = mea_name)
+    plt.plot(range(len(ground_truth)), ground_truth,marker=mkr,color='g',label = gtru_name)
     plt.legend()    
     
 def KF_plot(measurements,ground_truth,estimates,sigma,simulation=False):
