@@ -11,7 +11,13 @@ import E2Etest.System_setup_generator as SSGen
 import datetime
 
 def E2E_com_test():
-    System_models = SMGen1d.SM_generator_1d()
+    num = 10
+    Arange = [0,2]
+    Brange = [1,1]
+    Hrange = [0,2]
+    Qrange = [0,2]    
+    Rrange = [0,2]
+    System_models = SMGen1d.SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange)
     #As,Hs,Bs,Qs,Rs,
     T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator()
     SM_num = len(System_models[0])
@@ -41,15 +47,25 @@ def E2E_com_test():
         Error_M.append(error_M)
         Error_CR.append(error_CR)
         
-    return Error_D,Error_FA,Error_M,Error_CR
+    return Error_D,Error_FA,Error_M,Error_CR,System_models
 
 if __name__ == "__main__":
+    """
     starttime = datetime.datetime.now()
-
-    Error_D,Error_FA,Error_M,Error_CR = E2E_com_test()
+    Error_D,Error_FA,Error_M,Error_CR,system_models = E2E_com_test()    
+    endtime = datetime.datetime.now()
+    print ((endtime - starttime).seconds)
+    """
+    
+    A = system_models[0][5]
+    B = system_models[1][5]
+    H = system_models[2][5]
+    Q = system_models[3][5]
+    R = system_models[4][5]
+    
+    """
     np.save('5_Error_D.npy', Error_D)
     np.save('5_Error_FA.npy', Error_FA)
     np.save('5_Error_M.npy', Error_M)
     np.save('5_Error_CR.npy', Error_CR)
-    endtime = datetime.datetime.now()
-    print ((endtime - starttime).seconds)
+    """
