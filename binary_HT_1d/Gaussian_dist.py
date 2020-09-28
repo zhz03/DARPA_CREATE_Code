@@ -107,7 +107,7 @@ def error_prob(mean0,mean1,var0,var1):
     
     INF = 100
     dlm = len(Lambda)
-    if dlm == 1:
+    if dlm == 1 and (var1 - var0)< 0.000001:
         Prob_D = cdfd(Lambda[0],INF,mean1,var1)
         Prob_FA = cdfd(Lambda[0],INF,mean0,var0)
         Prob_M = 1 - Prob_D
