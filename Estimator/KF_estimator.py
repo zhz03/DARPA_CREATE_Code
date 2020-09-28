@@ -115,7 +115,7 @@ if __name__ == '__main__':
     x0 = np.array([[0]]).reshape(dx, 1)
     
     uts = [0,1]
-    ts = [10,1]
+    ts = [100,1]
     ut = [0,1] 
     trials = 1000
     SM = [A,B,H,Q,R]
