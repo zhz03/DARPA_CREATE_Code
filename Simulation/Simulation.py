@@ -41,7 +41,23 @@ if __name__ == '__main__':
     B = np.array([b]).reshape(dx, 1)
     Q = np.array([q * q]).reshape(dx, dx)
     R = np.array([r * r]).reshape(dz, dz)
+    
+    dx = 1
+    dz = 1
+    q = .1254
+    r = 1.6798
+    r = .1254
+    a = 1.4816
+    #a = 1.0
+    h = 1.5927
+    b = 1
+    A = np.array([a]).reshape(dx, dx)
+    H = np.array([h]).reshape(dz, dx)
+    B = np.array([b]).reshape(dx, 1)
+    Q = np.array([q]).reshape(dx, dx)
+    R = np.array([r]).reshape(dz, dz)
     x0 = np.array([[0]]).reshape(dx, 1)
+    
     uts = [0,1]
     ts = [100,1]
     ut = [0,1] 
