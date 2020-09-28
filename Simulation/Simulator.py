@@ -16,7 +16,7 @@ import utility_functions.plot_figures as plotfgs
 import utility_functions.convert_data as cnvdata
 
 np.set_printoptions(suppress=True)
-
+np.set_printoptions(precision=20)
 class Simulator_1t(object):
     def __init__(self, x0=0, ut=0,
                   A=1, B=1, H=1,R=0.0, Q=0.0):
@@ -123,11 +123,11 @@ def Simulator(SM,x0,ut_sq):
                 H = H)
             xzs_new = [sim_1n.transfer_and_sense()]
             yt,zt = seperate_x_z(xzs_new)
-            """
-            if yt[0][0] >= 1000 or yt[0][0] <= -1000 :
-                yt[0][0] = yt[0][0]/1000
-                zt[0][0] = zt[0][0]/1000
-            """
+
+            if yt[0][0] >= 1000000 or yt[0][0] <= -1000000 :
+                yt[0][0] = yt[0][0]/1000000
+                zt[0][0] = zt[0][0]/1000000
+
             y.append(yt[0])
             z.append(zt[0])
     return y,z
