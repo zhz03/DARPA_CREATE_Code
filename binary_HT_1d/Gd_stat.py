@@ -42,7 +42,7 @@ def stats_error_prob(mean0,mean1,var0,var1,sam_numb):
     dlm = len(Lambda)
     count_D = 0
     count_FA = 0
-    if dlm == 1:
+    if dlm == 1 and (var0 - var1)< 0.0000001:
         for i in range(sam_numb):
             if samples1[i] > Lambda[0]:
                 count_D = count_D + 1
@@ -87,7 +87,7 @@ def example1():
     """
     mean0 = 0
     var0 = 0.2
-    mean1 = 1
+    mean1 = 5
     var1 = 10
     sam_numb = 1000
     samples0 = generate_gaussian_samples(mean0,var0,sam_numb)      
@@ -108,8 +108,7 @@ def example2():
     sam_numb = 1000
     Prob_D,Prob_FA,Prob_M,Prob_CR = stats_error_prob(mean0,mean1,var0,var1,sam_numb)
 if __name__ == '__main__':
-    example2()
-     
+    example1() 
     
 
     
