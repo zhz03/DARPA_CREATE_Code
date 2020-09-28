@@ -65,7 +65,40 @@ def KF_estimator(SM,measurements):
 
     return Sigma,estimates#,predictions
 
+def figs_verification(num):
+    dx = 1
+    Arange = [0,2]
+    Brange = [1,1]
+    Hrange = [0,2]
+    Qrange = [0,2]    
+    Rrange = [0,2]
+    System_models = SMGen1d.SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange)
+    #As,Hs,Bs,Qs,Rs,
+    T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator()
+    SM_num = len(System_models[0])
+    
+    for i in range(SM_num):
+        A = System_models[0][i]
+        B = System_models[1][i]
+        H = System_models[2][i]
+        Q = System_models[3][i]
+        R = System_models[4][i]
+        SM = [A,B,H,Q,R]
+        u = Gsequ.generate_sequential_ut(uts,ts)
+        y,z = Simu.Simulator(SM,x0,u)
+        Sigma,estimates = KF_estimator(SM,z)
+        
+        ground_truth = cnvdata.convert_array2list_nd(y,dx)
+        measurements = cnvdata.convert_array2list_nd(z,dx) 
+        estimates = cnvdata.convert_array2list_nd(estimates,dx)
+        #predictions = cnvdata.convert_array2list_nd(predictions,dx)
+        plotfgs.multiKf_plot(measurements,ground_truth,estimates,kfest_flag = True)
+        plt.title('A=' + '%.2f' % A + '; B=' + '%.2f' % B + '; H=' + '%.2f' % H + '; Q=' + '%.2f' % Q + '; R=' + '%.2f' % R)
+        fig_name = './figs/KF_estimator_figs/' + str(i) + '.jpg'
+        plt.savefig(fig_name)
+        plt.close()
 if __name__ == '__main__':
+    figs_verification(20)
     """
     dx = 2
     dz = 2
@@ -143,40 +176,6 @@ if __name__ == '__main__':
     #predictions = cnvdata.convert_array2list_nd(predictions,dx)
     plotfgs.multiKf_plot(measurements,ground_truth,estimates,kfest_flag = True)
     """
-    dx = 1
-    num = 20
-    Arange = [0,2]
-    Brange = [1,1]
-    Hrange = [0,2]
-    Qrange = [0,2]    
-    Rrange = [0,2]
-    System_models = SMGen1d.SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange)
-    #As,Hs,Bs,Qs,Rs,
-    T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator()
-    SM_num = len(System_models[0])
-    
-    Error_D = []
-    Error_FA = []
-    Error_M = []
-    Error_CR = []
-    for i in range(SM_num):
-        A = System_models[0][i]
-        B = System_models[1][i]
-        H = System_models[2][i]
-        Q = System_models[3][i]
-        R = System_models[4][i]
-        SM = [A,B,H,Q,R]
-        u = Gsequ.generate_sequential_ut(uts,ts)
-        y,z = Simu.Simulator(SM,x0,u)
-        Sigma,estimates = KF_estimator(SM,z)
-        
-        ground_truth = cnvdata.convert_array2list_nd(y,dx)
-        measurements = cnvdata.convert_array2list_nd(z,dx) 
-        estimates = cnvdata.convert_array2list_nd(estimates,dx)
-        #predictions = cnvdata.convert_array2list_nd(predictions,dx)
-        plotfgs.multiKf_plot(measurements,ground_truth,estimates,kfest_flag = True)
-        plt.title('A=' + '%.2f' % A + '; B=' + '%.2f' % B + '; H=' + '%.2f' % H + '; Q=' + '%.2f' % Q + '; R=' + '%.2f' % R)
-        fig_name = './figs/KF_estimator_figs/' + str(i) + '.jpg'
-        plt.savefig(fig_name) 
+ 
         
         
