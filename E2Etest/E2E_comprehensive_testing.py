@@ -50,18 +50,19 @@ def E2E_com_test():
     return Error_D,Error_FA,Error_M,Error_CR,System_models
 
 if __name__ == "__main__":
-    """
+
     starttime = datetime.datetime.now()
     Error_D,Error_FA,Error_M,Error_CR,system_models = E2E_com_test()    
     endtime = datetime.datetime.now()
     print ((endtime - starttime).seconds)
+
     """
-    
     A = system_models[0][5]
     B = system_models[1][5]
     H = system_models[2][5]
     Q = system_models[3][5]
     R = system_models[4][5]
+    """
     
     """
     np.save('5_Error_D.npy', Error_D)
