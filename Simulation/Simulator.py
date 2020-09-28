@@ -10,13 +10,17 @@ import numpy as np
 from numpy.random import multivariate_normal
 from scipy.linalg import eigh, cholesky
 from scipy.stats import norm
-
+import matplotlib.pyplot as plt
 import Simulation.Generate_seq_u as Gsequ
 import utility_functions.plot_figures as plotfgs
 import utility_functions.convert_data as cnvdata
 
+import E2Etest.SM_generator_1d as SMGen1d
+import E2Etest.System_setup_generator as SSGen
+
 np.set_printoptions(suppress=True)
 np.set_printoptions(precision=20)
+
 class Simulator_1t(object):
     def __init__(self, x0=0, ut=0,
                   A=1, B=1, H=1,R=0.0, Q=0.0):
@@ -145,6 +149,7 @@ if __name__ == '__main__':
     uts = [0,1,0,2]
     ts = [100,10,20,10]
     """
+    """
     dx = 1
     dz = 1
     q = .1254
@@ -166,13 +171,41 @@ if __name__ == '__main__':
     ts = [100,1]
     ut = [0,1] 
     trials = 1000
-    
-    u = Gsequ.generate_sequential_ut(uts,ts)
+    """
+    dx = 1
+    dz = 1
+    num = 2
+    Arange = [0,2]
+    Brange = [0,2]
+    Hrange = [0,2]
+    Qrange = [0,2]    
+    Rrange = [0,2]
+    System_models = SMGen1d.SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange)
+    #As,Hs,Bs,Qs,Rs,
+    T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator()
+    SM_num = len(System_models[0])
+    for i in range(SM_num):
+        A = System_models[0][i]
+        B = System_models[1][i]
+        H = System_models[2][i]
+        Q = System_models[3][i]
+        R = System_models[4][i]
+        SM = [A,B,H,Q,R]
+        u = Gsequ.generate_sequential_ut(uts,ts)
+        y,z = Simulator(SM,x0,u)
+        ground_truth = cnvdata.convert_array2list_nd(y,dx)
+        measurements = cnvdata.convert_array2list_nd(z,dx)
+        plotfgs.multiKf_plot(ground_truth,measurements)
+        plt.title('A=' + '%.2f' % A + '; B=' + '%.2f' % B + '; H=' + '%.2f' % H + '; Q=' + '%.2f' % Q + '; R=' + '%.2f' % R)
+        fig_name = './figs/simulator_figs/' + str(i) + '.jpg'
+        plt.savefig(fig_name) 
+        plt.close()
+    """
     SM = [A,B,H,Q,R]
     y,z = Simulator(SM,x0,u)
     
     ground_truth = cnvdata.convert_array2list_nd(y,dx)
     measurements = cnvdata.convert_array2list_nd(z,dx)
     plotfgs.multiKf_plot(ground_truth,measurements)
-    
+    """
     
