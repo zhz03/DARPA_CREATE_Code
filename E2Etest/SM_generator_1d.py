@@ -8,6 +8,7 @@ Created on Tue Sep  8 11:33:58 2020
 import numpy as np
 import utility_functions.plot_figures as plf
 import random
+import matplotlib.pyplot as plt
 
 def SM_generator_1d_old():
     dx = 1
@@ -90,9 +91,19 @@ def SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange):
         Qs.append(Q)        
     SM = [As,Bs,Hs,Qs,Rs]
     return SM    
-        
+
+def run_example():
+    Arange = [0,4]
+    Brange = [0,4]
+    Hrange = [0,4]
+    Qrange = [0,4]    
+    Rrange = [0,4]
+    num = 1000
+    System_models = SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange)
+    plf.visulize_SM_data(System_models)
+    plt.savefig('./figs/SM_parameter_space.jpg')            
 if __name__ == '__main__':
-    #System_models = SM_generator_1d()
+    
     """
     plf.visulize_SM_data(System_models)
     A = System_models[0][0]
@@ -110,13 +121,5 @@ if __name__ == '__main__':
     b = random.random()
     ab = a * b
     """
-    Arange = [0,4]
-    Brange = [0,4]
-    Hrange = [0,4]
-    Qrange = [0,4]    
-    Rrange = [0,4]
-    num = 1000
-    System_models = SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange)
-    plf.visulize_SM_data(System_models)
-    #a = random.uniform(Arange[0],Arange[1])
+    run_example()
     
