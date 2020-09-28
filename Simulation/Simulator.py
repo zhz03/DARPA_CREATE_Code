@@ -122,8 +122,8 @@ def Simulator(SM,x0,ut_sq):
             xzs_new = [sim_1n.transfer_and_sense()]
             yt,zt = seperate_x_z(xzs_new)
             if yt[0][0] >= 1000 or yt[0][0] <= -1000 :
-                yt[0][0] = yt/1000
-                zt[0][0] = zt/1000
+                yt[0][0] = yt[0][0]/1000
+                zt[0][0] = zt[0][0]/1000
             
             y.append(yt[0])
             z.append(zt[0])
