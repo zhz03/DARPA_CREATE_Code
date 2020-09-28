@@ -131,10 +131,10 @@ if __name__ == '__main__':
     u_D = DM.Decision_making(ut,ut_zt,Sigma_ut_zt)
     #ut_zt1 = z[-1] - np.dot(H,predictions[-2])
     # Plot figure
-    
+    """
     ground_truth = cnvdata.convert_array2list_nd(y,dx)
     measurements = cnvdata.convert_array2list_nd(z,dx) 
     estimates = cnvdata.convert_array2list_nd(estimates,dx)
     #predictions = cnvdata.convert_array2list_nd(predictions,dx)
     plotfgs.multiKf_plot(measurements,ground_truth,estimates,kfest_flag = True)
-    
+    """
