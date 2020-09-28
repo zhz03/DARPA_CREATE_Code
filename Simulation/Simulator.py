@@ -136,7 +136,37 @@ def Simulator(SM,x0,ut_sq):
             z.append(zt[0])
     return y,z
 
+def figs_verification(num):
+    dx = 1
+    dz = 1
+    #num = 2
+    Arange = [0,2]
+    Brange = [0,2]
+    Hrange = [0,2]
+    Qrange = [0,2]    
+    Rrange = [0,2]
+    System_models = SMGen1d.SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange)
+    #As,Hs,Bs,Qs,Rs,
+    T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator()
+    SM_num = len(System_models[0])
+    for i in range(SM_num):
+        A = System_models[0][i]
+        B = System_models[1][i]
+        H = System_models[2][i]
+        Q = System_models[3][i]
+        R = System_models[4][i]
+        SM = [A,B,H,Q,R]
+        u = Gsequ.generate_sequential_ut(uts,ts)
+        y,z = Simulator(SM,x0,u)
+        ground_truth = cnvdata.convert_array2list_nd(y,dx)
+        measurements = cnvdata.convert_array2list_nd(z,dx)
+        plotfgs.multiKf_plot(ground_truth,measurements)
+        plt.title('A=' + '%.2f' % A + '; B=' + '%.2f' % B + '; H=' + '%.2f' % H + '; Q=' + '%.2f' % Q + '; R=' + '%.2f' % R)
+        fig_name = './figs/simulator_figs/' + str(i) + '.jpg'
+        plt.savefig(fig_name) 
+        plt.close()
 if __name__ == '__main__':
+    figs_verification(20)
     """
     dx = 2
     dz = 2
@@ -172,34 +202,8 @@ if __name__ == '__main__':
     ut = [0,1] 
     trials = 1000
     """
-    dx = 1
-    dz = 1
-    num = 2
-    Arange = [0,2]
-    Brange = [0,2]
-    Hrange = [0,2]
-    Qrange = [0,2]    
-    Rrange = [0,2]
-    System_models = SMGen1d.SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange)
-    #As,Hs,Bs,Qs,Rs,
-    T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator()
-    SM_num = len(System_models[0])
-    for i in range(SM_num):
-        A = System_models[0][i]
-        B = System_models[1][i]
-        H = System_models[2][i]
-        Q = System_models[3][i]
-        R = System_models[4][i]
-        SM = [A,B,H,Q,R]
-        u = Gsequ.generate_sequential_ut(uts,ts)
-        y,z = Simulator(SM,x0,u)
-        ground_truth = cnvdata.convert_array2list_nd(y,dx)
-        measurements = cnvdata.convert_array2list_nd(z,dx)
-        plotfgs.multiKf_plot(ground_truth,measurements)
-        plt.title('A=' + '%.2f' % A + '; B=' + '%.2f' % B + '; H=' + '%.2f' % H + '; Q=' + '%.2f' % Q + '; R=' + '%.2f' % R)
-        fig_name = './figs/simulator_figs/' + str(i) + '.jpg'
-        plt.savefig(fig_name) 
-        plt.close()
+
+        
     """
     SM = [A,B,H,Q,R]
     y,z = Simulator(SM,x0,u)
