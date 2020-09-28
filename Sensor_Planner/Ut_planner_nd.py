@@ -46,6 +46,6 @@ if __name__ == '__main__':
     Q = np.array([q * q]).reshape(dx, dx)
     R = np.array([r * r]).reshape(dz, dz)
     SM = [A,B,H,Q,R] 
-    T = 0  
+    T = 10  
     Sigma_xhat = kfplnnd.KF_planner(SM,T)
     Sigma_ut= Ut_planner_nd(SM,Sigma_xhat)

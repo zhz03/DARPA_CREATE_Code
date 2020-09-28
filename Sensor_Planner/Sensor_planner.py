@@ -30,6 +30,19 @@ if __name__ == '__main__':
     B = np.array([1]).reshape(dx, 1)
     Q = np.array([0.3 * 0.3]).reshape(dx, dx)
     R = np.array([0.2 * 0.2]).reshape(dz, dz)
+    
+    dx = 1
+    dz = 1
+    q = .1254
+    r = 1.6798
+    a = 1.4816
+    h = 1.5927
+    b = 1
+    A = np.array([a]).reshape(dx, dx)
+    H = np.array([h]).reshape(dz, dx)
+    B = np.array([b]).reshape(dx, 1)
+    Q = np.array([q]).reshape(dx, dx)
+    R = np.array([r]).reshape(dz, dz)
     # timestep
     T = 100
     # ut
