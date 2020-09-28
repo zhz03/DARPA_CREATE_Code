@@ -209,7 +209,7 @@ def plot_generate_seq_u(utsq,uts,ts):
     plt.figure()
     labelname1 = str(uts[0]) +';' + str(uts[1]) + ';' + str(uts[2])
     labelname2 = str(ts[0]) +';' + str(ts[1]) + ';' + str(ts[2])
-    plt.plot(range(len(utsq)),utsq,label='uts=' + labelname1, 'ts='labelname2)
+    plt.plot(range(len(utsq)),utsq,label='uts=' + labelname1 +',' + 'ts=' +labelname2)
     plt.legend()
 
 if __name__ =="__main__":
