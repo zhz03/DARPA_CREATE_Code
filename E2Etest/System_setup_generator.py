@@ -7,9 +7,10 @@ Created on Wed Sep  9 14:09:33 2020
 import numpy as np
 
 def System_setup_generator():
-    T = 101
+    
     uts = [0,1]
     ts = [100,1]
+    T = ts[0] + ts[1]
     ut = [0,1]
     trials = 1000
     dx = 1
