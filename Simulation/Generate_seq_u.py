@@ -32,10 +32,18 @@ def single_randome_test():
         ts[i] = round(random.uniform(10,100))
     fig_verification(uts,ts,i)  
 
+def comprehensive_test(num):
+    for j in range(num):
+        uts = [0,0,0]
+        ts = [10,10,10]
+        for i in range(3):
+            uts[i] = round(random.uniform(0,4))
+            ts[i] = round(random.uniform(10,100))
+        fig_verification(uts,ts,j)
 
 if __name__ == '__main__':
-    single_randome_test()
-    
+    #single_randome_test()
+    comprehensive_test(10)
     """
     uts = [0,1,2]
     ts = [100,10,20]
