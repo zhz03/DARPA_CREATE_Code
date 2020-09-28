@@ -50,6 +50,7 @@ if __name__ == '__main__':
     a = 1.4816
     #a = 1.0
     h = 1.5927
+    h = 1
     b = 1
     A = np.array([a]).reshape(dx, dx)
     H = np.array([h]).reshape(dz, dx)

@@ -126,6 +126,7 @@ def Simulator(SM,x0,ut_sq):
     return y,z
 
 if __name__ == '__main__':
+    """
     dx = 2
     dz = 2
     A = np.array([[1,0],[0,1]]).reshape(dx, dx)
@@ -136,6 +137,29 @@ if __name__ == '__main__':
     x0 = np.array([[0],[0]]).reshape(dx, 1)
     uts = [0,1,0,2]
     ts = [100,10,20,10]
+    """
+    dx = 1
+    dz = 1
+    q = .1254
+    r = 1.6798
+    r = .1254
+    a = 1.4816
+    #a = 1.0
+    h = 1.5927
+    h = 1
+    b = 1
+    A = np.array([a]).reshape(dx, dx)
+    H = np.array([h]).reshape(dz, dx)
+    B = np.array([b]).reshape(dx, 1)
+    Q = np.array([q]).reshape(dx, dx)
+    R = np.array([r]).reshape(dz, dz)
+    x0 = np.array([[0]]).reshape(dx, 1)
+    
+    uts = [0,1]
+    ts = [100,1]
+    ut = [0,1] 
+    trials = 1000
+    
     u = Gsequ.generate_sequential_ut(uts,ts)
     SM = [A,B,H,Q,R]
     y,z = Simulator(SM,x0,u)
