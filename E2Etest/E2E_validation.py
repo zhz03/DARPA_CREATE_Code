@@ -43,6 +43,8 @@ if __name__ == '__main__':
     trials = 1000
     T = 101
     """    
+    """
+    #The bug problem of this case was found to be that the measurements were too accurate to accuratel
     dx = 1
     dz = 1
     q = .1254
@@ -56,6 +58,21 @@ if __name__ == '__main__':
     Q = np.array([q]).reshape(dx, dx)
     R = np.array([r]).reshape(dz, dz)
     SM = [A,B,H,Q,R]
+    """
+    dx = 1
+    dz = 1
+    q = .049786
+    r = 1.40828
+    a = 0.2972
+    h = 0.96915
+    b = 1
+    A = np.array([a]).reshape(dx, dx)
+    H = np.array([h]).reshape(dz, dx)
+    B = np.array([b]).reshape(dx, 1)
+    Q = np.array([q]).reshape(dx, dx)
+    R = np.array([r]).reshape(dz, dz)
+    SM = [A,B,H,Q,R]
+    
     """
     System_models = SMGen1d.SM_generator_1d()
 

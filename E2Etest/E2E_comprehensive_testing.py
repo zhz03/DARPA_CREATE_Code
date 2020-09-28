@@ -11,7 +11,7 @@ import E2Etest.System_setup_generator as SSGen
 import datetime
 
 def E2E_com_test():
-    num = 10
+    num = 100
     Arange = [0,2]
     Brange = [1,1]
     Hrange = [0,2]
@@ -50,12 +50,12 @@ def E2E_com_test():
     return Error_D,Error_FA,Error_M,Error_CR,System_models
 
 if __name__ == "__main__":
-
+    
     starttime = datetime.datetime.now()
     Error_D,Error_FA,Error_M,Error_CR,system_models = E2E_com_test()    
     endtime = datetime.datetime.now()
     print ((endtime - starttime).seconds)
-
+    
     """
     A = system_models[0][5]
     B = system_models[1][5]
@@ -64,9 +64,9 @@ if __name__ == "__main__":
     R = system_models[4][5]
     """
     
-    """
-    np.save('5_Error_D.npy', Error_D)
-    np.save('5_Error_FA.npy', Error_FA)
-    np.save('5_Error_M.npy', Error_M)
-    np.save('5_Error_CR.npy', Error_CR)
-    """
+
+    np.save('Error_D.npy', Error_D)
+    np.save('Error_FA.npy', Error_FA)
+    np.save('Error_M.npy', Error_M)
+    np.save('Error_CR.npy', Error_CR)
+    
