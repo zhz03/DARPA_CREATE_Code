@@ -205,7 +205,11 @@ def visulize_SM_data(System_model):
     plt.title("Parameters space")
     plt.show()
 
-
+def plot_generate_seq_u(utsq,uts):
+    plt.figure()
+    labelname = str(uts[0]) + str(uts[1]) + str(uts[2])
+    plt.plot(len(utsq),utsq,label=labelname)
+    plt.legend()
 
 if __name__ =="__main__":
     mean1 = [1,1]
