@@ -181,14 +181,12 @@ def visulize_SM_data(System_model):
         if i+2<=4:
             y = System_model[i+1]
             z = System_model[i+2]
-        elif i+2>4:
+        elif i+2>4 and i+1 <=4:
             y = System_model[i+1]
             z = System_model[i+2-5]
         elif i+1>4:
             y = System_model[i+1-5]
             z = System_model[i+2-5]
-        print(i)
-        print(i+1)
         if i ==0:
             label_name = 'A,H,B'
         elif i == 1:
