@@ -223,6 +223,14 @@ def plot_2_Gaussian(mean0,mean1,var0,var1):
     x = Gd.generate_x(mean0,mean1,var0,var1)    
     plotGaussian(x,mean0,var0,'r.','mean={},var={}'.format(mean0,var0))
     plotGaussian(x,mean1,var1,'b.','mean={},var={}'.format(mean1,var1))  
+
+def plot_2_Gaussian_withpoints(mean0,mean1,var0,var1,ax,ay,bx,by):
+    x = Gd.generate_x(mean0,mean1,var0,var1)    
+    plotGaussian(x,mean0,var0,'r.','mean={},var={}'.format(mean0,var0))
+    plotGaussian(x,mean1,var1,'b.','mean={},var={}'.format(mean1,var1))
+    plt.scatter(ax,ay,color = 'k',s=20, label = 'pdf_H1')
+    plt.scatter(bx,by,color = 'k',s=20, label = 'pdf_H0')
+    plt.plot([ax,bx],[ay,by],'k')
     
 if __name__ =="__main__":
     mean1 = [1,1]
