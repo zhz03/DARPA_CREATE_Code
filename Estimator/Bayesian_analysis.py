@@ -10,6 +10,8 @@ import Estimator.KF_estimator as KF_est
 import Simulation.Generate_seq_u as Gsequ
 import Simulation.Simulator as Simu
 import utility_functions.convert_data as cnvdata
+import utility_functions.CompP2SHist as CompP2SHist
+import matplotlib.pyplot as plt
 
 def Bayesian_analysis(SM,Sigma,estimates,measurements):
     A = SM[0]
@@ -40,15 +42,25 @@ if __name__ == '__main__':
     x0 = np.array([[0]]).reshape(dx, 1)
     uts = [0,1]
     ts = [100,10]
-    u = Gsequ.generate_sequential_ut(uts,ts)
-    SM = [A,B,H,Q,R]
-    y,z = Simu.Simulator(SM,x0,u)
-    Sigma,estimates = KF_est.KF_estimator(SM,z)
+    samp_num = 1000
+    Ut_zt = []
+    for i in range(samp_num):
+        u = Gsequ.generate_sequential_ut(uts,ts)
+        SM = [A,B,H,Q,R]
+        y,z = Simu.Simulator(SM,x0,u)
+        Sigma,estimates = KF_est.KF_estimator(SM,z)
+        ut_zt,Sigma_ut_zt = Bayesian_analysis(SM,Sigma,estimates,z)
+        Ut_zt.append(ut_zt)
+    Ut_zt = cnvdata.convert_array2list_nd(Ut_zt,dx)
+    mean_pln = np.dot(H,B)*uts[1]
+    CompP2S = CompP2SHist.Compare_pln2statis_hist(mean_pln = np.mean(Ut_zt), Sigma_pln = Sigma_ut_zt[0][0])
+    CompP2S.visualization_compare(Ut_zt[0],10)
+    plt.title('A=' + '%.2f' % A + '; B=' + '%.2f' % B + '; H=' + '%.2f' % H + '; Q=' + '%.2f' % Q + '; R=' + '%.2f' % R)
     
     """
     ground_truth = cnvdata.convert_array2list_nd(y,dx)
     measurements = cnvdata.convert_array2list_nd(z,dx) 
     estimates = cnvdata.convert_array2list_nd(estimates,dx)
     """
-    ut_zt,Sigma_ut_zt = Bayesian_analysis(SM,Sigma,estimates,z)
+    
     
