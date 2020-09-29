@@ -27,10 +27,8 @@ def Bayesian_analysis(SM,Sigma,estimates,measurements):
     Sigma_ut_zt = np.dot(np.dot(H,S),H.T)+R
     return ut_zt,Sigma_ut_zt
 
-#def verification():
+def verification(num):
     
-if __name__ == '__main__':
-    num = 10
     dx = 1
     Arange = [1,1]
     Brange = [1,1]
@@ -41,7 +39,7 @@ if __name__ == '__main__':
     #As,Hs,Bs,Qs,Rs,
     T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator()
     SM_num = len(System_models[0])
-    for i in range(num):
+    for i in range(SM_num):
         A = System_models[0][i]
         B = System_models[1][i]
         H = System_models[2][i]
@@ -57,13 +55,16 @@ if __name__ == '__main__':
             ut_zt,Sigma_ut_zt = Bayesian_analysis(SM,Sigma,estimates,z)
             Ut_zt.append(ut_zt)
         Ut_zt = cnvdata.convert_array2list_nd(Ut_zt,dx)
-        mean_pln = np.dot(H,B)*uts[1]
+        #mean_pln = np.dot(H,B)*uts[1]
         CompP2S = CompP2SHist.Compare_pln2statis_hist(mean_pln = np.mean(Ut_zt), Sigma_pln = Sigma_ut_zt[0][0])
         CompP2S.visualization_compare(Ut_zt[0],1)
         plt.title('A=' + '%.2f' % A + '; B=' + '%.2f' % B + '; H=' + '%.2f' % H + '; Q=' + '%.2f' % Q + '; R=' + '%.2f' % R)
         fig_name = './figs/Bayesian_analysis_figs/' + str(i) + '_UtztHist.jpg'
         plt.savefig(fig_name)
         plt.close()
+    
+if __name__ == '__main__':
+    verification(20)
     
     """
     ground_truth = cnvdata.convert_array2list_nd(y,dx)
