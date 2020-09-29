@@ -15,6 +15,9 @@ import Estimator.estimator as Estr
 import utility_functions.plot_figures as plotfgs
 import utility_functions.convert_data as cnvdata
 import Simulation.Binary_stat_hypothesis_testing_1d as BstatHT1d
+import E2Etest.SM_generator_1d as SMGen1d
+import E2Etest.System_setup_generator as SSGen
+import matplotlib.pyplot as plt
 
 def simulation(SM,x0,uts,ts,ut,trials):
     u_T_D = []
@@ -28,6 +31,41 @@ def simulation(SM,x0,uts,ts,ut,trials):
     return u_T_D
 
 if __name__ == '__main__':
+
+    num = 2
+    dx = 1
+    Arange = [1,1]
+    Brange = [0,2]
+    Hrange = [0,2]
+    Qrange = [0,2]    
+    Rrange = [0,2]
+    System_models = SMGen1d.SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange)
+    #As,Hs,Bs,Qs,Rs,
+    T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator()
+    SM_num = len(System_models[0])
+
+    for i in range(SM_num):
+        A = System_models[0][i]
+        B = System_models[1][i]
+        H = System_models[2][i]
+        Q = System_models[3][i]
+        R = System_models[4][i]
+        SM = [A,B,H,Q,R]
+        u_T_D = simulation(SM,x0,uts,ts,ut,trials)
+
+        u_D =[]
+        for j in range(len(u_T_D)):
+            uD = u_T_D[j][1]
+            u_D.append(uD)
+        
+        plt.title('A=' + '%.2f' % A + '; B=' + '%.2f' % B + '; H=' + '%.2f' % H + '; Q=' + '%.2f' % Q + '; R=' + '%.2f' % R)
+        plt.hist(u_D, normed=0, facecolor="blue", edgecolor="black", alpha=1.0)
+        plt.ylabel("frequency")
+        plt.xlabel('categories')
+        fig_name1 = './figs/simulation_figs/' + str(i) + '_u_T_D.jpg'
+        plt.savefig(fig_name1)
+        plt.close()
+    """
     dx = 1
     dz = 1
     # system matrices parameters
@@ -70,5 +108,5 @@ if __name__ == '__main__':
     u_T_D1 = simulation(SM,x0,uts,ts,ut,trials)
     
     Pr_D_stat,Pr_FA_stat,Pr_M_stat,Pr_CR_stat = BstatHT1d.Bin_stat_hyp_test_1d(u_T_D1)
-    
+    """
 
