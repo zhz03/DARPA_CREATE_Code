@@ -66,7 +66,7 @@ def KF_estimator(SM,measurements):
 
     return Sigma,estimates#,predictions
 
-def figs_verification(num):
+def verification(num):
     dx = 1
     Arange = [1,1]
     Brange = [1,1]

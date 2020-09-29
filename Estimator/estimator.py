@@ -101,7 +101,7 @@ def verification(num):
         plt.close()
 if __name__ == '__main__':
     num = 100
-    KF_est.figs_verification(num)
+    KF_est.verification(num)
     BA.verification(num)
     DM.verification(num)
     verification(num)
