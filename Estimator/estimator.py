@@ -26,7 +26,7 @@ def estimator(SM,z,ut):
     return u_D
 
 if __name__ == '__main__':
-    num = 1
+    num = 10
     dx = 1
     Arange = [1,1]
     Brange = [1,1]
@@ -53,7 +53,7 @@ if __name__ == '__main__':
         ut_zt,mean_ut_zt,Sigma_ut_zt = BA.Bayesian_analysis(SM,ut,Sigma,estimates,z)
         u_D = DM.Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt)
         #======================kf_estimator_verification===============================
-        """
+
         ground_truth = cnvdata.convert_array2list_nd(y,dx)
         measurements = cnvdata.convert_array2list_nd(z,dx) 
         estimates = cnvdata.convert_array2list_nd(estimates,dx)
@@ -71,6 +71,7 @@ if __name__ == '__main__':
         plt.savefig(fig_name1)
         plt.close()
         # ========================verify bayesian analysis in the estimator 
+        """
         Ut_zt = []
         samp_num = 100
         for j in range(samp_num):
