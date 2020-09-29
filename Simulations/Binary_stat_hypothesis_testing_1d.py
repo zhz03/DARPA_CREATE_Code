@@ -39,5 +39,6 @@ if __name__ == '__main__':
     ts = [100,10]
     ut = [0,1] 
     trials = 1000
-    u_T_D = Sim.simulation(A,B,H,Q,R,x0,uts,ts,ut,trials)
+    SM = [A,B,H,Q,R]
+    u_T_D = Sim.simulation(SM,x0,uts,ts,ut,trials)
     Prob_D_stat,Prob_FA_stat,Prob_M_stat,Prob_CR_stat = Bin_stat_hyp_test_1d(u_T_D)
