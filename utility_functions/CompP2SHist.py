@@ -13,14 +13,15 @@ import binary_HT_1d.Gaussian_dist as Gd
 
 class Compare_pln2statis_hist(object):
     
-    def __init__(self, mean_pln = None, Sigma_pln = None,name = 'plan',bins = None):
+    def __init__(self, mean_pln = None, Sigma_pln = None,name = 'plan',bins = None,Range=None):
         #if(mean_pln is None or Sigma_pln is None):
         #    raise ValueError("Set proper statistics.")
         
         self.mean_Pln = 0 if mean_pln is None else mean_pln
         self.Sigma_Pln = 1 if Sigma_pln is None else Sigma_pln
         self.name = name
-        self.bins = 100 if bins is None else bins 
+        self.bins = 100 if bins is None else bins
+        self.Range = 1 if Range is None else Range
     
     def calculate_stat(self,data):
         mean_stat = np.mean(data)
@@ -54,7 +55,7 @@ class Compare_pln2statis_hist(object):
     def visualization_self(self,data,nflg = False):
         mean_stat,var_stat = self.calculate_stat(data)
         bins = self.bins
-        x_stat = np.linspace(np.min(data)-1,np.max(data)+1,bins)
+        x_stat = np.linspace(np.min(data)-Range,np.max(data)+Range,bins)
         plt.figure()
         plt.title("Data histogram")
         plt.hist(data, bins=int(bins), normed=True, alpha=1, histtype='stepfilled',
