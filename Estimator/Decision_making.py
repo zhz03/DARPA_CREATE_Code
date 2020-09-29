@@ -16,11 +16,15 @@ import binary_HT_1d.Gaussian_dist as Gd
 import random
 import matplotlib.pyplot as plt
 
-def Decision_making(ut,ut_zt,Sigma_ut_zt):
+def Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt):
+    Sigma_ut_zt0 = Sigma_ut_zt[0]
+    Sigma_ut_zt1 = Sigma_ut_zt[1]
+    mean0 = mean_ut_zt[0]
+    mean1 = mean_ut_zt[1]
     ut0 = ut[0]
     ut1 = ut[1]
-    pdf_H0 = multivariate_normal(mean=ut0,cov=Sigma_ut_zt).pdf(ut_zt) 
-    pdf_H1 = multivariate_normal(mean=ut1,cov=Sigma_ut_zt).pdf(ut_zt) 
+    pdf_H0 = multivariate_normal(mean=mean0,cov=Sigma_ut_zt0).pdf(ut_zt) 
+    pdf_H1 = multivariate_normal(mean=mean1,cov=Sigma_ut_zt1).pdf(ut_zt) 
     if pdf_H0 >= pdf_H1:
         decide_u = ut0
     else: decide_u = ut1
@@ -41,13 +45,16 @@ def verification(num):
             a = b 
             b = temp        
         ut = [a,b]
-        Sigma_ut_zt = random.uniform(0,range2)
-        ut_zt = random.uniform(ut[0]-3*np.sqrt(Sigma_ut_zt),ut[1]+3*np.sqrt(Sigma_ut_zt))
-        u_D = Decision_making(ut,ut_zt,Sigma_ut_zt)
+        mean_ut_zt = ut
+        Sigma_ut_zt0 = random.uniform(0,range2)
+        Sigma_ut_zt1 = random.uniform(0,range2)
+        Sigma_ut_zt = [Sigma_ut_zt0,Sigma_ut_zt1]
+        ut_zt = random.uniform(ut[0]-3*np.sqrt(Sigma_ut_zt[0]),ut[1]+3*np.sqrt(Sigma_ut_zt[1]))
+        u_D = Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt)
         # plot figure    
-        pdf_H0 = multivariate_normal(mean=ut[0],cov=Sigma_ut_zt).pdf(ut_zt) 
-        pdf_H1 = multivariate_normal(mean=ut[1],cov=Sigma_ut_zt).pdf(ut_zt)
-        plotfgs.plot_2_Gaussian_withpoints(ut[0],ut[1],round(Sigma_ut_zt,2),round(Sigma_ut_zt,2),ut_zt,pdf_H1,ut_zt,pdf_H0)
+        pdf_H0 = multivariate_normal(mean=ut[0],cov=Sigma_ut_zt[0]).pdf(ut_zt) 
+        pdf_H1 = multivariate_normal(mean=ut[1],cov=Sigma_ut_zt[1]).pdf(ut_zt)
+        plotfgs.plot_2_Gaussian_withpoints(ut[0],ut[1],round(Sigma_ut_zt[0],2),round(Sigma_ut_zt[1],2),ut_zt,pdf_H1,ut_zt,pdf_H0)
         plt.title('decision:% d'% u_D)
         fig_name = './figs/Decision_making_figs/' + str(i) + '.jpg'
         plt.savefig(fig_name)
