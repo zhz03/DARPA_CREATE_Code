@@ -8,8 +8,8 @@ import numpy as np
 from scipy.stats import multivariate_normal
 import Estimator.KF_estimator as KF_est
 import Estimator.Bayesian_analysis as BA
-import Simulation.Generate_seq_u as Gsequ
-import Simulation.Simulator as Simu
+import Simulations.Generate_seq_u as Gsequ
+import Simulations.Simulator as Simu
 import utility_functions.convert_data as cnvdata
 import utility_functions.plot_figures as plotfgs
 import binary_HT_1d.Gaussian_dist as Gd

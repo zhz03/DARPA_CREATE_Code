@@ -9,8 +9,8 @@ import numpy as np
 import Estimator.KF_estimator as KF_est
 import Estimator.Bayesian_analysis as BA
 import Estimator.Decision_making as DM
-import Simulation.Generate_seq_u as Gsequ
-import Simulation.Simulator as Simu
+import Simulations.Generate_seq_u as Gsequ
+import Simulations.Simulator as Simu
 import utility_functions.plot_figures as plotfgs
 import utility_functions.convert_data as cnvdata
 import E2Etest.SM_generator_1d as SMGen1d

@@ -7,8 +7,8 @@ Created on Mon Sep  7 23:37:49 2020
 
 import numpy as np
 import Estimator.KF_estimator as KF_est
-import Simulation.Generate_seq_u as Gsequ
-import Simulation.Simulator as Simu
+import Simulations.Generate_seq_u as Gsequ
+import Simulations.Simulator as Simu
 import utility_functions.convert_data as cnvdata
 import utility_functions.CompP2SHist as CompP2SHist
 import matplotlib.pyplot as plt

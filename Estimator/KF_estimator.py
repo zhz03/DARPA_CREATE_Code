@@ -6,8 +6,8 @@ Created on Mon Sep  7 22:20:15 2020
 """
 
 import numpy as np
-import Simulation.Generate_seq_u as Gsequ
-import Simulation.Simulator as Simu
+import Simulations.Generate_seq_u as Gsequ
+import Simulations.Simulator as Simu
 import utility_functions.plot_figures as plotfgs
 import utility_functions.convert_data as cnvdata
 import utility_functions.CompP2SHist as CompP2SHist
