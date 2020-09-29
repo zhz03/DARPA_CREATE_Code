@@ -7,7 +7,7 @@ There are four programs in this folder:
 
 The structure of this estimator is shown in the following flowchart inside the blue block diagram:
 
-![](/figs/estimator_flowchart.png)
+![](figs/estimator_flowchart.png)
 
 In each programs, there are two main functions that we care about, one is the program function itself, the other is the verification program.
 
