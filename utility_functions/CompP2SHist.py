@@ -33,10 +33,10 @@ class Compare_pln2statis_hist(object):
         var_error = np.abs(var_stat - self.Sigma_Pln)
         return mean_error,var_error
     
-    def visualization_compare(self,data):
+    def visualization_compare(self,data,rate):
         mean_stat,var_stat = self.calculate_stat(data)
         dim = len(data)
-        bins = dim/10
+        bins = dim/rate
         x_stat = np.linspace(np.min(data)-1,np.max(data)+1,bins)
         x_pln = np.linspace(np.floor(np.min(data)),np.ceil(np.max(data)),bins)
         
