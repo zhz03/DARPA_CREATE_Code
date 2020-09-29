@@ -26,10 +26,10 @@ def estimator(SM,z,ut):
     return u_D
 
 if __name__ == '__main__':
-    num = 10
+    num = 20
     dx = 1
     Arange = [1,1]
-    Brange = [1,1]
+    Brange = [0,2]
     Hrange = [0,2]
     Qrange = [0,2]    
     Rrange = [0,2]
