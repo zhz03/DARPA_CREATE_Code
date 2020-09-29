@@ -23,8 +23,7 @@ def Bin_stat_hyp_test_1d(u_T_D):
     Prob_CR_stat = 1 - Prob_FA_stat
     return Prob_D_stat,Prob_FA_stat,Prob_M_stat,Prob_CR_stat
 
-if __name__ == '__main__':
-    num = 1000
+def verification(num):
     Error_D = []
     Error_FA = []
     Error_CR = []
@@ -64,7 +63,9 @@ if __name__ == '__main__':
     CompP2S.visualization_self(Error_CR,nflg = True)
     fig_name4 = './figs/Bin_stat_HT_figs/' + 'Error_CR.jpg'
     plt.savefig(fig_name4) 
-    plt.close()
+    plt.close()    
+if __name__ == '__main__':
+    verification(1000)
     
     """
     dx = 1
