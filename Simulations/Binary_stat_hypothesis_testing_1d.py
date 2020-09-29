@@ -7,6 +7,9 @@ Created on Tue Sep  8 01:15:26 2020
 
 import numpy as np
 import Simulations.Simulation as Sim
+import utility_functions.CompP2SHist as CompP2SHist
+import random
+import matplotlib.pyplot as plt
 
 def Bin_stat_hyp_test_1d(u_T_D):
     num = len(u_T_D)
@@ -21,6 +24,49 @@ def Bin_stat_hyp_test_1d(u_T_D):
     return Prob_D_stat,Prob_FA_stat,Prob_M_stat,Prob_CR_stat
 
 if __name__ == '__main__':
+    num = 1000
+    Error_D = []
+    Error_FA = []
+    Error_CR = []
+    Error_M = []
+    for i in range(num):
+        samp_num = 1000
+        u_T_D = []
+        for j in range(samp_num):
+            u_T = 1
+            u_D = round(random.uniform(0,1))
+            u_td = [u_T,u_D]
+            u_T_D.append(u_td)
+        Prob_D_stat,Prob_FA_stat,Prob_M_stat,Prob_CR_stat = Bin_stat_hyp_test_1d(u_T_D)
+        Prob_uni = 0.5
+        error_D = Prob_D_stat - Prob_uni
+        error_FA = Prob_FA_stat - Prob_uni
+        error_M = Prob_M_stat - Prob_uni
+        error_CR = Prob_CR_stat - Prob_uni
+        Error_D.append(error_D)
+        Error_FA.append(error_FA)
+        Error_M.append(error_M)
+        Error_CR.append(error_CR)
+    
+    CompP2S = CompP2SHist.Compare_pln2statis_hist(Range = 0.1)
+    CompP2S.visualization_self(Error_D,nflg = True)
+    fig_name1 = './figs/Bin_stat_HT_figs/' + 'Error_D.jpg'
+    plt.savefig(fig_name1) 
+    plt.close()
+    CompP2S.visualization_self(Error_FA,nflg = True)
+    fig_name2 = './figs/Bin_stat_HT_figs/' + 'Error_FA.jpg'
+    plt.savefig(fig_name2) 
+    plt.close()
+    CompP2S.visualization_self(Error_M,nflg = True)
+    fig_name3 = './figs/Bin_stat_HT_figs/' + 'Error_M.jpg'
+    plt.savefig(fig_name3) 
+    plt.close()
+    CompP2S.visualization_self(Error_CR,nflg = True)
+    fig_name4 = './figs/Bin_stat_HT_figs/' + 'Error_CR.jpg'
+    plt.savefig(fig_name4) 
+    plt.close()
+    
+    """
     dx = 1
     dz = 1
     # system matrices parameters
@@ -41,4 +87,5 @@ if __name__ == '__main__':
     trials = 1000
     SM = [A,B,H,Q,R]
     u_T_D = Sim.simulation(SM,x0,uts,ts,ut,trials)
-    Prob_D_stat,Prob_FA_stat,Prob_M_stat,Prob_CR_stat = Bin_stat_hyp_test_1d(u_T_D)
+    """
+    #Prob_D_stat,Prob_FA_stat,Prob_M_stat,Prob_CR_stat = Bin_stat_hyp_test_1d(u_T_D)
