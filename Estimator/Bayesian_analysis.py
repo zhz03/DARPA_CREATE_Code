@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 import E2Etest.SM_generator_1d as SMGen1d
 import E2Etest.System_setup_generator as SSGen
 
-def Bayesian_analysis(SM,Sigma,estimates,measurements):
+def Bayesian_analysis(SM,ut,Sigma,estimates,measurements):
     A = SM[0]
     B = SM[1]
     H = SM[2]
@@ -24,8 +24,11 @@ def Bayesian_analysis(SM,Sigma,estimates,measurements):
     ut_zt = measurements[-1] - np.dot(H,np.dot(A,estimates[-2]))
     Sigma_t = Sigma[-1]
     S = np.dot(np.dot(A,Sigma_t),A.T)+Q
-    Sigma_ut_zt = np.dot(np.dot(H,S),H.T)+R
-    return ut_zt,Sigma_ut_zt
+    Sigma_ut_zt01 = np.dot(np.dot(H,S),H.T)+R
+    
+    mean_ut_zt = [np.dot(H,B)*ut[0],np.dot(H,B)*ut[1]]
+    Sigma_ut_zt = [Sigma_ut_zt01,Sigma_ut_zt01]
+    return ut_zt,mean_ut_zt,Sigma_ut_zt
 
 def verification(num):
     
@@ -52,11 +55,11 @@ def verification(num):
             u = Gsequ.generate_sequential_ut(uts,ts)
             y,z = Simu.Simulator(SM,x0,u)
             Sigma,estimates = KF_est.KF_estimator(SM,z)
-            ut_zt,Sigma_ut_zt = Bayesian_analysis(SM,Sigma,estimates,z)
+            ut_zt,mean_ut_zt,Sigma_ut_zt = Bayesian_analysis(SM,ut,Sigma,estimates,z)
             Ut_zt.append(ut_zt)
         Ut_zt = cnvdata.convert_array2list_nd(Ut_zt,dx)
         #mean_pln = np.dot(H,B)*uts[1]
-        CompP2S = CompP2SHist.Compare_pln2statis_hist(mean_pln = np.mean(Ut_zt), Sigma_pln = Sigma_ut_zt[0][0])
+        CompP2S = CompP2SHist.Compare_pln2statis_hist(mean_pln = np.mean(Ut_zt), Sigma_pln = Sigma_ut_zt[0][0][0])
         CompP2S.visualization_compare(Ut_zt[0],1)
         plt.title('A=' + '%.2f' % A + '; B=' + '%.2f' % B + '; H=' + '%.2f' % H + '; Q=' + '%.2f' % Q + '; R=' + '%.2f' % R)
         fig_name = './figs/Bayesian_analysis_figs/' + str(i) + '_UtztHist.jpg'
