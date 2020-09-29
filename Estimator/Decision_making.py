@@ -26,28 +26,34 @@ def Decision_making(ut,ut_zt,Sigma_ut_zt):
     else: decide_u = ut1
     return decide_u
 
-if __name__ == '__main__':
-    # randomly create some ut
-    range1 = -3
-    range2 = 3
-    a = round(random.uniform(range1,range2));
-    b = round(random.uniform(range1,range2));
-    while a == b:
+def verification(num):
+
+    for i in range(num):
+        # randomly create some ut
+        range1 = -3
+        range2 = 3
         a = round(random.uniform(range1,range2));
-    if a > b:
-        temp = a
-        a = b 
-        b = temp        
-    ut = [a,b]
-    Sigma_ut_zt = random.uniform(0,range2)
-    ut_zt = random.uniform(range1,range2)
-    u_D = Decision_making(ut,ut_zt,Sigma_ut_zt)
-    # plot figure    
-    pdf_H0 = multivariate_normal(mean=ut[0],cov=Sigma_ut_zt).pdf(ut_zt) 
-    pdf_H1 = multivariate_normal(mean=ut[1],cov=Sigma_ut_zt).pdf(ut_zt)
+        b = round(random.uniform(range1,range2));
+        while a == b:
+            a = round(random.uniform(range1,range2));
+        if a > b:
+            temp = a
+            a = b 
+            b = temp        
+        ut = [a,b]
+        Sigma_ut_zt = random.uniform(0,range2)
+        ut_zt = random.uniform(range1,range2)
+        u_D = Decision_making(ut,ut_zt,Sigma_ut_zt)
+        # plot figure    
+        pdf_H0 = multivariate_normal(mean=ut[0],cov=Sigma_ut_zt).pdf(ut_zt) 
+        pdf_H1 = multivariate_normal(mean=ut[1],cov=Sigma_ut_zt).pdf(ut_zt)
+        plotfgs.plot_2_Gaussian_withpoints(ut[0],ut[1],round(Sigma_ut_zt,2),round(Sigma_ut_zt,2),ut_zt,pdf_H1,ut_zt,pdf_H0)
+        plt.title('decision:% d'% u_D)
+        fig_name = './figs/Decision_making_figs/' + str(i) + '.jpg'
+        plt.savefig(fig_name)
+        plt.close()
+if __name__ == '__main__':
+    verification(20)
 
-    plotfgs.plot_2_Gaussian_withpoints(ut[0],ut[1],round(Sigma_ut_zt,2),round(Sigma_ut_zt,2),ut_zt,pdf_H1,ut_zt,pdf_H0)
-
-    plt.title('decision:% d'% u_D)
 
     
