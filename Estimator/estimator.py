@@ -25,8 +25,8 @@ def estimator(SM,z,ut):
     u_D = DM.Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt)
     return u_D
 
-if __name__ == '__main__':
-    num = 20
+def verification(num):
+
     dx = 1
     Arange = [1,1]
     Brange = [0,2]
@@ -97,6 +97,8 @@ if __name__ == '__main__':
         fig_name = './figs/estimator_figs/' + str(i) + 'DecisionMaking' +'.jpg'
         plt.savefig(fig_name)
         plt.close()
+if __name__ == '__main__':
+    verification(20)
     # system matrices parameters
     """
     q = 0.3
