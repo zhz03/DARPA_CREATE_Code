@@ -42,7 +42,7 @@ def verification(num):
             b = temp        
         ut = [a,b]
         Sigma_ut_zt = random.uniform(0,range2)
-        ut_zt = random.uniform(range1,range2)
+        ut_zt = random.uniform(ut[0]-3*np.sqrt(Sigma_ut_zt),ut[1]+3*np.sqrt(Sigma_ut_zt))
         u_D = Decision_making(ut,ut_zt,Sigma_ut_zt)
         # plot figure    
         pdf_H0 = multivariate_normal(mean=ut[0],cov=Sigma_ut_zt).pdf(ut_zt) 
