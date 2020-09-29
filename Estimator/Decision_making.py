@@ -45,9 +45,8 @@ if __name__ == '__main__':
     # plot figure    
     pdf_H0 = multivariate_normal(mean=ut[0],cov=Sigma_ut_zt).pdf(ut_zt) 
     pdf_H1 = multivariate_normal(mean=ut[1],cov=Sigma_ut_zt).pdf(ut_zt)
-    Gd.plot_2_Gaussian(ut[0],ut[1],round(Sigma_ut_zt,2),round(Sigma_ut_zt,2))
-    plt.plot(ut_zt,pdf_H1,color='kv', linewidth=10)
-    plt.plot(ut_zt,pdf_H0,color='kv', linewidth=10)
+
+    plotfgs.plot_2_Gaussian_withpoints(ut[0],ut[1],round(Sigma_ut_zt,2),round(Sigma_ut_zt,2),ut_zt,pdf_H1,ut_zt,pdf_H0)
 
     plt.title('decision:% d'% u_D)
 
