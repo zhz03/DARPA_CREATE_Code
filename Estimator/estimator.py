@@ -19,6 +19,8 @@ import matplotlib.pyplot as plt
 import utility_functions.CompP2SHist as CompP2SHist
 from scipy.stats import multivariate_normal
 
+
+
 def estimator(SM,z,ut):
     Sigma,estimates = KF_est.KF_estimator(SM,z)
     ut_zt,mean_ut_zt,Sigma_ut_zt = BA.Bayesian_analysis(SM,ut,Sigma,estimates,z)
@@ -98,7 +100,12 @@ def verification(num):
         plt.savefig(fig_name)
         plt.close()
 if __name__ == '__main__':
-    verification(20)
+    num = 100
+    KF_est.figs_verification(num)
+    BA.verification(num)
+    DM.verification(num)
+    verification(num)
+    
     # system matrices parameters
     """
     q = 0.3
