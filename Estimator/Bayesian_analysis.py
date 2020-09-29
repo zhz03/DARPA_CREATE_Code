@@ -59,7 +59,7 @@ def verification(num):
             Ut_zt.append(ut_zt)
         Ut_zt = cnvdata.convert_array2list_nd(Ut_zt,dx)
         #mean_pln = np.dot(H,B)*uts[1]
-        CompP2S = CompP2SHist.Compare_pln2statis_hist(mean_pln = np.mean(Ut_zt), Sigma_pln = Sigma_ut_zt[0][0][0])
+        CompP2S = CompP2SHist.Compare_pln2statis_hist(mean_pln = mean_ut_zt[1][0][0], Sigma_pln = Sigma_ut_zt[0][0][0])
         CompP2S.visualization_compare(Ut_zt[0],1)
         plt.title('A=' + '%.2f' % A + '; B=' + '%.2f' % B + '; H=' + '%.2f' % H + '; Q=' + '%.2f' % Q + '; R=' + '%.2f' % R)
         fig_name = './figs/Bayesian_analysis_figs/' + str(i) + '_UtztHist.jpg'
