@@ -6,7 +6,7 @@ Created on Tue Sep  8 01:15:26 2020
 """
 
 import numpy as np
-import Simulation.Simulation as Sim
+import Simulations.Simulation as Sim
 
 def Bin_stat_hyp_test_1d(u_T_D):
     num = len(u_T_D)

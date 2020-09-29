@@ -6,15 +6,15 @@ Created on Tue Sep  8 00:44:31 2020
 """
 
 import numpy as np
-import Simulation.Generate_seq_u as Gsequ
-import Simulation.Simulator as Simu
+import Simulations.Generate_seq_u as Gsequ
+import Simulations.Simulator as Simu
 import Estimator.KF_estimator as KF_est
 import Estimator.Bayesian_analysis as BA
 import Estimator.Decision_making as DM
 import Estimator.estimator as Estr
 import utility_functions.plot_figures as plotfgs
 import utility_functions.convert_data as cnvdata
-import Simulation.Binary_stat_hypothesis_testing_1d as BstatHT1d
+import Simulations.Binary_stat_hypothesis_testing_1d as BstatHT1d
 import E2Etest.SM_generator_1d as SMGen1d
 import E2Etest.System_setup_generator as SSGen
 import matplotlib.pyplot as plt

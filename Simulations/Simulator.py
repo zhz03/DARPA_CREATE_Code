@@ -11,7 +11,7 @@ from numpy.random import multivariate_normal
 from scipy.linalg import eigh, cholesky
 from scipy.stats import norm
 import matplotlib.pyplot as plt
-import Simulation.Generate_seq_u as Gsequ
+import Simulations.Generate_seq_u as Gsequ
 import utility_functions.plot_figures as plotfgs
 import utility_functions.convert_data as cnvdata
 
