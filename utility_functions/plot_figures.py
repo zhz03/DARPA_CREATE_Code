@@ -10,7 +10,7 @@ import random
 import random as rnd
 from mpl_toolkits.mplot3d import Axes3D
 from utility_functions.statis import multivariate_gaussian,plot_covariance_ellipse
-import Gaussian_dist as Gd
+import binary_HT_1d.Gaussian_dist as Gd
 
 """ 1d """
 def plot_filter_error(xs,var=None):
