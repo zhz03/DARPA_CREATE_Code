@@ -53,6 +53,7 @@ if __name__ == '__main__':
         ut_zt,mean_ut_zt,Sigma_ut_zt = BA.Bayesian_analysis(SM,ut,Sigma,estimates,z)
         u_D = DM.Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt)
         #======================kf_estimator_verification===============================
+        """
         ground_truth = cnvdata.convert_array2list_nd(y,dx)
         measurements = cnvdata.convert_array2list_nd(z,dx) 
         estimates = cnvdata.convert_array2list_nd(estimates,dx)
@@ -86,10 +87,11 @@ if __name__ == '__main__':
         fig_name = './figs/estimator_figs/' + str(i) + '_UtztHist.jpg'
         plt.savefig(fig_name)
         plt.close()
+        """
         #================ Decision making verification   
         pdf_H0 = multivariate_normal(mean=mean_ut_zt[0],cov=Sigma_ut_zt[0]).pdf(ut_zt) 
         pdf_H1 = multivariate_normal(mean=mean_ut_zt[1],cov=Sigma_ut_zt[1]).pdf(ut_zt)
-        plotfgs.plot_2_Gaussian_withpoints(mean_ut_zt[0],mean_ut_zt[1],round(Sigma_ut_zt[0],2),round(Sigma_ut_zt[1],2),ut_zt,pdf_H1,ut_zt,pdf_H0)
+        plotfgs.plot_2_Gaussian_withpoints(mean_ut_zt[0][0],mean_ut_zt[1][0],round(Sigma_ut_zt[0][0][0],2),round(Sigma_ut_zt[1][0][0],2),ut_zt[0][0],pdf_H1,ut_zt[0][0],pdf_H0)
         plt.title('decision:% d'% u_D)
         fig_name = './figs/estimator_figs/' + str(i) + 'DecisionMaking' +'.jpg'
         plt.savefig(fig_name)
