@@ -29,10 +29,7 @@ def simulation(SM,x0,uts,ts,ut,trials):
         u_td = [u_T,u_D]
         u_T_D.append(u_td)
     return u_T_D
-
-if __name__ == '__main__':
-
-    num = 2
+def verification(num):
     dx = 1
     Arange = [1,1]
     Brange = [0,2]
@@ -65,6 +62,9 @@ if __name__ == '__main__':
         fig_name1 = './figs/simulation_figs/' + str(i) + '_u_T_D.jpg'
         plt.savefig(fig_name1)
         plt.close()
+if __name__ == '__main__':
+    verification(20)
+
     """
     dx = 1
     dz = 1
