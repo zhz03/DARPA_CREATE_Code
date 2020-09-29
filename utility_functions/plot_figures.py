@@ -10,6 +10,7 @@ import random
 import random as rnd
 from mpl_toolkits.mplot3d import Axes3D
 from utility_functions.statis import multivariate_gaussian,plot_covariance_ellipse
+import Gaussian_dist as Gd
 
 """ 1d """
 def plot_filter_error(xs,var=None):
@@ -213,6 +214,16 @@ def plot_generate_seq_u(utsq,uts,ts):
     plt.plot(range(len(utsq)),utsq,label='uts=' + labelname1 +',' + 'ts=' +labelname2)
     plt.legend()
 
+def plotGaussian(x,mean,var,Color,Label):
+    y = Gd.gaussian(x, mean, np.sqrt(var))
+    plt.plot(x, y,Color,label=Label)
+    plt.legend()
+
+def plot_2_Gaussian(mean0,mean1,var0,var1):
+    x = Gd.generate_x(mean0,mean1,var0,var1)    
+    plotGaussian(x,mean0,var0,'r.','mean={},var={}'.format(mean0,var0))
+    plotGaussian(x,mean1,var1,'b.','mean={},var={}'.format(mean1,var1))  
+    
 if __name__ =="__main__":
     mean1 = [1,1]
     mean0 = [0,0]
