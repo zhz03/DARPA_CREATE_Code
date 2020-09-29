@@ -17,6 +17,7 @@ import E2Etest.SM_generator_1d as SMGen1d
 import E2Etest.System_setup_generator as SSGen
 import matplotlib.pyplot as plt
 import utility_functions.CompP2SHist as CompP2SHist
+from scipy.stats import multivariate_normal
 
 def estimator(SM,z,ut):
     Sigma,estimates = KF_est.KF_estimator(SM,z)
@@ -68,7 +69,31 @@ if __name__ == '__main__':
         fig_name1 = './figs/estimator_figs/' + str(i) + '_error.jpg'
         plt.savefig(fig_name1)
         plt.close()
-
+        # ========================verify bayesian analysis in the estimator 
+        Ut_zt = []
+        samp_num = 100
+        for j in range(samp_num):
+            u = Gsequ.generate_sequential_ut(uts,ts)
+            y,z = Simu.Simulator(SM,x0,u)
+            Sigma,estimates = KF_est.KF_estimator(SM,z)
+            ut_zt,mean_ut_zt,Sigma_ut_zt = BA.Bayesian_analysis(SM,ut,Sigma,estimates,z)
+            Ut_zt.append(ut_zt)
+        Ut_zt = cnvdata.convert_array2list_nd(Ut_zt,dx)
+        #mean_pln = np.dot(H,B)*uts[1]
+        CompP2S = CompP2SHist.Compare_pln2statis_hist(mean_pln = mean_ut_zt[1][0][0], Sigma_pln = Sigma_ut_zt[0][0][0])
+        CompP2S.visualization_compare(Ut_zt[0],1)
+        plt.title('A=' + '%.2f' % A + '; B=' + '%.2f' % B + '; H=' + '%.2f' % H + '; Q=' + '%.2f' % Q + '; R=' + '%.2f' % R)
+        fig_name = './figs/estimator_figs/' + str(i) + '_UtztHist.jpg'
+        plt.savefig(fig_name)
+        plt.close()
+        #================ Decision making verification   
+        pdf_H0 = multivariate_normal(mean=mean_ut_zt[0],cov=Sigma_ut_zt[0]).pdf(ut_zt) 
+        pdf_H1 = multivariate_normal(mean=mean_ut_zt[1],cov=Sigma_ut_zt[1]).pdf(ut_zt)
+        plotfgs.plot_2_Gaussian_withpoints(mean_ut_zt[0],mean_ut_zt[1],round(Sigma_ut_zt[0],2),round(Sigma_ut_zt[1],2),ut_zt,pdf_H1,ut_zt,pdf_H0)
+        plt.title('decision:% d'% u_D)
+        fig_name = './figs/estimator_figs/' + str(i) + 'DecisionMaking' +'.jpg'
+        plt.savefig(fig_name)
+        plt.close()
     # system matrices parameters
     """
     q = 0.3
