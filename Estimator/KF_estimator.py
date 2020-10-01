@@ -109,7 +109,7 @@ def verification(num):
         plt.close()
         
 if __name__ == '__main__':
-    figs_verification(20)
+    verification(20)
 
     """
     dx = 2
