@@ -81,7 +81,7 @@ def verification_direct_results_plot(plt_sig):
             compp2s.visualization_self(points1,nflg = True,dataname ='stat1')
             title = ''
             fig_path = './figs/verification_1d/'
-            savefigs(title,fig_path,i,close_flg = False)
+            savefigs(title,fig_path,i,close_flg = True)
     else: # plot only one figure and save it
         i = plt_sig
         points = Sample_points[i]
@@ -101,10 +101,10 @@ def verification_direct_results_plot(plt_sig):
         compp2s.visualization_self(points1,nflg = True,dataname ='stat1')
         title = ''
         fig_path = './figs/verification_1d/'
-        savefigs(title,fig_path,i,close_flg = False)         
+        savefigs(title,fig_path,i,close_flg = True)         
 
 
 if __name__ == '__main__':
     Sample_points,M0,M1,S0,S1 = load_plt_data()
     Error_mean0,Error_mean1,Error_var0,Error_var1 = load_stat_data()    
-    verification_direct_results_plot(1)
+    verification_direct_results_plot(6)
