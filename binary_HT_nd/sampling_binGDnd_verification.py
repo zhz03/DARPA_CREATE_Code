@@ -10,17 +10,7 @@ import utility_functions.CompP2SHist as CompP2S
 import utility_functions.plot_figures as plotfgs
 import utility_functions.convert_data as cnvdata
 import matplotlib.pyplot as plt
-import binary_HT_nd.sampling_binGDnd as smpl_bGDnd
-
-def savefigs(title,fig_path,i = None,close_flg = True):
-    plt.title(title)
-    if i == None:
-        fig_name = fig_path + title + '.jpg'
-    else:
-        fig_name = fig_path + str(i) + '.jpg'
-    plt.savefig(fig_name)
-    if close_flg == True:
-        plt.close()         
+import binary_HT_nd.sampling_binGDnd as smpl_bGDnd    
 
 def save_plt_data(Sample_points,M0,M1,S0,S1):
     
@@ -55,7 +45,7 @@ def save_stat_files(Error_mean0,Error_mean1,Error_var0,Error_var1):
     filename4 = filepath + 'Error_var1.npy'
     np.save(filename4, Error_var1)    
     
-def verification_1d(trial_num, range1):
+def verification_1d(trial_num,num_sam,range1):
     Error_mean0 = []
     Error_var0 = []
     Error_mean1 = []
@@ -75,7 +65,7 @@ def verification_1d(trial_num, range1):
         s1 = abs(round(random.uniform(range1[0],range1[1])))
         Sigma0 = np.array([s0]).reshape(1, 1)
         Sigma1 = np.array([s1]).reshape(1, 1)
-        num_sam = 1000
+        #num_sam = 1000
         points = smpl_bGDnd.sampling_binGDnd(mean0,mean1,Sigma0,Sigma1,num_sam)
         
         # concatenate all the resutls to a variable
@@ -114,4 +104,5 @@ def sampling_binGDnd_verification(num,dim_type):
 if __name__ == "__main__":
     range1 = [-10,10]
     trial_num = 2
-    Sample_points,M0 = verification_1d(trial_num,range1)
+    num_sam = 1000
+    Sample_points,M0 = verification_1d(trial_num,num_sam,range1)

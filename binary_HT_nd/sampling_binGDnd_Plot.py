@@ -42,6 +42,16 @@ def load_stat_data():
     Error_var1 = np.load(filename4) 
     return Error_mean0,Error_mean1,Error_var0,Error_var1
 
+def savefigs(title,fig_path,i = None,close_flg = True):
+    plt.title(title)
+    if i == None:
+        fig_name = fig_path + title + '.jpg'
+    else:
+        fig_name = fig_path + str(i) + '.jpg'
+    plt.savefig(fig_name)
+    if close_flg == True:
+        plt.close()
+        
 def verification_direct_results_plot():
     
     points0 = points[0:num_sam,:]
