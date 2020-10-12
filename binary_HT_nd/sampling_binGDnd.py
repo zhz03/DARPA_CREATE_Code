@@ -5,11 +5,7 @@ Created on Mon Aug 24 22:49:51 2020
 @author: Zhaoliang
 """
 import numpy as np
-from scipy.linalg import eigh
-from scipy.stats import norm, multivariate_normal
-import utility_functions.plot_figures as plotfgs
-import utility_functions.convert_data as cnvdata
-import matplotlib.pyplot as plt
+from scipy.stats import multivariate_normal
 
 def sampling_binGDnd(mean0,mean1,Sigma0,Sigma1,sam_size):
     points0 = np.random.multivariate_normal(mean=mean0, cov=Sigma0, size=sam_size)
