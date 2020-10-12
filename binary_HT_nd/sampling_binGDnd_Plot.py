@@ -6,7 +6,11 @@ Created on Mon Oct 12 16:42:36 2020
 """
 
 import numpy as np
-             
+import utility_functions.CompP2SHist as CompP2S
+import utility_functions.plot_figures as plotfgs
+import utility_functions.convert_data as cnvdata
+import matplotlib.pyplot as plt        
+
 def load_plt_data():
     filepath = './data_storage/'
     
@@ -52,26 +56,39 @@ def savefigs(title,fig_path,i = None,close_flg = True):
     if close_flg == True:
         plt.close()
         
-def verification_direct_results_plot():
+def verification_direct_results_plot(plt_sig):
+
+    Sample_points,M0,M1,S0,S1 = load_plt_data()
     
-    points0 = points[0:num_sam,:]
-    points1 = points[num_sam:num_sam * 2,:]
+    if plt_sig == -1: #plot all the figures and save them
+        trial_num = len(M0)
+        for i in range(trial_num):
+            points = Sample_points[i]
+            m0 = M0[i]
+            m1 = M1[i]
+            s0 = S0[i]
+            s1 = S1[i]
+            
+            num_sam = len(points)
+            
+            points0 = points[0:num_sam/2,:]
+            points1 = points[num_sam/2:num_sam,:]
     
-    compp2s = CompP2S.Compare_pln2statis_hist(mean_pln = None, Sigma_pln = None,name ='plan',bins = None,Range=None)
-    #compp2s0.visualization_compare(points0,10)
-    #compp2s1 = CompP2S.Compare_pln2statis_hist(mean_pln = m1, Sigma_pln = s1,name ='plan',bins = None,Range=None)
-    #compp2s0.visualization_compare(points1,10)
+            compp2s = CompP2S.Compare_pln2statis_hist(mean_pln = None, Sigma_pln = None,name ='plan',bins = None,Range=None)
     
-    plotfgs.plot_2_Gaussian(m0,m1,s0,s1)
-    compp2s.visualization_self(points0,nflg = True,dataname ='stat0')
-    compp2s.visualization_self(points1,nflg = True,dataname ='stat1')
-    
-    title = ''
-    fig_path = './figs/verification_1d/'
-    savefigs(title,fig_path,i,close_flg = False)
+            plotfgs.plot_2_Gaussian(m0,m1,s0,s1)
+            compp2s.visualization_self(points0,nflg = True,dataname ='stat0')
+            compp2s.visualization_self(points1,nflg = True,dataname ='stat1')
+            title = ''
+            fig_path = './figs/verification_1d/'
+            savefigs(title,fig_path,i,close_flg = False)
 
 
 if __name__ == '__main__':
     Sample_points,M0,M1,S0,S1 = load_plt_data()
     Error_mean0,Error_mean1,Error_var0,Error_var1 = load_stat_data() 
-    
+    trial_num = len(M0)
+    points = Sample_points[1]
+    num_sam = len(points)
+    points0 = points[0:int(num_sam/2),:]
+    points1 = points[int(num_sam/2):num_sam,:]    
