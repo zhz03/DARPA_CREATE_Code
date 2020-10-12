@@ -14,7 +14,9 @@ import matplotlib.pyplot as plt
 def HT_2d(mean0,mean1,Sigma0,Sigma1,sam_size):
     points0 = np.random.multivariate_normal(mean=mean0, cov=Sigma0, size=sam_size)
     points1 = np.random.multivariate_normal(mean=mean1, cov=Sigma1, size=sam_size)
-    return points0,points1
+    points = np.vstack((points0,points1)) 
+
+    return points
 
     """
     plotfgs.plot_multi_var(mean1,mean0,Sigma1,Sigma0)
@@ -26,6 +28,11 @@ def HT_2d(mean0,mean1,Sigma0,Sigma1,sam_size):
         
 
 if __name__ == "__main__":
+    mean0 = np.array([0])
+    mean1 = np.array([1])
+    Sigma0 = np.array([2]).reshape(1, 1)
+    Sigma1 = np.array([3]).reshape(1, 1)    
+    """
     mean0 = np.array([0,0])
     mean1 = np.array([1,1])
     Sigma0 = np.array([[2,-1],[-1,2]]).reshape(2, 2)
@@ -35,13 +42,11 @@ if __name__ == "__main__":
     mean1 = np.array([1,1,1])
     Sigma0 = np.array([[2,-1,0],[0,2,0],[0,-1,2]]).reshape(3, 3)
     Sigma1 = np.array([[3,0.1,0],[0,3,0],[0,0.1,3]]).reshape(3, 3)
-    
-    points0,points1 = HT_2d(mean0,mean1,Sigma0,Sigma1,1000)
-    
-    points = np.vstack((points0,points1)) 
+    """
+    points = HT_2d(mean0,mean1,Sigma0,Sigma1,1000)
 
-    p0 = multivariate_normal(mean=mean0,cov=Sigma0).pdf(points0[0])
-    p1 = multivariate_normal(mean=mean1,cov=Sigma1).pdf(points1[0])
+    p0 = multivariate_normal(mean=mean0,cov=Sigma0).pdf(points[0])
+    p1 = multivariate_normal(mean=mean1,cov=Sigma1).pdf(points[0])
     """
     x = np.array([4.3,0]).reshape(2,1)
     xmu = x - mean0
