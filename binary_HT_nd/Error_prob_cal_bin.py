@@ -5,6 +5,7 @@ Created on Mon Oct 12 12:27:13 2020
 @author: Zhaoliang
 """
 
+import numpy as np
 import binary_HT_nd.sampling_binGDnd as smpl_bGDnd
 from scipy.stats import norm, multivariate_normal
 
