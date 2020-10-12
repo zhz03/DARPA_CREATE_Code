@@ -56,7 +56,7 @@ def savefigs(title,fig_path,i = None,close_flg = True):
     if close_flg == True:
         plt.close()
         
-def verification_direct_results_plot(plt_sig):
+def verification_direct_results_plot1d(plt_sig):
 
     Sample_points,M0,M1,S0,S1 = load_plt_data()
     
@@ -103,8 +103,7 @@ def verification_direct_results_plot(plt_sig):
         fig_path = './figs/verification_1d/'
         savefigs(title,fig_path,i,close_flg = True)         
 
-
 if __name__ == '__main__':
     Sample_points,M0,M1,S0,S1 = load_plt_data()
     Error_mean0,Error_mean1,Error_var0,Error_var1 = load_stat_data()    
-    verification_direct_results_plot(6)
+    verification_direct_results_plot1d(6)
