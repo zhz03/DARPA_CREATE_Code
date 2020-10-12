@@ -14,7 +14,6 @@ import matplotlib.pyplot as plt
 def HT_2d(mean0,mean1,Sigma0,Sigma1,sam_size):
     points0 = np.random.multivariate_normal(mean=mean0, cov=Sigma0, size=sam_size)
     points1 = np.random.multivariate_normal(mean=mean1, cov=Sigma1, size=sam_size)
-    
     return points0,points1
 
     """
@@ -39,6 +38,10 @@ if __name__ == "__main__":
     
     points0,points1 = HT_2d(mean0,mean1,Sigma0,Sigma1,1000)
     
+    points = np.vstack((points0,points1)) 
+
+    p0 = multivariate_normal(mean=mean0,cov=Sigma0).pdf(points0[0])
+    p1 = multivariate_normal(mean=mean1,cov=Sigma1).pdf(points1[0])
     """
     x = np.array([4.3,0]).reshape(2,1)
     xmu = x - mean0
