@@ -9,6 +9,15 @@ import random
 import utility_functions.CompP2SHist as CompP2S
 import binary_HT_nd.sampling_binGDnd as smpl_bGDnd    
 
+def swap(a1,a2):
+    if a1 > a2:
+        return a1,a2
+    else:
+        t = a1
+        a1 = a2
+        a2 = t
+        return a1,a2
+    
 def save_plt_data(Sample_points,M0,M1,S0,S1):
     
     filepath = './data_storage/'
@@ -92,6 +101,33 @@ def verification_1d(trial_num,num_sam,range1):
     save_stat_files(Error_mean0,Error_mean1,Error_var0,Error_var1)
     
     return Sample_points,M0
+
+def verification_2d(trial_num,num_sam,range1):
+    m01 = round(random.uniform(range1[0],range1[1]))
+    m11 = round(random.uniform(range1[0],range1[1]))
+    m02 = round(random.uniform(range1[0],range1[1]))
+    m12 = round(random.uniform(range1[0],range1[1]))
+    mean0 = np.array([m01,m02])
+    mean1 = np.array([m11,m12])
+    
+    s01 = round(random.uniform(range1[0],range1[1]))
+    s02 = round(random.uniform(range1[0],range1[1]))
+    s01,s02 = swap(s01,s02)
+    s11 = round(random.uniform(range1[0],range1[1]))
+    s12 = round(random.uniform(range1[0],range1[1]))
+    s11,s12 = swap(s11,s12)    
+    
+    Sigma0 = np.array([[s01,s02],[s02,s01]]).reshape(2, 2)
+    Sigma1 = np.array([[s11,s12],[s12,s11]]).reshape(2, 2)
+    
+    points = smpl_bGDnd.sampling_binGDnd(mean0,mean1,Sigma0,Sigma1,num_sam)
+    
+    points0 = points[0:int(num_sam),:]
+    points1 = points[int(num_sam):num_sam*2,:]
+    
+    plt.plot(points0[:, 0], points0[:, 1], 'ro')
+    plt.plot(points1[:, 0], points1[:, 1], 'bo')
+    plt.show()
     
 """    
 def sampling_binGDnd_verification(num,dim_type):
@@ -102,4 +138,5 @@ if __name__ == "__main__":
     range1 = [-10,10]
     trial_num = 10
     num_sam = 1000
-    Sample_points,M0 = verification_1d(trial_num,num_sam,range1)
+    #Sample_points,M0 = verification_1d(trial_num,num_sam,range1)
+    verification_2d(trial_num,num_sam,range1)
