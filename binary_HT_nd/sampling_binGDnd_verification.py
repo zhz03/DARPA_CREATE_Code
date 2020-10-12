@@ -100,6 +100,6 @@ def sampling_binGDnd_verification(num,dim_type):
 
 if __name__ == "__main__":
     range1 = [-10,10]
-    trial_num = 2
+    trial_num = 10
     num_sam = 1000
     Sample_points,M0 = verification_1d(trial_num,num_sam,range1)
