@@ -6,7 +6,7 @@ Created on Mon Oct 12 16:42:36 2020
 """
 
 import numpy as np
-
+             
 def load_plt_data():
     filepath = './data_storage/'
     
@@ -27,7 +27,21 @@ def load_plt_data():
     
     return Sample_points,M0,M1,S0,S1    
 
-"""
+def load_stat_data():
+    filepath = './data_storage/'
+    filename1 = filepath + 'Error_mean0.npy'
+    Error_mean0 = np.load(filename1)
+    
+    filename2 = filepath + 'Error_mean1.npy'
+    Error_mean1 = np.load(filename2)
+    
+    filename3 = filepath + 'Error_var0.npy'
+    Error_var0 = np.load(filename3)
+    
+    filename4 = filepath + 'Error_var1.npy'
+    Error_var1 = np.load(filename4) 
+    return Error_mean0,Error_mean1,Error_var0,Error_var1
+
 def verification_direct_results_plot():
     
     points0 = points[0:num_sam,:]
@@ -45,8 +59,9 @@ def verification_direct_results_plot():
     title = ''
     fig_path = './figs/verification_1d/'
     savefigs(title,fig_path,i,close_flg = False)
-"""
+
 
 if __name__ == '__main__':
     Sample_points,M0,M1,S0,S1 = load_plt_data()
-    points1 = Sample_points[0]
+    Error_mean0,Error_mean1,Error_var0,Error_var1 = load_stat_data() 
+    
