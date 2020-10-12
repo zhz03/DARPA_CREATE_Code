@@ -5,6 +5,7 @@ Created on Mon Oct 12 00:40:28 2020
 @author: Zhaoliang
 """
 
+import Estimator.Bayesian_analysis as BA
 import Estimator.KF_estimator as KF_est
 import Simulations.Generate_seq_u as Gsequ
 import Simulations.Simulator as Simu
@@ -39,7 +40,7 @@ def verification(num):
             u = Gsequ.generate_sequential_ut(uts,ts)
             y,z = Simu.Simulator(SM,x0,u)
             Sigma,estimates = KF_est.KF_estimator(SM,z)
-            ut_zt,mean_ut_zt,Sigma_ut_zt = Bayesian_analysis(SM,ut,Sigma,estimates,z)
+            ut_zt,mean_ut_zt,Sigma_ut_zt = BA.Bayesian_analysis(SM,ut,Sigma,estimates,z)
             Ut_zt.append(ut_zt)
         Ut_zt = cnvdata.convert_array2list_nd(Ut_zt,dx)
         #mean_pln = np.dot(H,B)*uts[1]
