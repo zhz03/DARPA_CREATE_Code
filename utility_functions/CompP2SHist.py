@@ -52,7 +52,7 @@ class Compare_pln2statis_hist(object):
         plt.legend()
         plt.title("Statistical histogram vs. planning mean and variance")
         
-    def visualization_self(self,data,nflg = False):
+    def visualization_self(self,data,nflg = False,dataname = 'data'):
         mean_stat,var_stat = self.calculate_stat(data)
         bins = self.bins
         x_stat = np.linspace(np.min(data)-self.Range,np.max(data)+self.Range,bins)
@@ -63,9 +63,7 @@ class Compare_pln2statis_hist(object):
         plt.ylabel("Frequency")
         plt.xlabel("bins")
         if nflg == True:
-            Gd.plotGaussian(x_stat,mean_stat,var_stat,'-g','mean=$\mu_{data}$,var=$Sigma_{data}$')
-    
-    #def visualization_2hist(self,data1,data2,nflg = False):
+            Gd.plotGaussian(x_stat,mean_stat,var_stat,'-g','mean=$\mu_{%s}$,var=$Sigma_{%s}$'%(dataname,dataname))    
         
   
 if __name__ == '__main__':
