@@ -12,13 +12,10 @@ import utility_functions.convert_data as cnvdata
 import matplotlib.pyplot as plt
 
 def HT_2d(mean0,mean1,Sigma0,Sigma1,sam_size):
-    x0, y0 = np.random.multivariate_normal(mean=mean0, cov=Sigma0, size=sam_size).T
-    x1, y1 = np.random.multivariate_normal(mean=mean1, cov=Sigma1, size=sam_size).T
-    plt.plot(x0, y0, 'ro')
-    plt.plot(x1, y1, 'bo')
-    plt.show()
+    points0 = np.random.multivariate_normal(mean=mean0, cov=Sigma0, size=sam_size)
+    points1 = np.random.multivariate_normal(mean=mean1, cov=Sigma1, size=sam_size)
     
-    return x0,x1,y0,y1
+    return points0,points1
 
     """
     plotfgs.plot_multi_var(mean1,mean0,Sigma1,Sigma0)
@@ -34,7 +31,7 @@ if __name__ == "__main__":
     mean1 = np.array([1,1])
     Sigma0 = np.array([[2,-1],[-1,2]]).reshape(2, 2)
     Sigma1 = np.array([[3,0.1],[0.1,3]]).reshape(2, 2)
-    x0,x1,y0,y1 = HT_2d(mean0,mean1,Sigma0,Sigma1,1000)
+    points0,points1 = HT_2d(mean0,mean1,Sigma0,Sigma1,1000)
     
     """
     x = np.array([4.3,0]).reshape(2,1)
