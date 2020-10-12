@@ -7,9 +7,6 @@ Created on Mon Oct 12 14:46:45 2020
 import numpy as np
 import random
 import utility_functions.CompP2SHist as CompP2S
-import utility_functions.plot_figures as plotfgs
-import utility_functions.convert_data as cnvdata
-import matplotlib.pyplot as plt
 import binary_HT_nd.sampling_binGDnd as smpl_bGDnd    
 
 def save_plt_data(Sample_points,M0,M1,S0,S1):
