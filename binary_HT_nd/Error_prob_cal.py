@@ -9,12 +9,13 @@ import numpy as np
 import binary_HT_nd.sampling_binGDnd as smpl_bGDnd
 from scipy.stats import norm, multivariate_normal
 
-def Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points):
+def Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points,visualization_flg = False):
     count_CR = 0
     count_FA = 0
     count_M = 0
     count_D = 0
     num = len(points)
+    
     for i in range(num):
         p0 = multivariate_normal(mean=mean0,cov=Sigma0).pdf(points[i])
         p1 = multivariate_normal(mean=mean1,cov=Sigma1).pdf(points[i])
@@ -28,18 +29,34 @@ def Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points):
                 count_D = count_D + 1
             else:
                 count_FA = count_FA + 1
+        if visualization_flg == True:
+            if i < num/2: 
+                if p0 > p1:
+                    points_CR = points[i]
+                else:
+                    points_M = points[i] 
+            else:
+                if p0 < p1: 
+                    points_D = points[i]
+                else:
+                    points_FA = points[i]                
+            
+            
+    
     Pr_D = count_D/(num/2)
     Pr_M = count_M/(num/2)
     Pr_FA = count_FA/(num/2)
     Pr_CR = count_CR/(num/2)
+    if visualization_flg == False:
+        return Pr_D,Pr_FA,Pr_M,Pr_CR
+    else:
+        return Pr_D,Pr_FA,Pr_M,Pr_CR,points_D,points_FA,points_M,points_CR
     
-    return Pr_D,Pr_FA,Pr_M,Pr_CR
-
 if __name__ == "__main__":
     mean0 = np.array([0])
     mean1 = np.array([1])
     Sigma0 = np.array([1]).reshape(1, 1)
     Sigma1 = np.array([1]).reshape(1, 1)
     points = smpl_bGDnd.sampling_binGDnd(mean0,mean1,Sigma0,Sigma1,1000)
-    Pr_D,Pr_FA,Pr_M,Pr_CR = Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points)
-    
+    #Pr_D,Pr_FA,Pr_M,Pr_CR = Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points)
+    Pr_D,Pr_FA,Pr_M,Pr_CR,points_D,points_FA,points_M,points_CR = Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points,True)
