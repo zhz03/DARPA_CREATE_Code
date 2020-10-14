@@ -64,7 +64,7 @@ if __name__ == "__main__":
     #p0 = multivariate_normal(mean=m0,cov=s0).pdf(points[1])
     
     #Pr_D,Pr_FA,Pr_M,Pr_CR,points_D,points_FA,points_M,points_CR = EprC.Error_prob_cal(m0,m1,s0,s1,points,True)
-    Epr_verification_2d(1)
+    Epr_verification_2d(3)
     
     """
     points_D_con = np.array(points_D)
