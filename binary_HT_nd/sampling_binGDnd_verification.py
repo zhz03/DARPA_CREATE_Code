@@ -8,6 +8,7 @@ import numpy as np
 import random
 import utility_functions.CompP2SHist as CompP2S
 import binary_HT_nd.sampling_binGDnd as smpl_bGDnd    
+import matplotlib.pyplot as plt
 
 def swap(a1,a2):
     if a1 > a2:
