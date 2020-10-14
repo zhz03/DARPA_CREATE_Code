@@ -11,6 +11,7 @@ import binary_HT_nd.sampling_binGDnd as smpl_bGDnd
 import binary_HT_nd.Error_prob_cal as EprC
 import binary_HT_nd.sampling_binGDnd_Plot as smpl_bGDnd_plt
 import matplotlib.pyplot as plt
+import utility_functions.convert_data as cnvdata
 #from scipy.stats import norm, multivariate_normal
 
 #def visualization_2d():
@@ -42,10 +43,15 @@ if __name__ == "__main__":
     m1 = M1[1]
     s0 = S0[1]
     s1 = S1[1]
-    p0 = multivariate_normal(mean=m0,cov=s0).pdf(points[1])
+    #p0 = multivariate_normal(mean=m0,cov=s0).pdf(points[1])
     
     Pr_D,Pr_FA,Pr_M,Pr_CR,points_D,points_FA,points_M,points_CR = EprC.Error_prob_cal(m0,m1,s0,s1,points,True)
-        
-    points_D_con = convert_array2list_1d(points_D)
+     
+    #plt.plot(points_D[:,0],points_D[:,1],'ro')
+    #plt.show()
+    
+    #points_D_con = cnvdata.convert_array2list_nd(points_D,2)
     #plt.plot()
+    points_D_con = points_D[0]
+    points_D_conv = np.vstack(points_D_con,points_D[1])
     
