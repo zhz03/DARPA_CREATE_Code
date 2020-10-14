@@ -104,7 +104,7 @@ def verification_1d(trial_num,num_sam,range1):
     save_plt_data(filepath,Sample_points,M0,M1,S0,S1)
     save_stat_files(filepath,Error_mean0,Error_mean1,Error_var0,Error_var1)
     
-    return Sample_points,M0
+    #return Sample_points,M0
 
 def verification_2d(trial_num,num_sam,range1):
     Error_mean0 = []
@@ -170,7 +170,7 @@ def verification_2d(trial_num,num_sam,range1):
     plt.plot(points1[:, 0], points1[:, 1], 'bo')
     plt.show()
     """
-    return points,points0,points1
+    #return points,points0,points1
     
 """    
 def sampling_binGDnd_verification(num,dim_type):
@@ -179,7 +179,7 @@ def sampling_binGDnd_verification(num,dim_type):
 
 if __name__ == "__main__":
     range1 = [-5,5]
-    trial_num = 20
+    trial_num = 1000
     num_sam = 1000
-    Sample_points,M0 = verification_1d(trial_num,num_sam,range1)
-    points,points0,points1 = verification_2d(trial_num,num_sam,range1)
+    verification_1d(trial_num,num_sam,range1)
+    verification_2d(trial_num,num_sam,range1)
