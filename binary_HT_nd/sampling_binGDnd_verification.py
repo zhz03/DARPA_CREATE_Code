@@ -11,13 +11,10 @@ import binary_HT_nd.sampling_binGDnd as smpl_bGDnd
 import matplotlib.pyplot as plt
 
 def swap(a1,a2):
-    if a1 > a2:
-        return a1,a2
-    else:
-        t = a1
-        a1 = a2
-        a2 = t
-        return a1,a2
+    if abs(a1) >=  abs(a2):
+        return abs(a1),a2
+    else:        
+        return abs(a2),a1
     
 def save_plt_data(filepath,Sample_points,M0,M1,S0,S1):
     
