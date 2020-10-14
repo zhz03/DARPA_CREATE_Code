@@ -14,23 +14,41 @@ import matplotlib.pyplot as plt
 import utility_functions.convert_data as cnvdata
 #from scipy.stats import norm, multivariate_normal
 
-#def visualization_2d():
-    
+def visualization_2d(points_D,points_FA,points_M,points_CR):
+    points_D_con = np.array(points_D)
+    points_FA_con = np.array(points_FA)
+    points_M_con = np.array(points_M)
+    points_CR_con = np.array(points_CR)
 
-def Epr_verification_2d():
+    plt.plot(points_D_con[:,0],points_D_con[:,1],'ro')
+    plt.plot(points_CR_con[:,0],points_CR_con[:,1],'bo')
+    plt.plot(points_FA_con[:,0],points_FA_con[:,1],'ko')
+    plt.plot(points_M_con[:,0],points_M_con[:,1],'ko')
+    plt.show()
+
+def Epr_verification_2d(plt_fig):
     filepath = './data_storage/verification_2d/'
     Sample_points,M0,M1,S0,S1 = smpl_bGDnd_plt.load_plt_data(filepath)
     
     trial_num = len(M0)
-    for i in range(trial_num):
+    if plt_fig == -1:
+        for i in range(trial_num):
+            points = Sample_points[i]
+            m0 = M0[i]
+            m1 = M1[i]
+            s0 = S0[i]
+            s1 = S1[i]
+            Pr_D,Pr_FA,Pr_M,Pr_CR,points_D,points_FA,points_M,points_CR = EprC.Error_prob_cal(m0,m1,s0,s1,points,True)
+            visualization_2d(points_D,points_FA,points_M,points_CR)
+    else:
+        i = plt_fig
         points = Sample_points[i]
         m0 = M0[i]
         m1 = M1[i]
         s0 = S0[i]
         s1 = S1[i]
         Pr_D,Pr_FA,Pr_M,Pr_CR,points_D,points_FA,points_M,points_CR = EprC.Error_prob_cal(m0,m1,s0,s1,points,True)
-        
-        
+        visualization_2d(points_D,points_FA,points_M,points_CR)        
         
     return Pr_D,Pr_FA,Pr_M,Pr_CR
 
@@ -45,11 +63,14 @@ if __name__ == "__main__":
     s1 = S1[1]
     #p0 = multivariate_normal(mean=m0,cov=s0).pdf(points[1])
     
-    Pr_D,Pr_FA,Pr_M,Pr_CR,points_D,points_FA,points_M,points_CR = EprC.Error_prob_cal(m0,m1,s0,s1,points,True)
+    #Pr_D,Pr_FA,Pr_M,Pr_CR,points_D,points_FA,points_M,points_CR = EprC.Error_prob_cal(m0,m1,s0,s1,points,True)
+    Epr_verification_2d(1)
+    
+    """
     points_D_con = np.array(points_D)
     plt.plot(points_D_con[:,0],points_D_con[:,1],'ro')
     plt.show()
-    
+    """
     #points_D_con = cnvdata.convert_array2list_nd(points_D,2)
     #plt.plot()
     #points_D_con = points_D[0]
