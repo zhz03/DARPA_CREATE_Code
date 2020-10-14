@@ -150,12 +150,40 @@ def verification_direct_results_plot2d(plt_sig):
         savefigs(title,fig_path,i,close_flg = True)   
     
     #return Sample_points,M0,M1,S0,S1
+
+def verification_stat_results_plot1d():
+    filepath = './data_storage/verification_1d/'
+    Error_mean0,Error_mean1,Error_var0,Error_var1 = load_stat_data(filepath)
+    compp2s = CompP2S.Compare_pln2statis_hist(mean_pln = None, Sigma_pln = None,name ='plan',bins = 100,Range=0.1)
+    fig_path = './figs/stat_1d/'
+    plt.figure()
+    compp2s.visualization_self(Error_mean0,nflg = True,dataname ='Error_{mean0}')
+    fig_name1 = fig_path + 'Error_mean0' + '.jpg'
+    plt.savefig(fig_name1)
+    
+    plt.figure()
+    compp2s.visualization_self(Error_mean1,nflg = True,dataname ='Error_{mean1}')
+    fig_name2= fig_path + 'Error_mean1' + '.jpg'
+    plt.savefig(fig_name2)
+    
+    plt.figure()
+    compp2s.visualization_self(Error_var0,nflg = True,dataname ='Error_{var0}')
+    fig_name3= fig_path + 'Error_var0' + '.jpg'
+    plt.savefig(fig_name3)
+    
+    plt.figure()
+    compp2s.visualization_self(Error_var1,nflg = True,dataname ='Error_{var1}')
+    fig_name4= fig_path + 'Error_var1' + '.jpg'
+    plt.savefig(fig_name4)
+    
+    return Error_mean0,Error_mean1,Error_var0,Error_var1
     
 if __name__ == '__main__':
     #Sample_points,M0,M1,S0,S1 = load_plt_data()
     #Error_mean0,Error_mean1,Error_var0,Error_var1 = load_stat_data()    
-    verification_direct_results_plot1d(-1)
-    verification_direct_results_plot2d(-1)
+    #verification_direct_results_plot1d(-1)
+    #verification_direct_results_plot2d(-1)
+    Error_mean0,Error_mean1,Error_var0,Error_var1 = verification_stat_results_plot1d()
     """
     filepath = './data_storage/verification_2d/'
     Sample_points,M0,M1,S0,S1 = load_plt_data(filepath)
