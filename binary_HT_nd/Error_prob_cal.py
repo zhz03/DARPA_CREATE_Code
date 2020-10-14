@@ -9,7 +9,7 @@ import numpy as np
 import binary_HT_nd.sampling_binGDnd as smpl_bGDnd
 from scipy.stats import norm, multivariate_normal
 
-def Error_prob_cal_bin(mean0,mean1,Sigma0,Sigma1,points):
+def Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points):
     count_CR = 0
     count_FA = 0
     count_M = 0
@@ -41,5 +41,5 @@ if __name__ == "__main__":
     Sigma0 = np.array([1]).reshape(1, 1)
     Sigma1 = np.array([1]).reshape(1, 1)
     points = smpl_bGDnd.sampling_binGDnd(mean0,mean1,Sigma0,Sigma1,1000)
-    Pr_D,Pr_FA,Pr_M,Pr_CR = Error_prob_cal_bin(mean0,mean1,Sigma0,Sigma1,points)
+    Pr_D,Pr_FA,Pr_M,Pr_CR = Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points)
     
