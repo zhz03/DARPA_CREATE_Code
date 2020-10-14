@@ -7,11 +7,11 @@ Created on Mon Oct 12 12:46:00 2020
 
 import numpy as np
 import binary_HT_nd.sampling_binGDnd as smpl_bGDnd
-import binary_HT_nd.Error_prob_cal_bin as Epr_b
+import binary_HT_nd.Error_prob_cal as EprC
 
 def bin_HT_nd(mean0,mean1,Sigma0,Sigma1,Num_sam):
      points = smpl_bGDnd.sampling_binGDnd(mean0,mean1,Sigma0,Sigma1,Num_sam)
-     Pr_D,Pr_FA,Pr_M,Pr_CR = Epr_b.Error_prob_cal_bin(mean0,mean1,Sigma0,Sigma1,points)
+     Pr_D,Pr_FA,Pr_M,Pr_CR = EprC.Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points)
      
      return Pr_D,Pr_FA,Pr_M,Pr_CR
  
