@@ -12,7 +12,7 @@ import binary_HT_nd.Error_prob_cal as EprC
 import binary_HT_nd.sampling_binGDnd_Plot as smpl_bGDnd_plt
 import matplotlib.pyplot as plt
 import utility_functions.convert_data as cnvdata
-#from scipy.stats import norm, multivariate_normal
+from scipy.stats import norm, multivariate_normal
 
 def visualization_2d(points_D,points_FA,points_M,points_CR):
     points_D_con = np.array(points_D)
@@ -71,10 +71,11 @@ if __name__ == "__main__":
     m1 = M1[n]
     s0 = S0[n]
     s1 = S1[n]
-    #p0 = multivariate_normal(mean=m0,cov=s0).pdf(points[1])
+    
+    p0 = multivariate_normal(mean=m0,cov=s0).pdf(points[n])
     
     #Pr_D,Pr_FA,Pr_M,Pr_CR,points_D,points_FA,points_M,points_CR = EprC.Error_prob_cal(m0,m1,s0,s1,points,True)
-    Epr_verification_2d(n)
+    #Epr_verification_2d(n)
     
     """
     points_D_con = np.array(points_D)
