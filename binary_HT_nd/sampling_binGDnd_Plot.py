@@ -75,7 +75,7 @@ def verification_direct_results_plot1d(plt_sig):
             points1 = points[int(num_sam/2):num_sam,:]
     
             compp2s = CompP2S.Compare_pln2statis_hist(mean_pln = None, Sigma_pln = None,name ='plan',bins = None,Range=None)
-    
+            
             plotfgs.plot_2_Gaussian(m0,m1,s0,s1)
             compp2s.visualization_self(points0,nflg = True,dataname ='stat0')
             compp2s.visualization_self(points1,nflg = True,dataname ='stat1')
@@ -155,7 +155,7 @@ if __name__ == '__main__':
     #Sample_points,M0,M1,S0,S1 = load_plt_data()
     #Error_mean0,Error_mean1,Error_var0,Error_var1 = load_stat_data()    
     verification_direct_results_plot1d(-1)
-    #verification_direct_results_plot2d(-1)
+    verification_direct_results_plot2d(-1)
     """
     filepath = './data_storage/verification_2d/'
     Sample_points,M0,M1,S0,S1 = load_plt_data(filepath)
