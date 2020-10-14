@@ -123,10 +123,25 @@ def verification_direct_results_plot2d(plt_sig):
             
             plt.plot(points0[:, 0], points0[:, 1], 'ro')
             plt.plot(points1[:, 0], points1[:, 1], 'bo')
-            
-            plotfgs.plot_2_Gaussian(m0,m1,s0,s1)
+            plotfgs.plot_multi_var(m0.reshape(2,1),m1.reshape(2,1),s0,s1)
             plt.show()
+    else:
+        i = plt_sig
+        points = Sample_points[i]
+        m0 = M0[i]
+        m1 = M1[i]
+        s0 = S0[i]
+        s1 = S1[i]
+        num_sam = len(points)
+            
+        points0 = points[0:int(num_sam/2),:]
+        points1 = points[int(num_sam/2):num_sam,:]
         
+        plt.plot(points0[:, 0], points0[:, 1], 'ro')
+        plt.plot(points1[:, 0], points1[:, 1], 'bo')
+        title = 'Data' + str(i) + ' | verification plot'
+        plotfgs.plot_multi_var2d(title,m0.reshape(2,1),m1.reshape(2,1),s0,s1)
+        plt.show()
     
     return Sample_points,M0,M1,S0,S1
     
@@ -141,5 +156,5 @@ if __name__ == '__main__':
     m1 = M1[1]
     s0 = S0[1]
     s1 = S1[1]
-    plotfgs.plot_multi_var(m0.reshape(2,1),m1.reshape(2,1),s0,s1)
+    verification_direct_results_plot2d(1)
     #plotfgs.plot_2_Gaussian(m0.reshape(2,1),m1.reshape(2,1),s0,s1)
