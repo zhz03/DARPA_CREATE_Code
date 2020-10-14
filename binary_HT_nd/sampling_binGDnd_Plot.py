@@ -124,7 +124,9 @@ def verification_direct_results_plot2d(plt_sig):
             plt.plot(points0[:, 0], points0[:, 1], 'ro')
             plt.plot(points1[:, 0], points1[:, 1], 'bo')
             plotfgs.plot_multi_var(m0.reshape(2,1),m1.reshape(2,1),s0,s1)
-            plt.show()
+            title = ''
+            fig_path = './figs/verification_2d/'
+            savefigs(title,fig_path,i,close_flg = True)   
     else:
         i = plt_sig
         points = Sample_points[i]
@@ -141,9 +143,12 @@ def verification_direct_results_plot2d(plt_sig):
         plt.plot(points1[:, 0], points1[:, 1], 'bo')
         title = 'Data' + str(i) + ' | verification plot'
         plotfgs.plot_multi_var2d(title,m0.reshape(2,1),m1.reshape(2,1),s0,s1)
-        plt.show()
+        
+        title = ''
+        fig_path = './figs/verification_2d/'
+        savefigs(title,fig_path,i,close_flg = True)   
     
-    return Sample_points,M0,M1,S0,S1
+    #return Sample_points,M0,M1,S0,S1
     
 if __name__ == '__main__':
     #Sample_points,M0,M1,S0,S1 = load_plt_data()
