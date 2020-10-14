@@ -63,6 +63,7 @@ def Epr_verification_2d(plt_fig):
 
 if __name__ == "__main__":
     
+    """
     filepath = './data_storage/verification_2d/'
     n = 10
     Sample_points,M0,M1,S0,S1 = smpl_bGDnd_plt.load_plt_data(filepath) 
@@ -71,9 +72,9 @@ if __name__ == "__main__":
     m1 = M1[n]
     s0 = S0[n]
     s1 = S1[n]
-    
     p0 = multivariate_normal(mean=m1,cov=s1).pdf(points[n])
-    
+    """
+    n = 100
     #Pr_D,Pr_FA,Pr_M,Pr_CR,points_D,points_FA,points_M,points_CR = EprC.Error_prob_cal(m0,m1,s0,s1,points,True)
     Epr_verification_2d(n)
     
