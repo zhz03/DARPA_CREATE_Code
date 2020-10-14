@@ -20,10 +20,11 @@ def visualization_2d(points_D,points_FA,points_M,points_CR):
     points_M_con = np.array(points_M)
     points_CR_con = np.array(points_CR)
 
-    plt.plot(points_D_con[:,0],points_D_con[:,1],'ro')
-    plt.plot(points_CR_con[:,0],points_CR_con[:,1],'bo')
-    plt.plot(points_FA_con[:,0],points_FA_con[:,1],'ko')
-    plt.plot(points_M_con[:,0],points_M_con[:,1],'ko')
+    plt.plot(points_D_con[:,0],points_D_con[:,1],'ro',label='Pr_D')
+    plt.plot(points_CR_con[:,0],points_CR_con[:,1],'bo',label='Pr_CR')
+    plt.plot(points_FA_con[:,0],points_FA_con[:,1],'ko',label='Pr_FA')
+    plt.plot(points_M_con[:,0],points_M_con[:,1],'ko',label='Pr_M')
+    plt.legend()
     plt.show()
 
 def Epr_verification_2d(plt_fig):
@@ -40,6 +41,11 @@ def Epr_verification_2d(plt_fig):
             s1 = S1[i]
             Pr_D,Pr_FA,Pr_M,Pr_CR,points_D,points_FA,points_M,points_CR = EprC.Error_prob_cal(m0,m1,s0,s1,points,True)
             visualization_2d(points_D,points_FA,points_M,points_CR)
+            
+            title = 'Error_prob_cal Verification for data ' + str(i) 
+            fig_path = './figs/error_prob_verification_2d/'
+            smpl_bGDnd_plt.savefigs(title,fig_path,i = None,close_flg = True)
+            
     else:
         i = plt_fig
         points = Sample_points[i]
@@ -48,23 +54,27 @@ def Epr_verification_2d(plt_fig):
         s0 = S0[i]
         s1 = S1[i]
         Pr_D,Pr_FA,Pr_M,Pr_CR,points_D,points_FA,points_M,points_CR = EprC.Error_prob_cal(m0,m1,s0,s1,points,True)
-        visualization_2d(points_D,points_FA,points_M,points_CR)        
+        visualization_2d(points_D,points_FA,points_M,points_CR)  
+        title = 'Error_prob_cal Verification for data ' + str(i) 
+        fig_path = './figs/error_prob_verification_2d/'
+        smpl_bGDnd_plt.savefigs(title,fig_path,i,close_flg = True)
         
     return Pr_D,Pr_FA,Pr_M,Pr_CR
 
 if __name__ == "__main__":
     
     filepath = './data_storage/verification_2d/'
+    n = 5
     Sample_points,M0,M1,S0,S1 = smpl_bGDnd_plt.load_plt_data(filepath) 
-    points = Sample_points[1]
-    m0 = M0[1]
-    m1 = M1[1]
-    s0 = S0[1]
-    s1 = S1[1]
+    points = Sample_points[n]
+    m0 = M0[n]
+    m1 = M1[n]
+    s0 = S0[n]
+    s1 = S1[n]
     #p0 = multivariate_normal(mean=m0,cov=s0).pdf(points[1])
     
     #Pr_D,Pr_FA,Pr_M,Pr_CR,points_D,points_FA,points_M,points_CR = EprC.Error_prob_cal(m0,m1,s0,s1,points,True)
-    Epr_verification_2d(3)
+    Epr_verification_2d(n)
     
     """
     points_D_con = np.array(points_D)
