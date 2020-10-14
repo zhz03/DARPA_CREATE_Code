@@ -19,9 +19,9 @@ def swap(a1,a2):
         a2 = t
         return a1,a2
     
-def save_plt_data(Sample_points,M0,M1,S0,S1):
+def save_plt_data(filepath,Sample_points,M0,M1,S0,S1):
     
-    filepath = './data_storage/'
+    #filepath = './data_storage/'
     
     filename1 = filepath + 'sample_points.npy'
     np.save(filename1, Sample_points) 
@@ -38,8 +38,10 @@ def save_plt_data(Sample_points,M0,M1,S0,S1):
     filename5 = filepath + 'S1.npy'
     np.save(filename5, S1)  
 
-def save_stat_files(Error_mean0,Error_mean1,Error_var0,Error_var1):
-    filepath = './data_storage/'
+def save_stat_files(filepath, Error_mean0,Error_mean1,Error_var0,Error_var1):
+    
+    #filepath = './data_storage/'
+    
     filename1 = filepath + 'Error_mean0.npy'
     np.save(filename1, Error_mean0)
     
@@ -98,8 +100,9 @@ def verification_1d(trial_num,num_sam,range1):
         Error_var0.append(error_var0)
         Error_var1.append(error_var1)
     
-    save_plt_data(Sample_points,M0,M1,S0,S1)
-    save_stat_files(Error_mean0,Error_mean1,Error_var0,Error_var1)
+    filepath = './data_storage/verification_1d/'
+    save_plt_data(filepath,Sample_points,M0,M1,S0,S1)
+    save_stat_files(filepath,Error_mean0,Error_mean1,Error_var0,Error_var1)
     
     return Sample_points,M0
 
@@ -140,12 +143,33 @@ def verification_2d(trial_num,num_sam,range1):
         S1.append(Sigma1)
         S0.append(Sigma0)
         
-    points0 = points[0:int(num_sam),:]
-    points1 = points[int(num_sam):num_sam*2,:]
+        points0 = points[0:int(num_sam),:]
+        points1 = points[int(num_sam):num_sam*2,:]
+        
+        mean_stat0 = np.array([np.mean(points0[:,0]),np.mean(points0[:,1])])
+        mean_stat1 = np.array([np.mean(points1[:,0]),np.mean(points1[:,1])])
+        Sigma_stat0 = np.cov(points0.T)
+        Sigma_stat1 = np.cov(points1.T)
+        
+        error_mean0 = mean0 - mean_stat0
+        error_cov0 = Sigma0 - Sigma_stat0
+        error_mean1 = mean1 - mean_stat1
+        error_cov1 = Sigma1 - Sigma_stat1
+        
+        # concatenate all the statistical comparison results
+        Error_mean0.append(error_mean0)
+        Error_mean1.append(error_mean1)
+        Error_var0.append(error_cov0)
+        Error_var1.append(error_cov1)
     
+    filepath = './data_storage/verification_2d/'    
+    save_plt_data(filepath,Sample_points,M0,M1,S0,S1)
+    save_stat_files(filepath,Error_mean0,Error_mean1,Error_var0,Error_var1)
+    """
     plt.plot(points0[:, 0], points0[:, 1], 'ro')
     plt.plot(points1[:, 0], points1[:, 1], 'bo')
     plt.show()
+    """
     return points,points0,points1
     
 """    
@@ -155,7 +179,7 @@ def sampling_binGDnd_verification(num,dim_type):
 
 if __name__ == "__main__":
     range1 = [-5,5]
-    trial_num = 1
+    trial_num = 10
     num_sam = 1000
     #Sample_points,M0 = verification_1d(trial_num,num_sam,range1)
     points,points0,points1 = verification_2d(trial_num,num_sam,range1)
