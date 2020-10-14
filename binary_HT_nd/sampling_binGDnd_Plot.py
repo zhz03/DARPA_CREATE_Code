@@ -123,8 +123,9 @@ def verification_direct_results_plot2d(plt_sig):
             
             plt.plot(points0[:, 0], points0[:, 1], 'ro')
             plt.plot(points1[:, 0], points1[:, 1], 'bo')
-            plotfgs.plot_multi_var(m0.reshape(2,1),m1.reshape(2,1),s0,s1)
-            title = ''
+            title = 'Data' + str(i) + ' | verification plot'
+            plotfgs.plot_multi_var2d(title, m0.reshape(2,1),m1.reshape(2,1),s0,s1)
+            title = 'Verification for data ' + str(i) 
             fig_path = './figs/verification_2d/'
             savefigs(title,fig_path,i,close_flg = True)   
     else:
@@ -144,7 +145,7 @@ def verification_direct_results_plot2d(plt_sig):
         title = 'Data' + str(i) + ' | verification plot'
         plotfgs.plot_multi_var2d(title,m0.reshape(2,1),m1.reshape(2,1),s0,s1)
         
-        title = ''
+        title = 'Verification for data ' + str(i) 
         fig_path = './figs/verification_2d/'
         savefigs(title,fig_path,i,close_flg = True)   
     
@@ -161,5 +162,5 @@ if __name__ == '__main__':
     m1 = M1[1]
     s0 = S0[1]
     s1 = S1[1]
-    verification_direct_results_plot2d(1)
+    verification_direct_results_plot2d(-1)
     #plotfgs.plot_2_Gaussian(m0.reshape(2,1),m1.reshape(2,1),s0,s1)
