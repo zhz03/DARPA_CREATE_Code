@@ -104,8 +104,42 @@ def verification_direct_results_plot1d(plt_sig):
         fig_path = './figs/verification_1d/'
         savefigs(title,fig_path,i,close_flg = True)         
 
-
+def verification_direct_results_plot2d(plt_sig):
+    filepath = './data_storage/verification_2d/'
+    Sample_points,M0,M1,S0,S1 = load_plt_data(filepath)
+    if plt_sig == -1: #plot all the figures and save them
+        trial_num = len(M0)
+        for i in range(trial_num):
+            points = Sample_points[i]
+            m0 = M0[i]
+            m1 = M1[i]
+            s0 = S0[i]
+            s1 = S1[i]
+            
+            num_sam = len(points)
+            
+            points0 = points[0:int(num_sam/2),:]
+            points1 = points[int(num_sam/2):num_sam,:]
+            
+            plt.plot(points0[:, 0], points0[:, 1], 'ro')
+            plt.plot(points1[:, 0], points1[:, 1], 'bo')
+            
+            plotfgs.plot_2_Gaussian(m0,m1,s0,s1)
+            plt.show()
+        
+    
+    return Sample_points,M0,M1,S0,S1
+    
 if __name__ == '__main__':
-    Sample_points,M0,M1,S0,S1 = load_plt_data()
-    Error_mean0,Error_mean1,Error_var0,Error_var1 = load_stat_data()    
-    verification_direct_results_plot1d(6)
+    #Sample_points,M0,M1,S0,S1 = load_plt_data()
+    #Error_mean0,Error_mean1,Error_var0,Error_var1 = load_stat_data()    
+    #verification_direct_results_plot1d(6)
+    filepath = './data_storage/verification_2d/'
+    Sample_points,M0,M1,S0,S1 = load_plt_data(filepath)
+    Error_mean0,Error_mean1,Error_var0,Error_var1 = load_stat_data(filepath)
+    m0 = M0[1]
+    m1 = M1[1]
+    s0 = S0[1]
+    s1 = S1[1]
+    plotfgs.plot_multi_var(m0.reshape(2,1),m1.reshape(2,1),s0,s1)
+    #plotfgs.plot_2_Gaussian(m0.reshape(2,1),m1.reshape(2,1),s0,s1)
