@@ -37,6 +37,7 @@ def Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points,visualization_flg = False):
             if i < num/2: 
                 if p0 > p1:
                     points_CR = points[i]
+                    #np.vstack(Points_CR,points_CR)
                     Points_CR.append(points_CR)
                 else:
                     points_M = points[i]
