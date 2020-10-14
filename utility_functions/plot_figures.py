@@ -153,10 +153,19 @@ def multiKf_plot_dxdz(mea,gtru,esti = None,kfest_flag = False):
         
 def plot_multi_var(mean1,mean0,U_sigma1,U_sigma0):
     dn = len(mean1)
-    #plt.figure()
+    plt.figure()
     plot_covariance_ellipse(mean1,U_sigma1,fc='g', alpha=0.2, 
                         std=[1, 2, 3],
                         title='{%s}D Error(between ground truth and estimate) distribution'%dn)
+    plot_covariance_ellipse(mean0,U_sigma0,fc='g', alpha=0.2, 
+                    std=[1, 2, 3])
+    plt.gca().grid(b=False)
+
+def plot_multi_var2d(ptitle,mean1,mean0,U_sigma1,U_sigma0):
+
+    plot_covariance_ellipse(mean1,U_sigma1,fc='g', alpha=0.2, 
+                        std=[1, 2, 3],
+                        title= ptitle)
     plot_covariance_ellipse(mean0,U_sigma0,fc='g', alpha=0.2, 
                     std=[1, 2, 3])
     plt.gca().grid(b=False)
