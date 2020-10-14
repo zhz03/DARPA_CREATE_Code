@@ -11,8 +11,8 @@ import utility_functions.plot_figures as plotfgs
 import utility_functions.convert_data as cnvdata
 import matplotlib.pyplot as plt        
 
-def load_plt_data():
-    filepath = './data_storage/'
+def load_plt_data(filepath):
+    #filepath = './data_storage/'
     
     filename1 = filepath + 'sample_points.npy'
     Sample_points = np.load(filename1) 
@@ -31,8 +31,8 @@ def load_plt_data():
     
     return Sample_points,M0,M1,S0,S1    
 
-def load_stat_data():
-    filepath = './data_storage/'
+def load_stat_data(filepath):
+    #filepath = './data_storage/'
     filename1 = filepath + 'Error_mean0.npy'
     Error_mean0 = np.load(filename1)
     
