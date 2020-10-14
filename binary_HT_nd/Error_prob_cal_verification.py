@@ -46,13 +46,13 @@ if __name__ == "__main__":
     #p0 = multivariate_normal(mean=m0,cov=s0).pdf(points[1])
     
     Pr_D,Pr_FA,Pr_M,Pr_CR,points_D,points_FA,points_M,points_CR = EprC.Error_prob_cal(m0,m1,s0,s1,points,True)
-    points_D_convert = np.array(points_D)
-    #plt.plot(points_D[:,0],points_D[:,1],'ro')
-    #plt.show()
+    points_D_con = np.array(points_D)
+    plt.plot(points_D_con[:,0],points_D_con[:,1],'ro')
+    plt.show()
     
     #points_D_con = cnvdata.convert_array2list_nd(points_D,2)
     #plt.plot()
-    points_D_con = points_D[0]
-    points_D_conv = points_D_con + points_D[1]
+    #points_D_con = points_D[0]
+    #points_D_conv = points_D_con + points_D[1]
     #points_D_conv = np.vstack(points_D_con,points_D[1].reshape(1,2))
     
