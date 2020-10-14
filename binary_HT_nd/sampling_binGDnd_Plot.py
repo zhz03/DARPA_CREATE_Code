@@ -154,7 +154,9 @@ def verification_direct_results_plot2d(plt_sig):
 if __name__ == '__main__':
     #Sample_points,M0,M1,S0,S1 = load_plt_data()
     #Error_mean0,Error_mean1,Error_var0,Error_var1 = load_stat_data()    
-    #verification_direct_results_plot1d(6)
+    verification_direct_results_plot1d(-1)
+    #verification_direct_results_plot2d(-1)
+    """
     filepath = './data_storage/verification_2d/'
     Sample_points,M0,M1,S0,S1 = load_plt_data(filepath)
     Error_mean0,Error_mean1,Error_var0,Error_var1 = load_stat_data(filepath)
@@ -162,5 +164,6 @@ if __name__ == '__main__':
     m1 = M1[1]
     s0 = S0[1]
     s1 = S1[1]
-    verification_direct_results_plot2d(-1)
+    """
+    
     #plotfgs.plot_2_Gaussian(m0.reshape(2,1),m1.reshape(2,1),s0,s1)
