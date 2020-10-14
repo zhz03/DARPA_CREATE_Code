@@ -57,8 +57,8 @@ def savefigs(title,fig_path,i = None,close_flg = True):
         plt.close()
         
 def verification_direct_results_plot1d(plt_sig):
-
-    Sample_points,M0,M1,S0,S1 = load_plt_data()
+    filepath = './data_storage/verification_1d/'
+    Sample_points,M0,M1,S0,S1 = load_plt_data(filepath)
     
     if plt_sig == -1: #plot all the figures and save them
         trial_num = len(M0)
@@ -82,6 +82,7 @@ def verification_direct_results_plot1d(plt_sig):
             title = ''
             fig_path = './figs/verification_1d/'
             savefigs(title,fig_path,i,close_flg = True)
+            
     else: # plot only one figure and save it
         i = plt_sig
         points = Sample_points[i]
@@ -102,6 +103,7 @@ def verification_direct_results_plot1d(plt_sig):
         title = ''
         fig_path = './figs/verification_1d/'
         savefigs(title,fig_path,i,close_flg = True)         
+
 
 if __name__ == '__main__':
     Sample_points,M0,M1,S0,S1 = load_plt_data()
