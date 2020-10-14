@@ -11,7 +11,9 @@ import binary_HT_nd.sampling_binGDnd as smpl_bGDnd
 import matplotlib.pyplot as plt
 
 def swap(a1,a2):
-    if abs(a1) >=  abs(a2):
+    if abs(a1) ==  abs(a2):
+        a2 = a2 - 0.01
+    if abs(a1) >  abs(a2):
         return abs(a1),a2
     else:        
         return abs(a2),a1
