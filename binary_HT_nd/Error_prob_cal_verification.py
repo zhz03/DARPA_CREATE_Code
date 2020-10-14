@@ -38,7 +38,7 @@ if __name__ == "__main__":
     
     filepath = './data_storage/verification_2d/'
     Sample_points,M0,M1,S0,S1 = smpl_bGDnd_plt.load_plt_data(filepath) 
-    points1 = Sample_points[1]
+    points = Sample_points[1]
     m0 = M0[1]
     m1 = M1[1]
     s0 = S0[1]
@@ -52,6 +52,6 @@ if __name__ == "__main__":
     
     #points_D_con = cnvdata.convert_array2list_nd(points_D,2)
     #plt.plot()
-    points_D_con = points_D[0]
-    points_D_conv = np.vstack(points_D_con,points_D[1])
+    #points_D_con = points_D[0]
+    #points_D_conv = np.vstack(points_D_con,points_D[1])
     
