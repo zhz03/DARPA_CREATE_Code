@@ -183,7 +183,11 @@ if __name__ == '__main__':
     #Error_mean0,Error_mean1,Error_var0,Error_var1 = load_stat_data()    
     #verification_direct_results_plot1d(-1)
     #verification_direct_results_plot2d(-1)
-    Error_mean0,Error_mean1,Error_var0,Error_var1 = verification_stat_results_plot1d()
+    #Error_mean0,Error_mean1,Error_var0,Error_var1 = verification_stat_results_plot1d()
+    
+    filepath = './data_storage/verification_2d/'
+    Error_mean0,Error_mean1,Error_var0,Error_var1 = load_stat_data(filepath)
+    
     """
     filepath = './data_storage/verification_2d/'
     Sample_points,M0,M1,S0,S1 = load_plt_data(filepath)
