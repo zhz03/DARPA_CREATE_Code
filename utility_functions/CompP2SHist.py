@@ -52,12 +52,12 @@ class Compare_pln2statis_hist(object):
         plt.legend()
         plt.title("Statistical histogram vs. planning mean and variance")
         
-    def visualization_self(self,data,nflg = False,dataname = 'data'):
+    def visualization_self(self,data,nflg = False,dataname = 'data',tname = "Data histogram"):
         mean_stat,var_stat = self.calculate_stat(data)
         bins = self.bins
         x_stat = np.linspace(np.min(data)-self.Range,np.max(data)+self.Range,bins)
         
-        plt.title("Data histogram")
+        plt.title(tname)
         plt.hist(data, bins=int(bins), normed=True, alpha=1, histtype='stepfilled',
              color='steelblue', edgecolor='none')
         plt.ylabel("Frequency")
