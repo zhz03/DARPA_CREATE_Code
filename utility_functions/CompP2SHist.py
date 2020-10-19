@@ -58,8 +58,10 @@ class Compare_pln2statis_hist(object):
         x_stat = np.linspace(np.min(data)-self.Range,np.max(data)+self.Range,bins)
         
         plt.title(tname)
+        #plt.legend(data,dataname)
         plt.hist(data, bins=int(bins), normed=True, alpha=1, histtype='stepfilled',
-             color='steelblue', edgecolor='none')
+             color='steelblue', edgecolor='none',label=dataname)
+        plt.legend()
         plt.ylabel("Frequency")
         plt.xlabel("bins")
         if nflg == True:
