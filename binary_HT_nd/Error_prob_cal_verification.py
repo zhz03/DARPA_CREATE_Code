@@ -22,7 +22,7 @@ def visualization_2d(points_D,points_FA,points_M,points_CR):
 
     plt.plot(points_D_con[:,0],points_D_con[:,1],'ro',label='Pr_D')
     plt.plot(points_CR_con[:,0],points_CR_con[:,1],'bo',label='Pr_CR')
-    plt.plot(points_FA_con[:,0],points_FA_con[:,1],'ko',label='Pr_FA')
+    plt.plot(points_FA_con[:,0],points_FA_con[:,1],'yo',label='Pr_FA')
     plt.plot(points_M_con[:,0],points_M_con[:,1],'ko',label='Pr_M')
     plt.legend()
     plt.show()
@@ -74,7 +74,7 @@ if __name__ == "__main__":
     s1 = S1[n]
     p0 = multivariate_normal(mean=m1,cov=s1).pdf(points[n])
     """
-    n = 100
+    n = 20
     #Pr_D,Pr_FA,Pr_M,Pr_CR,points_D,points_FA,points_M,points_CR = EprC.Error_prob_cal(m0,m1,s0,s1,points,True)
     Epr_verification_2d(n)
     
