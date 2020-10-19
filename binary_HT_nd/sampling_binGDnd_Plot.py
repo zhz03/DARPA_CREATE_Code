@@ -156,23 +156,28 @@ def verification_stat_results_plot1d():
     Error_mean0,Error_mean1,Error_var0,Error_var1 = load_stat_data(filepath)
     compp2s = CompP2S.Compare_pln2statis_hist(mean_pln = None, Sigma_pln = None,name ='plan',bins = 100,Range=0.1)
     fig_path = './figs/stat_1d/'
+    
     plt.figure()
-    compp2s.visualization_self(Error_mean0,nflg = True,dataname ='Error_{mean0}')
+    m_0,var_0 = compp2s.calculate_stat(Error_mean0)
+    compp2s.visualization_self(Error_mean0,nflg = False,dataname ='Error_{mean0}',tname = 'mean_{stat} = %.6s, var_{stat} = %.6s' %(m_0,var_0))
     fig_name1 = fig_path + 'Error_mean0' + '.jpg'
     plt.savefig(fig_name1)
     
     plt.figure()
-    compp2s.visualization_self(Error_mean1,nflg = True,dataname ='Error_{mean1}')
+    m_1,var_1 = compp2s.calculate_stat(Error_mean1)
+    compp2s.visualization_self(Error_mean1,nflg = False,dataname ='Error_{mean1}',tname = 'mean_{stat} = %.6s, var_{stat} = %.6s' %(m_1,var_1))
     fig_name2= fig_path + 'Error_mean1' + '.jpg'
     plt.savefig(fig_name2)
     
     plt.figure()
-    compp2s.visualization_self(Error_var0,nflg = True,dataname ='Error_{var0}')
+    m_0,var_0 = compp2s.calculate_stat(Error_mean0)
+    compp2s.visualization_self(Error_var0,nflg = False,dataname ='Error_{var0}',tname = 'mean_{stat} = %.6s, var_{stat} = %.6s' %(m_0,var_0))
     fig_name3= fig_path + 'Error_var0' + '.jpg'
     plt.savefig(fig_name3)
     
     plt.figure()
-    compp2s.visualization_self(Error_var1,nflg = True,dataname ='Error_{var1}')
+    m_1,var_1 = compp2s.calculate_stat(Error_mean1)
+    compp2s.visualization_self(Error_var1,nflg = False,dataname ='Error_{var1}',tname = 'mean_{stat} = %.6s, var_{stat} = %.6s' %(m_1,var_1))
     fig_name4= fig_path + 'Error_var1' + '.jpg'
     plt.savefig(fig_name4)
     
@@ -188,6 +193,10 @@ if __name__ == '__main__':
     filepath = './data_storage/verification_2d/'
     Error_mean0,Error_mean1,Error_var0,Error_var1 = load_stat_data(filepath)
     
+    filepath = './data_storage/verification_1d/'
+    Error_mean0,Error_mean1,Error_var0,Error_var1 = load_stat_data(filepath)    
+    
+    verification_stat_results_plot1d()
     """
     filepath = './data_storage/verification_2d/'
     Sample_points,M0,M1,S0,S1 = load_plt_data(filepath)
