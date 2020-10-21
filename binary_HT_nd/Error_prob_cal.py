@@ -10,34 +10,34 @@ import binary_HT_nd.sampling_binGDnd as smpl_bGDnd
 from scipy.stats import norm, multivariate_normal
 
 def labelling(points,mean0,mean1,Sigma0,Sigma1):
-    labeled_points = []
+    labelled_points = []
     num = len(points)
     for i in range(num):
         p0 = multivariate_normal(mean=mean0,cov=Sigma0).pdf(points[i])
         p1 = multivariate_normal(mean=mean1,cov=Sigma1).pdf(points[i])
         if i<num/2:
-            #labeled_point = [mean0,points[i],p0,p1]
-            labeled_point = {'label':mean0,'data':points[i],'p_u0':p0,'p_u1':p1}
+            #labelled_point = [mean0,points[i],p0,p1]
+            labelled_point = {'label':mean0,'data':points[i],'p_u0':p0,'p_u1':p1}
         else:
-            #labeled_point = [mean1,points[i],p0,p1]
-            labeled_point = {'label':mean1,'data':points[i],'p_u0':p0,'p_u1':p1}
-        labeled_points.append(labeled_point)
-    return labeled_points
+            #labelled_point = [mean1,points[i],p0,p1]
+            labelled_point = {'label':mean1,'data':points[i],'p_u0':p0,'p_u1':p1}
+        labelled_points.append(labelled_point)
+    return labelled_points
 
 
 def label_comparison(label_points):
-    labeled_pts_dec = []   
+    labelled_pts_dec = []   
     num = len(label_points)
     for i in range(num):
         p0 = label_points[i]['p_u0']
         p1 = label_points[i]['p_u1']
         if p0 > p1:
-            labeled_pt_dec = {label_points[i],'dec':0}
+            label_points[i].update({'dec':0})
         else:
-            labeled_pt_dec = {label_points[i],'dec':1}
-        labeled_pts_dec.append(labeled_pt_dec)
-    return labeled_pts_dec        
-        
+            label_points[i].update({'dec':1})
+        labelled_pts_dec.append(label_points[i])
+    return labelled_pts_dec        
+       
 def Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points,visualization_flg = False):
 
     count_CR = 0
@@ -107,5 +107,5 @@ if __name__ == "__main__":
     points = smpl_bGDnd.sampling_binGDnd(mean0,mean1,Sigma0,Sigma1,1000)
     #Pr_D,Pr_FA,Pr_M,Pr_CR = Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points)
     Pr_D,Pr_FA,Pr_M,Pr_CR = Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points,False)
-    labeled_points = labelling(points,mean0,mean1,Sigma0,Sigma1)
-    labeled_pts_dec = label_comparison(label_points)
+    labelled_points = labelling(points,mean0,mean1,Sigma0,Sigma1)
+    labelled_pts_dec = label_comparison(labelled_points)
