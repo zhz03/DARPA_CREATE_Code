@@ -8,6 +8,7 @@ Created on Tue Oct 20 22:51:01 2020
 import numpy as np
 import binary_HT_nd.sampling_binGDnd as smpl_bGDnd
 import binary_HT_nd.Error_prob_cal as EprC
+import random
 
 def generate_mean(nHy,nd,Range):
     means = []
@@ -15,15 +16,23 @@ def generate_mean(nHy,nd,Range):
         mean = np.random.randint(Range[0],Range[1],size=nd)
         means.append(mean)
     return means 
-"""        
+    
 def generate_cov(nHy,nd,Range):
     Sigmas = []
-"""    
+    for i in range(nHy):
+        
+        Sigma = np.random.rand(nd,nd)
+        
+        j = range(nd)
+        Sigma[j,j] = 1
+        Sigmas.append(Sigma)
+    return Sigmas
 
 def input_generator_nd(nHy,nd,Range):
     #mean0 = np.random.rand(1,nd)
     means = generate_mean(nHy,nd,Range)
-    return means
+    Sigmas = generate_cov(nHy,nd,Range)
+    return means,Sigmas
     
 if __name__ == "__main__":
     mean0 = np.array([0])
@@ -44,13 +53,19 @@ if __name__ == "__main__":
     nHy = 2
     nd = 2
     Range = [0,5]
-    mean = input_generator_nd(nHy,nd,Range)
+    means,Sigmas = input_generator_nd(nHy,nd,Range)
+    
     Sigma = np.random.randint(Range[0],Range[1],size=(3,3))
     Sigma1 = np.array([[3,0.9,0],[0,3,0],[0,0.9,3]]).reshape(3, 3)
     
     eyeM = np.eye(nd, dtype=int)
-    randM = np.random.rand(nd,nd)
-    randM.diagonal(offset=1)
+    if random.uniform(0,1) < 0.5:
+        randM = np.random.rand(nd,nd) * -1
+    else:
+        randM = np.random.rand(nd,nd) * 1
+    #randM = np.random.rand(nd,nd)
+    #randM.diagonal(offset=1)
     i = range(nd)
-    print(i)
     randM[i, i] = 1
+    range1 = [-1,1]
+    example = random.uniform(0,1)
