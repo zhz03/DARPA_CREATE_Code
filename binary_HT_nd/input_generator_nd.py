@@ -20,11 +20,15 @@ def generate_mean(nHy,nd,Range):
 def generate_cov(nHy,nd,Range):
     Sigmas = []
     for i in range(nHy):
-        
-        Sigma = np.random.rand(nd,nd)
-        
+        # create a right Sigma
+        if random.uniform(0,1) < 0.5:
+            Sigma = np.random.rand(nd,nd) * -1
+        else:
+            Sigma = np.random.rand(nd,nd) * 1        
         j = range(nd)
-        Sigma[j,j] = 1
+        Sigma[j,j] = 1 
+
+        
         Sigmas.append(Sigma)
     return Sigmas
 
@@ -51,9 +55,9 @@ if __name__ == "__main__":
     Sigma1 = np.array([[3,0.1,0],[0,3,0],[0,0.1,3]]).reshape(3, 3)
     """
     nHy = 2
-    nd = 2
+    nd = 4
     Range = [0,5]
-    means,Sigmas = input_generator_nd(nHy,nd,Range)
+    #means,Sigmas = input_generator_nd(nHy,nd,Range)
     
     Sigma = np.random.randint(Range[0],Range[1],size=(3,3))
     Sigma1 = np.array([[3,0.9,0],[0,3,0],[0,0.9,3]]).reshape(3, 3)
@@ -65,7 +69,8 @@ if __name__ == "__main__":
         randM = np.random.rand(nd,nd) * 1
     #randM = np.random.rand(nd,nd)
     #randM.diagonal(offset=1)
-    i = range(nd)
-    randM[i, i] = 1
+    j = range(nd)
+    randM[j, j] = 1
+    
     range1 = [-1,1]
     example = random.uniform(0,1)
