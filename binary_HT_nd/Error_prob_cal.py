@@ -17,26 +17,28 @@ def labelling(points,mean0,mean1,Sigma0,Sigma1):
         p1 = multivariate_normal(mean=mean1,cov=Sigma1).pdf(points[i])
         if i<num/2:
             #labelled_point = [mean0,points[i],p0,p1]
-            labelled_point = {'label':mean0,'data':points[i],'p_u0':p0,'p_u1':p1}
+            labelled_point = {'label':0,'data':points[i],'p_u0':p0,'p_u1':p1}
         else:
             #labelled_point = [mean1,points[i],p0,p1]
-            labelled_point = {'label':mean1,'data':points[i],'p_u0':p0,'p_u1':p1}
+            labelled_point = {'label':1,'data':points[i],'p_u0':p0,'p_u1':p1}
         labelled_points.append(labelled_point)
     return labelled_points
 
 
-def label_comparison(label_points):
+def label_comparison(labelled_points):
     labelled_pts_dec = []   
-    num = len(label_points)
+    num = len(labelled_points)
     for i in range(num):
-        p0 = label_points[i]['p_u0']
-        p1 = label_points[i]['p_u1']
+        p0 = labelled_points[i]['p_u0']
+        p1 = labelled_points[i]['p_u1']
         if p0 > p1:
-            label_points[i].update({'dec':0})
+            labelled_points[i].update({'dec':0})
         else:
-            label_points[i].update({'dec':1})
-        labelled_pts_dec.append(label_points[i])
+            labelled_points[i].update({'dec':1})
+        labelled_pts_dec.append(labelled_points[i])
     return labelled_pts_dec        
+
+    
        
 def Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points,visualization_flg = False):
 
