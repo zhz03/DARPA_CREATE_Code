@@ -39,8 +39,8 @@ def Epr_verification_2d(plt_fig):
             m1 = M1[i]
             s0 = S0[i]
             s1 = S1[i]
-            Pr_D,Pr_FA,Pr_M,Pr_CR,points_D,points_FA,points_M,points_CR = EprC.Error_prob_cal(m0,m1,s0,s1,points,True)
-            visualization_2d(points_D,points_FA,points_M,points_CR)
+            Pr_D,Pr_M,Pr_FA,Pr_CR,Points_D,Points_M,Points_FA,Points_CR = EprC.Error_prob_cal(m0,m1,s0,s1,points,True)
+            visualization_2d(Points_D,Points_FA,Points_M,Points_CR)
             
             title = 'Error_prob_cal Verification for data ' + str(i) 
             fig_path = './figs/error_prob_verification_2d/'
@@ -53,8 +53,8 @@ def Epr_verification_2d(plt_fig):
         m1 = M1[i]
         s0 = S0[i]
         s1 = S1[i]
-        Pr_D,Pr_FA,Pr_M,Pr_CR,points_D,points_FA,points_M,points_CR = EprC.Error_prob_cal(m0,m1,s0,s1,points,True)
-        visualization_2d(points_D,points_FA,points_M,points_CR)  
+        Pr_D,Pr_M,Pr_FA,Pr_CR,Points_D,Points_M,Points_FA,Points_CR = EprC.Error_prob_cal_oldV(m0,m1,s0,s1,points,True)
+        visualization_2d(Points_D,Points_FA,Points_M,Points_CR)  
         title = 'Error_prob_cal Verification for data ' + str(i) 
         fig_path = './figs/error_prob_verification_2d/'
         smpl_bGDnd_plt.savefigs(title,fig_path,i,close_flg = True)
@@ -74,8 +74,9 @@ if __name__ == "__main__":
     s1 = S1[n]
     p0 = multivariate_normal(mean=m1,cov=s1).pdf(points[n])
     """
-    n = 20
+    n = 151
     #Pr_D,Pr_FA,Pr_M,Pr_CR,points_D,points_FA,points_M,points_CR = EprC.Error_prob_cal(m0,m1,s0,s1,points,True)
+
     Epr_verification_2d(n)
     
     """
