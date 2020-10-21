@@ -45,13 +45,13 @@ def error_prob_count(labelled_pts_dec):
     count_D = 0
     num = len(labelled_pts_dec)
     for i in range(num):
-        if labelled_points[i]['label'] == 0:
-            if labelled_points[i]['label'] == labelled_points[i]['dec']:
+        if labelled_pts_dec[i]['label'] == 0:
+            if labelled_pts_dec[i]['label'] == labelled_pts_dec[i]['dec']:
                 count_CR = count_CR + 1
             else:
                 count_FA = count_FA + 1
-        elif labelled_points[i]['label'] == 1:
-            if labelled_points[i]['label'] == labelled_points[i]['dec']:
+        elif labelled_pts_dec[i]['label'] == 1:
+            if labelled_pts_dec[i]['label'] == labelled_pts_dec[i]['dec']:
                 count_D = count_D + 1
             else:
                 count_M = count_M + 1
@@ -59,9 +59,15 @@ def error_prob_count(labelled_pts_dec):
     Pr_M = count_M/(num/2)
     Pr_FA = count_FA/(num/2)
     Pr_CR = count_CR/(num/2)           
-    return Pr_D,Pr_FA,Pr_M,Pr_CR
+    return Pr_D,Pr_M,Pr_FA,Pr_CR 
+
+def Error_pro_cal(points,mean0,mean1,Sigma0,Sigma1):
+    labelled_points = labelling(points,mean0,mean1,Sigma0,Sigma1)
+    labelled_pts_dec = label_comparison(labelled_points)
+    Pr_D,Pr_M,Pr_FA,Pr_CR = error_prob_count(labelled_pts_dec)
+    return Pr_D,Pr_M,Pr_FA,Pr_CR    
        
-def Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points,visualization_flg = False):
+def Error_prob_cal_oldV(mean0,mean1,Sigma0,Sigma1,points,visualization_flg = False):
 
     count_CR = 0
     count_FA = 0
@@ -108,9 +114,9 @@ def Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points,visualization_flg = False):
     Pr_FA = count_FA/(num/2)
     Pr_CR = count_CR/(num/2)
     if visualization_flg == False:
-        return Pr_D,Pr_FA,Pr_M,Pr_CR
+        return Pr_D,Pr_M,Pr_FA,Pr_CR
     else:
-        return Pr_D,Pr_FA,Pr_M,Pr_CR,Points_D,Points_FA,Points_M,Points_CR
+        return Pr_D,Pr_M,Pr_FA,Pr_CR,Points_D,Points_M,Points_FA,Points_CR
     
 if __name__ == "__main__":
     
@@ -138,8 +144,5 @@ if __name__ == "__main__":
     
     #Pr_D,Pr_FA,Pr_M,Pr_CR = Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points)
     
-    Pr1_D,Pr1_FA,Pr1_M,Pr1_CR = Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points,False)
-    
-    labelled_points = labelling(points,mean0,mean1,Sigma0,Sigma1)
-    labelled_pts_dec = label_comparison(labelled_points)
-    Pr_D,Pr_FA,Pr_M,Pr_CR = error_prob_count(labelled_pts_dec)
+    Pr1_D,Pr1_M,Pr1_FA,Pr1_CR = Error_prob_cal_oldV(mean0,mean1,Sigma0,Sigma1,points,False)
+    Pr_D,Pr_M,Pr_FA,Pr_CR = Error_pro_cal(points,mean0,mean1,Sigma0,Sigma1)
