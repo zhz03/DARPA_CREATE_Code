@@ -45,4 +45,12 @@ if __name__ == "__main__":
     nd = 2
     Range = [0,5]
     mean = input_generator_nd(nHy,nd,Range)
+    Sigma = np.random.randint(Range[0],Range[1],size=(3,3))
+    Sigma1 = np.array([[3,0.9,0],[0,3,0],[0,0.9,3]]).reshape(3, 3)
     
+    eyeM = np.eye(nd, dtype=int)
+    randM = np.random.rand(nd,nd)
+    randM.diagonal(offset=1)
+    i = range(nd)
+    print(i)
+    randM[i, i] = 1
