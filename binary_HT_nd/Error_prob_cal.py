@@ -61,7 +61,7 @@ def error_prob_count(labelled_pts_dec):
     Pr_CR = count_CR/(num/2)           
     return Pr_D,Pr_M,Pr_FA,Pr_CR 
 
-def Error_pro_cal(points,mean0,mean1,Sigma0,Sigma1):
+def Error_pro_cal(mean0,mean1,Sigma0,Sigma1,points):
     labelled_points = labelling(points,mean0,mean1,Sigma0,Sigma1)
     labelled_pts_dec = label_comparison(labelled_points)
     Pr_D,Pr_M,Pr_FA,Pr_CR = error_prob_count(labelled_pts_dec)
