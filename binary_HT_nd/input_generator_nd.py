@@ -71,6 +71,7 @@ if __name__ == "__main__":
     #randM.diagonal(offset=1)
     j = range(nd)
     randM[j, j] = 1
+    randM = np.triu(randM)
+    randM += randM.T - np.diag(randM.diagonal())
     
-    range1 = [-1,1]
-    example = random.uniform(0,1)
+    print(randM.T == randM)
