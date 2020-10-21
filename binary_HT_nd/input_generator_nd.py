@@ -21,10 +21,10 @@ def generate_cov(nHy,nd):
     Sigmas = []
     for i in range(nHy):
         # create a right Sigma
-        if random.uniform(0,1) < 0.5:
-            Sigma = np.random.rand(nd,nd) * -1
-        else:
-            Sigma = np.random.rand(nd,nd) * 1        
+        # To generate a uniform distribution random matrix over [-0.99,1)
+        a = -0.9999
+        b = 1
+        Sigma = (b - a) * np.random.random_sample((nd,nd)) + a     
         j = range(nd)
         Sigma[j,j] = 1 
         Sigma = np.triu(Sigma)
@@ -58,7 +58,3 @@ if __name__ == "__main__":
     nd = 5
     Range = [0,5]
     means,Sigmas = input_generator_nd(nHy,nd,Range)
-    a = -1
-    b = 1
-    example = (b - a) * np.random.random_sample((nd,nd)) + a
-    
