@@ -49,6 +49,8 @@ There are two sub-programs about it:
 
 - Error_prob_cal
 
+  ![](figs/sub-system-flowchart.png)
+
 - Error_prob_cal_verification
 
   - In this program, we could verify 2d error probabilities 
@@ -57,7 +59,31 @@ There are two sub-programs about it:
 
   - Some results:
 
-    ![](figs/error_prob_verification_2d/3.jpg)
+    ![](figs/error_prob_verification_2d/0.jpg)
 
     ![](figs/error_prob_verification_2d/10.jpg)
+    
+    ![](figs/error_prob_verification_2d/30.jpg)
 
+### Verification
+
+![](figs/verification.png)
+
+*Numerical and statistical analysis -nd* function is to verify and calculate  the norm of the error of the mean and variance of the different dimensions.
+
+The inputs of this function are: $Error_{i}^{mean} \in \mathcal{R}^{1 \times n}, Error_{i}^{var} \in \mathcal{R}^{n \times n}$ 
+$$
+Error_{i}^{mean} = mean_{i}^{sample} - mean_{i}^{truth}, i \in \mathcal{R}_{trials}^{n}
+$$
+
+$$
+Error_{i}^{var} = Var_{i}^{sample} - Var_{i}^{truth}, i \in \mathcal{R}_{trials}^{n}
+$$
+
+The outputs of this function are: $||Error_{i}^{mean}||_2\in \mathcal{R}^{n},||Error_{i}^{var}||_2\in \mathcal{R}^{n}$
+
+The outputs plots for 2-d:
+
+![](figs/stat_2d/Mean0_norms.jpg) ![](figs/stat_2d/Mean1_norms.jpg)
+
+![](figs/stat_2d/Var0_norms.jpg)![](figs/stat_2d/Var1_norms.jpg)
