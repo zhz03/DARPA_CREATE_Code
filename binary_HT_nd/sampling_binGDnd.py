@@ -10,6 +10,7 @@ from scipy.stats import multivariate_normal
 def sampling_binGDnd(mean0,mean1,Sigma0,Sigma1,sam_size):
     points0 = np.random.multivariate_normal(mean=mean0, cov=Sigma0, size=sam_size)
     points1 = np.random.multivariate_normal(mean=mean1, cov=Sigma1, size=sam_size)
+    
     points = np.vstack((points0,points1)) 
 
     return points
@@ -28,12 +29,12 @@ if __name__ == "__main__":
     mean1 = np.array([1])
     Sigma0 = np.array([2]).reshape(1, 1)
     Sigma1 = np.array([3]).reshape(1, 1)    
-    """
+    
     mean0 = np.array([0,0])
     mean1 = np.array([1,1])
     Sigma0 = np.array([[2,-1],[-1,2]]).reshape(2, 2)
     Sigma1 = np.array([[3,0.1],[0.1,3]]).reshape(2, 2)
-    
+    """
     mean0 = np.array([0,0,0])
     mean1 = np.array([1,1,1])
     Sigma0 = np.array([[2,-1,0],[0,2,0],[0,-1,2]]).reshape(3, 3)
