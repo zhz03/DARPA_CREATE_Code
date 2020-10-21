@@ -38,7 +38,28 @@ def label_comparison(labelled_points):
         labelled_pts_dec.append(labelled_points[i])
     return labelled_pts_dec        
 
-    
+def error_prob_count(labelled_pts_dec):
+    count_CR = 0
+    count_FA = 0
+    count_M = 0
+    count_D = 0
+    num = len(labelled_pts_dec)
+    for i in range(num):
+        if labelled_points[i]['label'] == 0:
+            if labelled_points[i]['label'] == labelled_points[i]['dec']:
+                count_CR = count_CR + 1
+            else:
+                count_FA = count_FA + 1
+        elif labelled_points[i]['label'] == 1:
+            if labelled_points[i]['label'] == labelled_points[i]['dec']:
+                count_D = count_D + 1
+            else:
+                count_M = count_M + 1
+    Pr_D = count_D/(num/2)
+    Pr_M = count_M/(num/2)
+    Pr_FA = count_FA/(num/2)
+    Pr_CR = count_CR/(num/2)           
+    return Pr_D,Pr_FA,Pr_M,Pr_CR
        
 def Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points,visualization_flg = False):
 
@@ -59,12 +80,12 @@ def Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points,visualization_flg = False):
             if p0 > p1:
                 count_CR = count_CR + 1
             else:
-                count_M = count_M + 1
+                count_FA = count_FA + 1
         else: 
             if p0 < p1: 
                 count_D = count_D + 1
             else:
-                count_FA = count_FA + 1
+                count_M = count_M + 1
         if visualization_flg == True:
             if i < num/2: 
                 if p0 > p1:
@@ -72,15 +93,15 @@ def Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points,visualization_flg = False):
                     #np.vstack(Points_CR,points_CR)
                     Points_CR.append(points_CR)
                 else:
-                    points_M = points[i]
-                    Points_M.append(points_M)
+                    points_FA = points[i]
+                    Points_FA.append(points_FA)
             else:
                 if p0 < p1: 
                     points_D = points[i]
                     Points_D.append(points_D)
                 else:
-                    points_FA = points[i]    
-                    Points_FA.append(points_FA)                    
+                    points_M = points[i]    
+                    Points_M.append(points_M)                    
     
     Pr_D = count_D/(num/2)
     Pr_M = count_M/(num/2)
@@ -108,6 +129,8 @@ if __name__ == "__main__":
     Sigma1 = np.array([[3,0.1],[0.1,3]]).reshape(2, 2)
     points = smpl_bGDnd.sampling_binGDnd(mean0,mean1,Sigma0,Sigma1,1000)
     #Pr_D,Pr_FA,Pr_M,Pr_CR = Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points)
-    Pr_D,Pr_FA,Pr_M,Pr_CR = Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points,False)
+    Pr1_D,Pr1_FA,Pr1_M,Pr1_CR = Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points,False)
+    
     labelled_points = labelling(points,mean0,mean1,Sigma0,Sigma1)
     labelled_pts_dec = label_comparison(labelled_points)
+    Pr_D,Pr_FA,Pr_M,Pr_CR = error_prob_count(labelled_pts_dec)
