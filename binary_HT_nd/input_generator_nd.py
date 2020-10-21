@@ -17,7 +17,7 @@ def generate_mean(nHy,nd,Range):
         means.append(mean)
     return means 
     
-def generate_cov(nHy,nd,Range):
+def generate_cov(nHy,nd):
     Sigmas = []
     for i in range(nHy):
         # create a right Sigma
@@ -35,7 +35,7 @@ def generate_cov(nHy,nd,Range):
 def input_generator_nd(nHy,nd,Range):
     #mean0 = np.random.rand(1,nd)
     means = generate_mean(nHy,nd,Range)
-    Sigmas = generate_cov(nHy,nd,Range)
+    Sigmas = generate_cov(nHy,nd)
     return means,Sigmas
     
 if __name__ == "__main__":
@@ -55,7 +55,10 @@ if __name__ == "__main__":
     Sigma1 = np.array([[3,0.1,0],[0,3,0],[0,0.1,3]]).reshape(3, 3)
     """
     nHy = 2
-    nd = 4
+    nd = 5
     Range = [0,5]
     means,Sigmas = input_generator_nd(nHy,nd,Range)
+    a = -1
+    b = 1
+    example = (b - a) * np.random.random_sample((nd,nd)) + a
     
