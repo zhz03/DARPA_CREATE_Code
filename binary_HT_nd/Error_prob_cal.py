@@ -113,22 +113,27 @@ def Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points,visualization_flg = False):
         return Pr_D,Pr_FA,Pr_M,Pr_CR,Points_D,Points_FA,Points_M,Points_CR
     
 if __name__ == "__main__":
-    """
+    
     mean0 = np.array([0])
     mean1 = np.array([1])
     Sigma0 = np.array([1]).reshape(1, 1)
     Sigma1 = np.array([1]).reshape(1, 1)
+    """
     points = smpl_bGDnd.sampling_binGDnd(mean0,mean1,Sigma0,Sigma1,1000)
     #Pr_D,Pr_FA,Pr_M,Pr_CR = Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points)
     Pr_D,Pr_FA,Pr_M,Pr_CR = Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points,False)
     #Pr_D,Pr_FA,Pr_M,Pr_CR,points_D,points_FA,points_M,points_CR = Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points,True)
     """
+    """
     mean0 = np.array([0,0])
     mean1 = np.array([1,1])
     Sigma0 = np.array([[2,-1],[-1,2]]).reshape(2, 2)
     Sigma1 = np.array([[3,0.1],[0.1,3]]).reshape(2, 2)
+    """
     points = smpl_bGDnd.sampling_binGDnd(mean0,mean1,Sigma0,Sigma1,1000)
+    
     #Pr_D,Pr_FA,Pr_M,Pr_CR = Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points)
+    
     Pr1_D,Pr1_FA,Pr1_M,Pr1_CR = Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points,False)
     
     labelled_points = labelling(points,mean0,mean1,Sigma0,Sigma1)
