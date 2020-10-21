@@ -139,7 +139,7 @@ if __name__ == "__main__":
     mean0 = np.array([0,0,0])
     mean1 = np.array([1,1,1])
     Sigma0 = np.array([[2,-1,0],[0,2,0],[0,-1,2]]).reshape(3, 3)
-    Sigma1 = np.array([[3,4,0],[0,3,0],[0,4,3]]).reshape(3, 3)
+    Sigma1 = np.array([[3,2.9,0],[0,3,0],[0,2.9,3]]).reshape(3, 3)
     points = smpl_bGDnd.sampling_binGDnd(mean0,mean1,Sigma0,Sigma1,1000)
     
     #Pr_D,Pr_FA,Pr_M,Pr_CR = Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points)
