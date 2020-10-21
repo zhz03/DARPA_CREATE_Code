@@ -15,16 +15,24 @@ def labelling(points,mean0,mean1,Sigma0,Sigma1):
     for i in range(num):
         p0 = multivariate_normal(mean=mean0,cov=Sigma0).pdf(points[i])
         p1 = multivariate_normal(mean=mean1,cov=Sigma1).pdf(points[i])
-        labeled_point = [points[i],p0,p1]
+        if i<num/2:
+            labeled_point = [mean0,points[i],p0,p1]
+        else:
+            labeled_point = [mean1,points[i],p0,p1]
         labeled_points.append(labeled_point)
     return labeled_points
 
 
 def label_comparison(label_points):
+    
     num = len(label_points)
+    indx = 1
     for i in range(num):
-        p0 = label_points[i][1]
-        p1 = label_points[i][2]
+        p0 = label_points[i][indx]
+        p1 = label_points[i][indx+1]
+    
+    
+        
         
         
 def Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points,visualization_flg = False):
