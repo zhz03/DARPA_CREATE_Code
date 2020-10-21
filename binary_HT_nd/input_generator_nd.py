@@ -12,16 +12,18 @@ import binary_HT_nd.Error_prob_cal as EprC
 def generate_mean(nHy,nd,Range):
     means = []
     for i in range(nHy):
-        
+        mean = np.random.randint(Range[0],Range[1],size=nd)
+        means.append(mean)
+    return means 
+"""        
 def generate_cov(nHy,nd,Range):
     Sigmas = []
-    
+"""    
 
 def input_generator_nd(nHy,nd,Range):
     #mean0 = np.random.rand(1,nd)
-    mean0 = np.random.randint(Range[0],Range[1],size=nd)
-    mean1 = np.random.randint(Range[0],Range[1],size=nd)
-    return mean0,mean1  
+    means = generate_mean(nHy,nd,Range)
+    return means
     
 if __name__ == "__main__":
     mean0 = np.array([0])
@@ -39,7 +41,8 @@ if __name__ == "__main__":
     Sigma0 = np.array([[2,-1,0],[0,2,0],[0,-1,2]]).reshape(3, 3)
     Sigma1 = np.array([[3,0.1,0],[0,3,0],[0,0.1,3]]).reshape(3, 3)
     """
+    nHy = 2
     nd = 2
     Range = [0,5]
-    mean_1,mean_2 = input_generator_nd(nHy,nd,Range)
+    mean = input_generator_nd(nHy,nd,Range)
     
