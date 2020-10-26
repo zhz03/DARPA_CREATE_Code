@@ -52,7 +52,7 @@ def Epr_verification_2d(plt_fig):
     Sample_points,M0,M1,S0,S1 = smpl_bGDnd_plt.load_plt_data(filepath)
     
     trial_num = len(M0)
-    trial_num = 50
+    trial_num = 100
     if plt_fig == -1:
         for i in range(trial_num):
             points = Sample_points[i]
@@ -103,9 +103,10 @@ if __name__ == "__main__":
     n = 150
     #Pr_D,Pr_FA,Pr_M,Pr_CR,points_D,points_FA,points_M,points_CR = EprC.Error_prob_cal(m0,m1,s0,s1,points,True)
 
-    Epr_verification_2d(n)
+    #Epr_verification_2d(n)
     # Pr_D,Pr_FA,Pr_M,Pr_CR,Pr_CR,Points_D,Points_M,Points_FA,Points_CR = Epr_verification_2d(n)
 
+    """
     filepath = './data_storage/verification_2d/'
     Sample_points,M0,M1,S0,S1 = smpl_bGDnd_plt.load_plt_data(filepath)
     i = n
@@ -114,6 +115,7 @@ if __name__ == "__main__":
     m1 = M1[i]
     s0 = S0[i]
     s1 = S1[i]
+
     Pr_D,Pr_M,Pr_FA,Pr_CR,Points_D,Points_M,Points_FA,Points_CR = EprC.Error_prob_cal_oldV(m0,m1,s0,s1,points,True)
     visualization_2d(Points_D,Points_FA,Points_M,Points_CR)
     
@@ -123,7 +125,31 @@ if __name__ == "__main__":
     points_CR_con = np.array(Points_CR)
 
     pltfig.plot_multi_var(m1,m0,s1,s0)
+    """
     
+    mean0 = np.array([-1,-1])
+    mean1 = np.array([-1,3])
+    mean1 = np.array([-1,-1])
+    #mean1 = np.array([1,1])
+    
+    Sigma0 = np.array([[5,-4],[-4,5]]).reshape(2, 2)
+    Sigma1 = np.array([[4,-2],[-2,4]]).reshape(2, 2)
+    Sigma1 = np.array([[5,-4],[-4,5]]).reshape(2, 2)
+
+    Sigma0 = np.array([[4,-3],[-3,4]]).reshape(2, 2)
+    Sigma1 = np.array([[4,3],[3,4]]).reshape(2, 2)
+
+    """
+    Sigma0 = np.array([[2,0],[0,2]]).reshape(2, 2)
+    Sigma1 = np.array([[2,0],[0,2]]).reshape(2, 2)
+    """
+    pltfig.plot_multi_var(mean1,mean0,Sigma1,Sigma0)
+
+    num_sam = 2000
+    points = smpl_bGDnd.sampling_binGDnd(mean0,mean1,Sigma0,Sigma1,num_sam)
+    Pr_D,Pr_M,Pr_FA,Pr_CR,Points_D,Points_M,Points_FA,Points_CR = EprC.Error_prob_cal_oldV(mean0,mean1,Sigma0,Sigma1,points,True)
+    visualization_2d(Points_D,Points_FA,Points_M,Points_CR)    
+
     """
     points_D_con = np.array(points_D)
     plt.plot(points_D_con[:,0],points_D_con[:,1],'ro')
