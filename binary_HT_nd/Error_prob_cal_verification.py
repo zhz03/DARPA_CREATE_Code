@@ -20,30 +20,31 @@ def visualization_2d(points_D,points_FA,points_M,points_CR):
     points_M_con = np.array(points_M)
     points_CR_con = np.array(points_CR)
     
-    if not points_M_con and not points_FA_con:
+    if points_M_con.any() and points_FA_con.any():
         plt.plot(points_D_con[:,0],points_D_con[:,1],'ro',label='Pr_D')
         plt.plot(points_CR_con[:,0],points_CR_con[:,1],'bo',label='Pr_CR')
+        plt.plot(points_M_con[:,0],points_M_con[:,1],'ko',label='Pr_M')
+        plt.plot(points_FA_con[:,0],points_FA_con[:,1],'yo',label='Pr_FA')
         plt.legend()
-        plt.show()
-    elif not points_M_con and points_FA_con:
+        plt.show()   
+    elif not points_M_con.any() and points_FA_con.any():
         plt.plot(points_D_con[:,0],points_D_con[:,1],'ro',label='Pr_D')
         plt.plot(points_CR_con[:,0],points_CR_con[:,1],'bo',label='Pr_CR')
         plt.plot(points_FA_con[:,0],points_FA_con[:,1],'yo',label='Pr_FA')
         plt.legend()
         plt.show()        
-    elif points_M_con and not points_FA_con:
+    elif points_M_con.any() and not points_FA_con.any():
         plt.plot(points_D_con[:,0],points_D_con[:,1],'ro',label='Pr_D')
         plt.plot(points_CR_con[:,0],points_CR_con[:,1],'bo',label='Pr_CR')
         plt.plot(points_M_con[:,0],points_M_con[:,1],'ko',label='Pr_M')
         plt.legend()
         plt.show()   
-    else:
+    elif not points_M_con.any() and not points_FA_con.any():
         plt.plot(points_D_con[:,0],points_D_con[:,1],'ro',label='Pr_D')
         plt.plot(points_CR_con[:,0],points_CR_con[:,1],'bo',label='Pr_CR')
-        plt.plot(points_M_con[:,0],points_M_con[:,1],'ko',label='Pr_M')
-        plt.plot(points_FA_con[:,0],points_FA_con[:,1],'yo',label='Pr_FA')
         plt.legend()
-        plt.show()          
+        plt.show()
+       
 
 def Epr_verification_2d(plt_fig):
     filepath = './data_storage/verification_2d/'
@@ -98,12 +99,12 @@ if __name__ == "__main__":
     s1 = S1[n]
     p0 = multivariate_normal(mean=m1,cov=s1).pdf(points[n])
     """
-    n = 11
+    n = 12
     #Pr_D,Pr_FA,Pr_M,Pr_CR,points_D,points_FA,points_M,points_CR = EprC.Error_prob_cal(m0,m1,s0,s1,points,True)
 
-    Pr_D,Pr_FA,Pr_M,Pr_CR,Pr_CR,Points_D,Points_M,Points_FA,Points_CR = Epr_verification_2d(n)
+    #Pr_D,Pr_FA,Pr_M,Pr_CR,Pr_CR,Points_D,Points_M,Points_FA,Points_CR = Epr_verification_2d(n)
     
-    """
+
     filepath = './data_storage/verification_2d/'
     Sample_points,M0,M1,S0,S1 = smpl_bGDnd_plt.load_plt_data(filepath)
     i = n
@@ -113,7 +114,12 @@ if __name__ == "__main__":
     s0 = S0[i]
     s1 = S1[i]
     Pr_D,Pr_M,Pr_FA,Pr_CR,Points_D,Points_M,Points_FA,Points_CR = EprC.Error_prob_cal_oldV(m0,m1,s0,s1,points,True)
-    """     
+    visualization_2d(Points_D,Points_FA,Points_M,Points_CR)
+    
+    points_D_con = np.array(Points_D)
+    points_FA_con = np.array(Points_FA)
+    points_M_con = np.array(Points_M)
+    points_CR_con = np.array(Points_CR)
     
     """
     points_D_con = np.array(points_D)
