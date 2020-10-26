@@ -13,6 +13,7 @@ import binary_HT_nd.sampling_binGDnd_Plot as smpl_bGDnd_plt
 import matplotlib.pyplot as plt
 import utility_functions.convert_data as cnvdata
 from scipy.stats import norm, multivariate_normal
+import utility_functions.plot_figures as pltfig
 
 def visualization_2d(points_D,points_FA,points_M,points_CR):
     points_D_con = np.array(points_D)
@@ -21,10 +22,10 @@ def visualization_2d(points_D,points_FA,points_M,points_CR):
     points_CR_con = np.array(points_CR)
     
     if points_M_con.any() and points_FA_con.any():
-        plt.plot(points_D_con[:,0],points_D_con[:,1],'ro',label='Pr_D')
-        plt.plot(points_CR_con[:,0],points_CR_con[:,1],'bo',label='Pr_CR')
-        plt.plot(points_M_con[:,0],points_M_con[:,1],'ko',label='Pr_M')
-        plt.plot(points_FA_con[:,0],points_FA_con[:,1],'yo',label='Pr_FA')
+        plt.plot(points_D_con[:,0],points_D_con[:,1],'r.',label='Pr_D')
+        plt.plot(points_CR_con[:,0],points_CR_con[:,1],'b.',label='Pr_CR')
+        plt.plot(points_M_con[:,0],points_M_con[:,1],'k.',label='Pr_M')
+        plt.plot(points_FA_con[:,0],points_FA_con[:,1],'y.',label='Pr_FA')
         plt.legend()
         plt.show()   
     elif not points_M_con.any() and points_FA_con.any():
@@ -63,8 +64,8 @@ def Epr_verification_2d(plt_fig):
             Points_M = []
             Points_FA= []
             Points_CR = []
-            #Pr_D,Pr_M,Pr_FA,Pr_CR,Points_D,Points_M,Points_FA,Points_CR = EprC.Error_prob_cal_oldV(m0,m1,s0,s1,points,True)
-            #visualization_2d(Points_D,Points_FA,Points_M,Points_CR)
+            Pr_D,Pr_M,Pr_FA,Pr_CR,Points_D,Points_M,Points_FA,Points_CR = EprC.Error_prob_cal_oldV(m0,m1,s0,s1,points,True)
+            visualization_2d(Points_D,Points_FA,Points_M,Points_CR)
             
             title = 'Error_prob_cal Verification for data ' + str(i) 
             fig_path = './figs/error_prob_verification_2d/'
@@ -99,11 +100,11 @@ if __name__ == "__main__":
     s1 = S1[n]
     p0 = multivariate_normal(mean=m1,cov=s1).pdf(points[n])
     """
-    n = 12
+    n = 150
     #Pr_D,Pr_FA,Pr_M,Pr_CR,points_D,points_FA,points_M,points_CR = EprC.Error_prob_cal(m0,m1,s0,s1,points,True)
 
-    #Pr_D,Pr_FA,Pr_M,Pr_CR,Pr_CR,Points_D,Points_M,Points_FA,Points_CR = Epr_verification_2d(n)
-    
+    Epr_verification_2d(n)
+    # Pr_D,Pr_FA,Pr_M,Pr_CR,Pr_CR,Points_D,Points_M,Points_FA,Points_CR = Epr_verification_2d(n)
 
     filepath = './data_storage/verification_2d/'
     Sample_points,M0,M1,S0,S1 = smpl_bGDnd_plt.load_plt_data(filepath)
@@ -120,6 +121,8 @@ if __name__ == "__main__":
     points_FA_con = np.array(Points_FA)
     points_M_con = np.array(Points_M)
     points_CR_con = np.array(Points_CR)
+
+    pltfig.plot_multi_var(m1,m0,s1,s0)
     
     """
     points_D_con = np.array(points_D)
