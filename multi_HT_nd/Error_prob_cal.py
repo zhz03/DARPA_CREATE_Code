@@ -6,8 +6,10 @@ Created on Mon Oct 12 12:27:13 2020
 """
 
 import numpy as np
-import binary_HT_nd.sampling_binGDnd as smpl_bGDnd
+import multi_HT_nd.sampling_GDnd as smpl_GDnd
 from scipy.stats import norm, multivariate_normal
+from scipy.stats import multivariate_normal
+from multi_HT_nd.input_generator_nd import input_generator_nd as InGen_nd 
 
 def labelling(points,mean0,mean1,Sigma0,Sigma1):
     labelled_points = []
@@ -25,12 +27,23 @@ def labelling(points,mean0,mean1,Sigma0,Sigma1):
     return labelled_points
 
 def labelling_mH(means,Sigmas,Points):
-    labelled_points = []
+    labelled_Points = []
+    p_u = []
     H_num = len(means)
     p_num = len(Points)
-    for i 
-    
-    
+    p_num_each = len(Points[0])
+    for i in range(p_num):
+        labelled_points = []
+        for k in range(p_num_each):
+            p_u = []
+            for j in range(H_num):
+                points = Points[i]
+                prob = multivariate_normal(mean=means[j],cov=Sigmas[j]).pdf(points[k])
+                p_u.append(prob)
+            labelled_point = {'label':i,'data':points[k],'p_u':p_u}
+            labelled_points.append(labelled_point)
+        labelled_Points.append(labelled_points)            
+    return labelled_Points
 
 def label_comparison(labelled_points):
     labelled_pts_dec = []   
@@ -81,11 +94,12 @@ def Error_pro_cal_mH(means,Sigmas,Points):
     return Prob_errors    
     
 if __name__ == "__main__":
-    
+    """
     mean0 = np.array([0])
     mean1 = np.array([1])
     Sigma0 = np.array([1]).reshape(1, 1)
     Sigma1 = np.array([1]).reshape(1, 1)
+    """
     """
     points = smpl_bGDnd.sampling_binGDnd(mean0,mean1,Sigma0,Sigma1,1000)
     #Pr_D,Pr_FA,Pr_M,Pr_CR = Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points)
@@ -98,12 +112,10 @@ if __name__ == "__main__":
     Sigma0 = np.array([[2,-1],[-1,2]]).reshape(2, 2)
     Sigma1 = np.array([[3,0.1],[0.1,3]]).reshape(2, 2)
     """
-    mean0 = np.array([0,0,0])
-    mean1 = np.array([1,1,1])
-    Sigma0 = np.array([[2,-1,0],[0,2,0],[0,-1,2]]).reshape(3, 3)
-    Sigma1 = np.array([[3,2.9,0],[0,3,0],[0,2.9,3]]).reshape(3, 3)
-    points = smpl_bGDnd.sampling_binGDnd(mean0,mean1,Sigma0,Sigma1,1000)
-    
-    #Pr_D,Pr_FA,Pr_M,Pr_CR = Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points)
-
-    Pr_D,Pr_M,Pr_FA,Pr_CR = Error_pro_cal(points,mean0,mean1,Sigma0,Sigma1)
+    nHy = 3
+    nd = 2
+    Range = [0,5]
+    means,Sigmas = InGen_nd(nHy,nd,Range)    
+    sam_size = 1000
+    Points = smpl_GDnd.sampling_GDnd(means,Sigmas,sam_size)
+    labelled_Points = labelling_mH(means,Sigmas,Points)
