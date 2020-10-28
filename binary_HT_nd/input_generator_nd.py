@@ -54,7 +54,7 @@ if __name__ == "__main__":
     Sigma0 = np.array([[2,-1,0],[0,2,0],[0,-1,2]]).reshape(3, 3)
     Sigma1 = np.array([[3,0.1,0],[0,3,0],[0,0.1,3]]).reshape(3, 3)
     """
-    nHy = 3
+    nHy = 4
     nd = 5
     Range = [0,5]
     means,Sigmas = input_generator_nd(nHy,nd,Range)
