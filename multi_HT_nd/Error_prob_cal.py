@@ -58,6 +58,22 @@ def label_comparison(labelled_points):
         labelled_pts_dec.append(labelled_points[i])
     return labelled_pts_dec        
 
+def label_comparison_mH(labelled_Points):
+    labelled_Pts_Dec = []
+    num = len(labelled_Points)
+    p_num = len(labelled_Points[0])
+    for i in range(num):
+        labelled_pts_dec = []
+        labelled_points = labelled_Points[i]
+        
+        for j in range(p_num):
+            prob = labelled_points[j]['p_u']
+            dec = prob.index(max(prob))
+            labelled_points[j].update({'dec':dec})
+            labelled_pts_dec.append(labelled_points[j])
+        labelled_Pts_Dec.append(labelled_pts_dec)
+    return labelled_Pts_Dec
+
 def error_prob_count(labelled_pts_dec):
     count_CR = 0
     count_FA = 0
@@ -119,3 +135,7 @@ if __name__ == "__main__":
     sam_size = 1000
     Points = smpl_GDnd.sampling_GDnd(means,Sigmas,sam_size)
     labelled_Points = labelling_mH(means,Sigmas,Points)
+    labelled_Pts_Dec = label_comparison_mH(labelled_Points)
+    
+    prob = labelled_Points[0][10]['p_u']
+    
