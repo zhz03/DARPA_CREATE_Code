@@ -24,6 +24,13 @@ def labelling(points,mean0,mean1,Sigma0,Sigma1):
         labelled_points.append(labelled_point)
     return labelled_points
 
+def labelling_mH(means,Sigmas,Points):
+    labelled_points = []
+    H_num = len(means)
+    p_num = len(Points)
+    for i 
+    
+    
 
 def label_comparison(labelled_points):
     labelled_pts_dec = []   
@@ -68,7 +75,7 @@ def Error_pro_cal(mean0,mean1,Sigma0,Sigma1,points):
     return Pr_D,Pr_M,Pr_FA,Pr_CR               
 
 def Error_pro_cal_mH(means,Sigmas,Points):
-    labelled_points = labelling(means,Sigmas,Points)
+    labelled_points = labelling_mH(means,Sigmas,Points)
     labelled_pts_dec = label_comparison(labelled_points)
     Prob_errors = error_prob_count(labelled_pts_dec)
     return Prob_errors    
