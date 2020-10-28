@@ -67,6 +67,11 @@ def Error_pro_cal(mean0,mean1,Sigma0,Sigma1,points):
     Pr_D,Pr_M,Pr_FA,Pr_CR = error_prob_count(labelled_pts_dec)
     return Pr_D,Pr_M,Pr_FA,Pr_CR               
 
+def Error_pro_cal_mH(means,Sigmas,Points):
+    labelled_points = labelling(means,Sigmas,Points)
+    labelled_pts_dec = label_comparison(labelled_points)
+    Prob_errors = error_prob_count(labelled_pts_dec)
+    return Prob_errors    
     
 if __name__ == "__main__":
     
