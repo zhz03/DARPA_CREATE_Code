@@ -101,13 +101,26 @@ def error_prob_count_mH(labelled_Pts_Dec):
     H_num = len(labelled_Pts_Dec)
     p_num = len(labelled_Pts_Dec[0])
     Prob = []
+    
+    for i in range(H_num):
+        prob = []
+        for j in range(H_num):
+            p = 0
+            prob.append(p)
+        Prob.append(prob)
+        
+    for i in range(H_num):
+        for j in range(p_num):
+            label = labelled_Pts_Dec[i][j]['label']
+            dec = labelled_Pts_Dec[i][j]['dec']
+            if label == dec:
+                Prob[i][label] = Prob[i][label] + 1
+            else:
+                Prob[i][dec] = Prob[i][dec] + 1
     for i in range(H_num):
         for j in range(H_num):
-            prob = 0
-            Prob.append(prob)
-    
-    #for i in range(H_num):
-    #    for j in range(p_num):
+            Prob[i][j] = Prob[i][j]/p_num
+            
     return Prob       
     
 
@@ -143,13 +156,14 @@ if __name__ == "__main__":
     Sigma1 = np.array([[3,0.1],[0.1,3]]).reshape(2, 2)
     """
     nHy = 3
-    nd = 2
+    nd = 3
     Range = [0,5]
     means,Sigmas = InGen_nd(nHy,nd,Range)    
     sam_size = 1000
     Points = smpl_GDnd.sampling_GDnd(means,Sigmas,sam_size)
     labelled_Points = labelling_mH(means,Sigmas,Points)
     labelled_Pts_Dec = label_comparison_mH(labelled_Points)
-    Prob = error_prob_count_mH(labelled_Pts_Dec)
-    prob = labelled_Points[0][10]['p_u']
+    Prob_error = error_prob_count_mH(labelled_Pts_Dec)
+    
+    #prob = labelled_Points[0][10]['p_u']
     
