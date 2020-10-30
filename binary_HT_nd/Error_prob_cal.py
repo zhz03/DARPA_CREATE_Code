@@ -4,10 +4,11 @@ Created on Mon Oct 12 12:27:13 2020
 
 @author: Zhaoliang
 """
-
+from mpl_toolkits import mplot3d
 import numpy as np
 import binary_HT_nd.sampling_binGDnd as smpl_bGDnd
 from scipy.stats import norm, multivariate_normal
+import matplotlib.pyplot as plt
 
 def labelling(points,mean0,mean1,Sigma0,Sigma1):
     labelled_points = []
@@ -140,9 +141,20 @@ if __name__ == "__main__":
     mean1 = np.array([1,1,1])
     Sigma0 = np.array([[2,-1,0],[0,2,0],[0,-1,2]]).reshape(3, 3)
     Sigma1 = np.array([[3,2.9,0],[0,3,0],[0,2.9,3]]).reshape(3, 3)
+    
     points = smpl_bGDnd.sampling_binGDnd(mean0,mean1,Sigma0,Sigma1,1000)
     
     #Pr_D,Pr_FA,Pr_M,Pr_CR = Error_prob_cal(mean0,mean1,Sigma0,Sigma1,points)
     
     Pr1_D,Pr1_M,Pr1_FA,Pr1_CR = Error_prob_cal_oldV(mean0,mean1,Sigma0,Sigma1,points,False)
-    Pr_D,Pr_M,Pr_FA,Pr_CR = Error_pro_cal(points,mean0,mean1,Sigma0,Sigma1)
+    Pr_D,Pr_M,Pr_FA,Pr_CR,Points_D,Points_M,Points_FA,Points_CR = Error_prob_cal_oldV(mean0,mean1,Sigma0,Sigma1,points,True)
+    #Pr_D,Pr_M,Pr_FA,Pr_CR = Error_pro_cal(points,mean0,mean1,Sigma0,Sigma1)
+    fig = plt.figure()
+    ax = plt.axes(projection='3d')
+    #for i in range(len(Points_CR)):
+        #ax.scatter(Points_CR[i][0],Points_CR[i][0],Points_CR[i][0])
+    ax.scatter(Points_CR[1][0],Points_CR[1][0],Points_CR[1][0])
+    ax.set_xlabel('X Label')
+    ax.set_ylabel('Y Label')
+    ax.set_zlabel('Z Label')    
+    plt.show()
