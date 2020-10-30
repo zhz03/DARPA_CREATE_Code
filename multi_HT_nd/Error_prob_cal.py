@@ -156,7 +156,7 @@ if __name__ == "__main__":
     Sigma1 = np.array([[3,0.1],[0.1,3]]).reshape(2, 2)
     """
     nHy = 3
-    nd = 4
+    nd = 2
     Range = [0,5]
     means,Sigmas = InGen_nd(nHy,nd,Range)    
     sam_size = 1000
