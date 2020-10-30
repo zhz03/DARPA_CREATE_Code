@@ -100,10 +100,15 @@ def error_prob_count(labelled_pts_dec):
 def error_prob_count_mH(labelled_Pts_Dec):
     H_num = len(labelled_Pts_Dec)
     p_num = len(labelled_Pts_Dec[0])
-    
+    Prob = []
     for i in range(H_num):
-        for j in range(p_num):
-            
+        for j in range(H_num):
+            prob = 0
+            Prob.append(prob)
+    
+    #for i in range(H_num):
+    #    for j in range(p_num):
+    return Prob       
     
 
 def Error_pro_cal(mean0,mean1,Sigma0,Sigma1,points):
@@ -145,6 +150,6 @@ if __name__ == "__main__":
     Points = smpl_GDnd.sampling_GDnd(means,Sigmas,sam_size)
     labelled_Points = labelling_mH(means,Sigmas,Points)
     labelled_Pts_Dec = label_comparison_mH(labelled_Points)
-    
+    Prob = error_prob_count_mH(labelled_Pts_Dec)
     prob = labelled_Points[0][10]['p_u']
     
