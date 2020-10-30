@@ -58,3 +58,18 @@ if __name__ == "__main__":
     nd = 5
     Range = [0,5]
     means,Sigmas = input_generator_nd(nHy,nd,Range)
+
+    matrixSize = 3 
+    A = np.random.rand(matrixSize,matrixSize)
+    B = np.dot(A,A.transpose())
+    C = B+B.T # makesure symmetric
+    # test whether C is definite
+    D = np.linalg.cholesky(C)
+
+
+    math = [84, 82, 81, 89, 73, 94, 92, 70, 88, 95]
+    science = [-85, -82, -72, -77, -75, -89, -95, -84, -77, -94]
+    history = [97, 94, 93, 95, 88, 82, 78, 84, 69, 78]
+    
+    cov = np.cov([math,science,history])
+    cov_unit = cov/ np.max(cov)
