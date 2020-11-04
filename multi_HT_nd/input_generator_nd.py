@@ -32,10 +32,22 @@ def generate_cov(nHy,nd):
         Sigmas.append(Sigma)
     return Sigmas
 
+def generate_cov_new(nHy,nd,Range):
+    Sigmas = []
+    for i in range(nHy):
+        b = np.max(Range)
+        a = -np.max(Range)
+        Sigma = (b - a) * np.random.random_sample((nd,nd)) + a
+        Sigma_b = np.dot(Sigma,Sigma.transpose())
+        Sigma_c = Sigma_b+Sigma_b.T # makesure symmetric
+        Sigmas.append(Sigma_c)
+    return Sigmas        
+    
+    
 def input_generator_nd(nHy,nd,Range):
     #mean0 = np.random.rand(1,nd)
     means = generate_mean(nHy,nd,Range)
-    Sigmas = generate_cov(nHy,nd)
+    Sigmas = generate_cov_new(nHy,nd,Range)
     return means,Sigmas
     
 if __name__ == "__main__":
@@ -66,10 +78,18 @@ if __name__ == "__main__":
     # test whether C is definite
     D = np.linalg.cholesky(C)
 
-
+    
     math = [84, 82, 81, 89, 73, 94, 92, 70, 88, 95]
     science = [-85, -82, -72, -77, -75, -89, -95, -84, -77, -94]
     history = [97, 94, 93, 95, 88, 82, 78, 84, 69, 78]
     
     cov = np.cov([math,science,history])
     cov_unit = cov/ np.max(cov)
+    
+    b = 1
+    a = -1
+    nd = 3
+    Sigma = (b - a) * np.random.random_sample((nd,nd)) + a
+    Sigma_b = np.dot(Sigma,Sigma.transpose())
+    Sigma_c = Sigma_b+Sigma_b.T # makesure symmetric
+    
