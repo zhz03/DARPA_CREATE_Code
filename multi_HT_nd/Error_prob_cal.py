@@ -155,7 +155,7 @@ if __name__ == "__main__":
     Sigma0 = np.array([[2,-1],[-1,2]]).reshape(2, 2)
     Sigma1 = np.array([[3,0.1],[0.1,3]]).reshape(2, 2)
     """
-    nHy = 3
+    nHy = 4
     nd = 2
     Range = [0,5]
     means,Sigmas = InGen_nd(nHy,nd,Range)    
