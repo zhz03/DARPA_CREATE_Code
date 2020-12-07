@@ -6,8 +6,8 @@ Created on Tue Sep  8 01:30:22 2020
 """
 import numpy as np
 import Sensor_Planner.Sensor_planner as Spr
-import Simulation.Binary_stat_hypothesis_testing_1d as BstatHT1d
-import Simulation.Simulation as Sim
+import Simulations.Binary_stat_hypothesis_testing_1d as BstatHT1d
+import Simulations.Simulation as Sim
 import E2Etest.Error_prob_comparison as EPComp
 import E2Etest.SM_generator_1d as SMGen1d
 import E2Etest.System_setup_generator as SSGen
@@ -61,11 +61,11 @@ if __name__ == '__main__':
     """
     dx = 1
     dz = 1
-    q = .049786
-    r = 1.40828
-    a = 0.2972
-    h = 0.96915
-    b = 1
+    q = 1.0
+    r = 0.1
+    a = 1
+    h = 1
+    b = 0
     A = np.array([a]).reshape(dx, dx)
     H = np.array([h]).reshape(dz, dx)
     B = np.array([b]).reshape(dx, 1)
