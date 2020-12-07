@@ -138,9 +138,9 @@ if __name__ == "__main__":
     Sigma1 = np.array([[3,0.1],[0.1,3]]).reshape(2, 2)
     """
     mean0 = np.array([0,0,0])
-    mean1 = np.array([1,1,1])
-    Sigma0 = np.array([[2,-1,0],[0,2,0],[0,-1,2]]).reshape(3, 3)
-    Sigma1 = np.array([[3,2.9,0],[0,3,0],[0,2.9,3]]).reshape(3, 3)
+    mean1 = np.array([2,2,2])
+    Sigma0 = np.array([[1,0.5,-0.1],[0.5,1,0],[-0.1,0,1]]).reshape(3, 3)
+    Sigma1 = np.array([[1,0.6,-0.3],[.6,2,0],[-0.3,0,1.5]]).reshape(3, 3)
     
     points = smpl_bGDnd.sampling_binGDnd(mean0,mean1,Sigma0,Sigma1,1000)
     
@@ -151,9 +151,15 @@ if __name__ == "__main__":
     #Pr_D,Pr_M,Pr_FA,Pr_CR = Error_pro_cal(points,mean0,mean1,Sigma0,Sigma1)
     fig = plt.figure()
     ax = plt.axes(projection='3d')
-    #for i in range(len(Points_CR)):
-        #ax.scatter(Points_CR[i][0],Points_CR[i][0],Points_CR[i][0])
-    ax.scatter(Points_CR[1][0],Points_CR[1][0],Points_CR[1][0])
+    for i in range(len(Points_CR)):
+        ax.scatter(Points_CR[i][0],Points_CR[i][1],Points_CR[i][2],color = 'b')
+    for i in range(len(Points_FA)):
+        ax.scatter(Points_FA[i][0],Points_FA[i][1],Points_FA[i][2],color = 'y')
+    for i in range(len(Points_D)):
+        ax.scatter(Points_D[i][0],Points_D[i][1],Points_D[i][2],color ='r')
+    for i in range(len(Points_M)):
+        ax.scatter(Points_M[i][0],Points_M[i][1],Points_M[i][2],color ='k')
+    #ax.scatter(Points_CR[1][0],Points_CR[1][0],Points_CR[1][0])
     ax.set_xlabel('X Label')
     ax.set_ylabel('Y Label')
     ax.set_zlabel('Z Label')    
