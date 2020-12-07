@@ -15,6 +15,11 @@ def visualize_sample_points(Points):
         points = Points[i]
         plt.scatter(points[:,0],points[:,1])
     plt.show()    
+
+def verification_sample_points(nHy,nd,Range,sam_size,num_trials):
+    means,Sigmas = iGennd.input_generator_nd(nHy,nd,Range)
+    Points = samGDnd.sampling_GDnd(means,Sigmas,sam_size)
+    visualize_sample_points(Points)
     
 if __name__ == "__main__":
     nHy = 3
