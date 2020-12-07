@@ -15,7 +15,6 @@ To run all the code in this repository, your system need to meet the following r
 - [sys](https://docs.python.org/3/library/sys.html) library
 - [numpy](https://numpy.org/) library
 - [scipy](https://www.scipy.org/scipylib/) library
-- copy
 
 ### Prerequisite
 
@@ -32,8 +31,10 @@ Before you execute any code in the subfolder, you'll need to run '*addpath.py*' 
   - calculate the statistical error probabilities by using generated data
   - calculate theoretical error probabilities based on equations
   - Compare the above two error probabilities and do comprehensive test across different parameters space. 
+- **binary_HT_nd**: this folder contains programs that can:
+  - sampling from probability -nd algorithm could sample points
+  - error probability calculation -nd algorithm could calculate the final n-d error probability
 - **utility_functions**: this folder contains some utility functions that could help in data converting, plotting and visualization. 
-
 - **E2Etest_1d**: this folder only contains four program, which can do end-to-end calculation (inputs $A,B,H,Q,R,x0,ts,uts$, outputs $Prob_D,Prob_{FA},Prob_M,Prob_{CR}$) as well as end-to-end comprehensive validation and testing. The **Sensor_planner** program can be directly integrated with other groups. 
 
 In each folder, there is another README.md to explain more details about each program. And in each program, there are comments and example functions to show how to use and run the code.
@@ -42,5 +43,7 @@ In each folder, there is another README.md to explain more details about each pr
 
 **3 To see the result of comprehensive test on 1d state binary hypothesis testing, please go to *binary_HT_1d* folder and run *Gd_comp.py* program.**
 
-**4 To see the result of comprehensive test on nd state simulation, nd state kalman filter as well as nd state planning, please go to *Sim_KF_Pln_nd* folder to run *CompTest_diff_sysM.py* program**
+**4 To see the results of comprehensive test on n-d state binary hypothesis testing, please go to *binary_HT_nd* folder and run *bin_HT_nd_verification.py* *Error_prob_cal_verfication.py* **  
+
+**5 To see the result of comprehensive test on nd state simulation, nd state kalman filter as well as nd state planning, please go to *Sim_KF_Pln_nd* folder to run *CompTest_diff_sysM.py* program**
 
