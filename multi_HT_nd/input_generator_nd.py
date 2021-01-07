@@ -70,7 +70,8 @@ if __name__ == "__main__":
     nd = 5
     Range = [0,5]
     means,Sigmas = input_generator_nd(nHy,nd,Range)
-
+ 
+    """
     matrixSize = 3 
     A = np.random.rand(matrixSize,matrixSize)
     B = np.dot(A,A.transpose())
@@ -92,4 +93,4 @@ if __name__ == "__main__":
     Sigma = (b - a) * np.random.random_sample((nd,nd)) + a
     Sigma_b = np.dot(Sigma,Sigma.transpose())
     Sigma_c = Sigma_b+Sigma_b.T # makesure symmetric
-    
+    """
