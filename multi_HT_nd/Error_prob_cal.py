@@ -131,9 +131,9 @@ def Error_pro_cal(mean0,mean1,Sigma0,Sigma1,points):
     return Pr_D,Pr_M,Pr_FA,Pr_CR               
 
 def Error_pro_cal_mH(means,Sigmas,Points):
-    labelled_points = labelling_mH(means,Sigmas,Points)
-    labelled_pts_dec = label_comparison(labelled_points)
-    Prob_errors = error_prob_count(labelled_pts_dec)
+    labelled_Points = labelling_mH(means,Sigmas,Points)
+    labelled_Pts_Dec = label_comparison_mH(labelled_Points)
+    Prob_errors = error_prob_count_mH(labelled_Pts_Dec)
     return Prob_errors    
     
 if __name__ == "__main__":
@@ -155,15 +155,17 @@ if __name__ == "__main__":
     Sigma0 = np.array([[2,-1],[-1,2]]).reshape(2, 2)
     Sigma1 = np.array([[3,0.1],[0.1,3]]).reshape(2, 2)
     """
-    nHy = 2
+    nHy = 3
     nd = 2
     Range = [0,5]
     means,Sigmas = InGen_nd(nHy,nd,Range)    
     sam_size = 1000
     Points = smpl_GDnd.sampling_GDnd(means,Sigmas,sam_size)
+    Prob_errors = Error_pro_cal_mH(means,Sigmas,Points)
+    """
     labelled_Points = labelling_mH(means,Sigmas,Points)
     labelled_Pts_Dec = label_comparison_mH(labelled_Points)
     Prob_error = error_prob_count_mH(labelled_Pts_Dec)
-    
+    """
     #prob = labelled_Points[0][10]['p_u']
     
