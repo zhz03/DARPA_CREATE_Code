@@ -32,8 +32,9 @@ def generate_cov(nHy,nd):
         Sigmas.append(Sigma)
     return Sigmas
 
-def generate_cov_new(nHy,nd,Range):
+def generate_cov_new(Range,nd,nHy = None):
     Sigmas = []
+    nHy = 1 if nHy is None else nHy
     for i in range(nHy):
         b = np.max(Range)
         a = -np.max(Range)
@@ -47,7 +48,7 @@ def generate_cov_new(nHy,nd,Range):
 def input_generator_nd(nHy,nd,Range):
     #mean0 = np.random.rand(1,nd)
     means = generate_mean(nHy,nd,Range)
-    Sigmas = generate_cov_new(nHy,nd,Range)
+    Sigmas = generate_cov_new(Range,nd,nHy)
     return means,Sigmas
     
 if __name__ == "__main__":
@@ -67,7 +68,7 @@ if __name__ == "__main__":
     Sigma1 = np.array([[3,0.1,0],[0,3,0],[0,0.1,3]]).reshape(3, 3)
     """
     nHy = 4
-    nd = 5
+    nd = 3
     Range = [0,5]
     means,Sigmas = input_generator_nd(nHy,nd,Range)
  
