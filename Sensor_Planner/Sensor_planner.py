@@ -36,11 +36,13 @@ def Sensor_planner_nd(SM,T,ut):
     #n_dim = np.size(ut[0])
     ut_hats = []
     for i in range(n_Hy):
-        ut_hat = np.dot(H,B) * ut[i]
+        ut_hat =  np.dot(np.dot(H,B), ut[i].reshape(n_dim))
         ut_hats.append(ut_hat)
-    sam_size = 1000    
-    Prob_errors = mhtnd(ut_hats,Sigma_ut,sam_size)    
-    return Sigma_ut
+    #sam_size = 1000    
+    #Prob_errors = mhtnd(ut_hats,Sigma_ut,sam_size)    
+    #return Prob_errors
+    return ut_hats
+    
     
 if __name__ == '__main__':
     # system model
@@ -108,5 +110,6 @@ if __name__ == '__main__':
     
     H = sm[2]
     B = sm[1]    
-    ut = np.dot(H,B) 
-    ut1 = np.dot(ut, means[0].reshape(n_dim))
+  
+    ut1 = np.dot(np.dot(H,B), means[0].reshape(n_dim))
+    uts = Sensor_planner_nd(sm,101,means)
