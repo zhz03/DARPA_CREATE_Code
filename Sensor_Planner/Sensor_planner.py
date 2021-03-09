@@ -28,20 +28,26 @@ def Sensor_planner_1d(SM,T,ut):
 
 def Sensor_planner_nd(SM,T,ut):
     Sigma_xhat = kfplnnd.KF_planner(SM,T)
+    
     Sigma_ut = Uplnnd.Ut_planner_nd(SM,Sigma_xhat)    
     H = SM[2]
     B = SM[1]
     
     n_Hy = len(ut)
     #n_dim = np.size(ut[0])
+    print ("dim n_Hy is ", n_Hy)
     ut_hats = []
+    Sigma_uts= []
     for i in range(n_Hy):
         ut_hat =  np.dot(np.dot(H,B), ut[i].reshape(n_dim))
         ut_hats.append(ut_hat)
-    #sam_size = 1000    
-    #Prob_errors = mhtnd(ut_hats,Sigma_ut,sam_size)    
-    #return Prob_errors
-    return ut_hats
+        Sigma_uts.append(Sigma_ut)
+    sam_size = 1000    
+    print("ut_hat is ", ut_hats)
+
+    Prob_error = mhtnd(ut_hats,Sigma_uts,sam_size)    
+    return Prob_error
+    # ut_hats
     
     
 if __name__ == '__main__':
@@ -89,7 +95,7 @@ if __name__ == '__main__':
     """
     #Prob_D,Prob_FA,Prob_M,Prob_CR = Sensor_planner_1d(SM,T,ut)
 
-    nHy = 3
+    nHy = 4
     nd = 2
     Range = [0,5]
     means,Sigmas = InGen_nd(nHy,nd,Range)
@@ -112,4 +118,4 @@ if __name__ == '__main__':
     B = sm[1]    
   
     ut1 = np.dot(np.dot(H,B), means[0].reshape(n_dim))
-    uts = Sensor_planner_nd(sm,101,means)
+    Prob_errors = Sensor_planner_nd(sm,101,means)

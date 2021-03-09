@@ -56,14 +56,14 @@ def verification(num):
             u_D.append(uD)
         
         plt.title('A=' + '%.2f' % A + '; B=' + '%.2f' % B + '; H=' + '%.2f' % H + '; Q=' + '%.2f' % Q + '; R=' + '%.2f' % R)
-        plt.hist(u_D, normed=0, facecolor="blue", edgecolor="black", alpha=1.0)
+        plt.hist(u_D, density=0, facecolor="blue", edgecolor="black", alpha=1.0)
         plt.ylabel("frequency")
         plt.xlabel('categories')
         fig_name1 = './figs/simulation_figs/' + str(i) + '_u_T_D.jpg'
         plt.savefig(fig_name1)
         plt.close()
 if __name__ == '__main__':
-    verification(20)
+    verification(1)
 
     """
     dx = 1

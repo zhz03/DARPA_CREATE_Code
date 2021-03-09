@@ -222,6 +222,7 @@ def plot_generate_seq_u(utsq,uts,ts):
     labelname2 = str(ts[0]) +';' + str(ts[1]) + ';' + str(ts[2])
     plt.plot(range(len(utsq)),utsq,label='uts=' + labelname1 +',' + 'ts=' +labelname2)
     plt.legend()
+    plt.show()
 
 def plotGaussian(x,mean,var,Color,Label):
     y = Gd.gaussian(x, mean, np.sqrt(var))

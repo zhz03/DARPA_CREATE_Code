@@ -43,7 +43,7 @@ class Compare_pln2statis_hist(object):
         
         plt.figure()
         plt.title("The error histogram")
-        plt.hist(data, bins=int(bins), normed=True, alpha=1, histtype='stepfilled',
+        plt.hist(data, bins=int(bins), density=True, alpha=1, histtype='stepfilled',
              color='steelblue', edgecolor='none')
         plt.ylabel("Frequency")
         plt.xlabel("Error in bins")
@@ -59,7 +59,7 @@ class Compare_pln2statis_hist(object):
         
         plt.title(tname)
         #plt.legend(data,dataname)
-        plt.hist(data, bins=int(bins), normed=True, alpha=1, histtype='stepfilled',
+        plt.hist(data, bins=int(bins), density=True, alpha=1, histtype='stepfilled',
              color='steelblue', edgecolor='none',label=dataname)
         plt.legend()
         plt.ylabel("Frequency")

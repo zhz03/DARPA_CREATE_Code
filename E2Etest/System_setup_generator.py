@@ -13,7 +13,7 @@ def System_setup_generator():
     ts = [100,1]
     T = ts[0] + ts[1]
     ut = [0,1]
-    trials = 1000
+    trials = 10
     dx = 1
     x0 = np.array([[0]]).reshape(dx, 1)
     return T,uts,ts,ut,trials,x0

@@ -17,7 +17,7 @@ def mul_Hyp_test_nd(ut,Sigma_ut,sam_size):
 
 if __name__ == "__main__":
     nHy = 3
-    nd = 3
+    nd = 2
     Range = [0,5]
     means,Sigmas = InGen_nd(nHy,nd,Range)
     sam_size = 1000
