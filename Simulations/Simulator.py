@@ -62,7 +62,6 @@ class Simulator_1t(object):
         # process noise
         #self.process_noise = self.convert_var2noise(self.process_var)
         self.process_noise = self.multi_noise(self.process_var)
-
         ut = np.dot(self.B,self.ut) +  self.process_noise
         self.x =np.dot(self.A,self.x)  + np.dot(ut, dt)
     def sensing(self):
@@ -129,9 +128,13 @@ def Simulator(SM,x0,ut_sq):
             xzs_new = [sim_1n.transfer_and_sense()]
             yt,zt = seperate_x_z(xzs_new)
 
-            #if yt[0][0] >= 1000000 or yt[0][0] <= -1000000 :
-            #    yt[0][0] = yt[0][0]/1000000
-            #    zt[0][0] = zt[0][0]/1000000
+        #    if yt[0][0] >= 1000000 or yt[0][0] <= -1000000 :
+         #       yt[0][0] = yt[0][0]/1000000
+        #        zt[0][0] = zt[0][0]/1000000
+                
+            if np.mean(yt[0]) >=1000000 or np.mean(yt[0]) <= -1000000:
+                yt[0] /= 1000000
+                zt[0] /= 1000000
 
             y.append(yt[0])
             z.append(zt[0])

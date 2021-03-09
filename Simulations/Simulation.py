@@ -28,6 +28,7 @@ def simulation(SM,x0,uts,ts,ut,trials):
         u_D = Estr.estimator(SM,z,ut)
         u_T = u[-1]
         u_td = [u_T,u_D]
+        #print("u_td is ",  u_td)
         u_T_D.append(u_td)
     return u_T_D
 def verification(num, mode):
@@ -45,15 +46,16 @@ def verification(num, mode):
         T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator()
 
     elif mode == "nd": 
-        MRange = [0,6]
-        nHy = 5
-        nd = 4
+        
+        nHy = 3
+        nd = 2
         dx = nd
-        du = nd
+        du = dx
         dz = 1 
+        MRange = [0,nHy]
         System_models = SMGennd.SM_generator_nd(dx,dz,du,Arange,Brange,Hrange,Qrange,Rrange,num)
         
-        T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator_nd(nHy,nd,MRange)
+        T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator_nd(nHy,nd,du,MRange)
         
     SM_num = len(System_models[0]) #SM = [As,Bs,Hs,Qs,Rs]; As = []
 
@@ -70,14 +72,13 @@ def verification(num, mode):
         for j in range(len(u_T_D)):
             uD = u_T_D[j][1]
             u_D.append(uD)
-        print ("sucess once ")
-        plt.title('A=' + '%.2f' % A + '; B=' + '%.2f' % B + '; H=' + '%.2f' % H + '; Q=' + '%.2f' % Q + '; R=' + '%.2f' % R)
+      #  plt.title('A=' + '%.2f' % A + '; B=' + '%.2f' % B + '; H=' + '%.2f' % H + '; Q=' + '%.2f' % Q + '; R=' + '%.2f' % R)
         plt.hist(u_D, density=0, facecolor="blue", edgecolor="black", alpha=1.0)
         plt.ylabel("frequency")
         plt.xlabel('categories')
         fig_name1 = './figs/simulation_figs/' + str(i) + '_u_T_D.jpg'
         plt.savefig(fig_name1)
-        #plt.close()
+        plt.close()
 if __name__ == '__main__':
     
     mode = "nd" #1d/nd

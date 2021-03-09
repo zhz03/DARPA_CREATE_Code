@@ -48,5 +48,5 @@ def verification(num):
         plt.savefig(fig_name)
         plt.close()
 if __name__ == '__main__':
-    verification(20)
+    verification(2)
 

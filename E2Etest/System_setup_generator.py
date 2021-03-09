@@ -18,8 +18,8 @@ def System_setup_generator():
     x0 = np.array([[0]]).reshape(dx, 1)
     return T,uts,ts,ut,trials,x0
 
-def System_setup_generator_nd(nHy,nd,MRange):
-    uts = GenMean(nHy,nd,MRange)
+def System_setup_generator_nd(nHy,nd,nu,MRange):
+    uts = GenMean(nHy,nu,MRange)
     ts = []
     for _ in range(nHy):
         ts.append(int(np.random.randint(20,50,size=1)))
@@ -27,8 +27,9 @@ def System_setup_generator_nd(nHy,nd,MRange):
     #T = ts[0] + ts[1]
     T = sum(ts)
     ut = uts
+    print("ut is " , ut)
 
-    trials = 1000   
+    trials = 100   
     dx = nd
     x0 = np.random.uniform(0, 0, (dx,1))
     return T,uts,ts,ut,trials,x0

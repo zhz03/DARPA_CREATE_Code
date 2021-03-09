@@ -14,6 +14,7 @@ def Bayesian_analysis(SM,ut,Sigma,estimates,measurements):
     Q = SM[3]
     R = SM[4]
     ut_zt = measurements[-1] - np.dot(H,np.dot(A,estimates[-2]))
+    print("bayesian ut|zt",ut_zt)
     Sigma_t = Sigma[-1]
     S = np.dot(np.dot(A,Sigma_t),A.T)+Q
     Sigma_ut_zt01 = np.dot(np.dot(H,S),H.T)+R
@@ -21,9 +22,15 @@ def Bayesian_analysis(SM,ut,Sigma,estimates,measurements):
     mean_ut_zt = []
     Sigma_ut_zt = []
     
-    for i in range(len(ut))
+    for i in range(len(ut)):
         mean_ut_zt.append(np.dot(H,B) * ut[i])
-        Sigma_ut_zt.append(Sigma_ut_zt01)
+        if (type(ut[i]) == int):
+            Sigma_ut_zt.append(Sigma_ut_zt01)
+        else:
+            #sigma = np.full((H.shape[0], ut[i].shape[-1]), Sigma_ut_zt01)
+            sigma = Sigma_ut_zt01  #Note: dimention is not correct!
+            Sigma_ut_zt.append(sigma)
+        
     #mean_ut_zt = [np.dot(H,B)*ut[0],np.dot(H,B)*ut[1]]
     #Sigma_ut_zt = [Sigma_ut_zt01,Sigma_ut_zt01]
     return ut_zt,mean_ut_zt,Sigma_ut_zt
