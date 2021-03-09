@@ -14,7 +14,7 @@ def generate_sequential_ut(uts,ts):
     for i in range(un):
         t = ts[i]
         for j in range(t):
-            ut_sq.append(uts[i])    
+          ut_sq.append(uts[i])    
     return ut_sq
 
 def fig_verification(uts,ts,i):    

@@ -16,6 +16,7 @@ import utility_functions.plot_figures as plotfgs
 import utility_functions.convert_data as cnvdata
 import Simulations.Binary_stat_hypothesis_testing_1d as BstatHT1d
 import E2Etest.SM_generator_1d as SMGen1d
+import E2Etest.SM_generator_nd as SMGennd
 import E2Etest.System_setup_generator as SSGen
 import matplotlib.pyplot as plt
 
@@ -29,17 +30,32 @@ def simulation(SM,x0,uts,ts,ut,trials):
         u_td = [u_T,u_D]
         u_T_D.append(u_td)
     return u_T_D
-def verification(num):
-    dx = 1
+def verification(num, mode):
+    
     Arange = [1,1]
     Brange = [0,2]
     Hrange = [0,2]
     Qrange = [0,2]    
     Rrange = [0,2]
-    System_models = SMGen1d.SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange)
-    #As,Hs,Bs,Qs,Rs,
-    T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator()
-    SM_num = len(System_models[0])
+    
+    if mode == "1d":
+        dx = 1
+        System_models = SMGen1d.SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange)
+        #As,Hs,Bs,Qs,Rs,
+        T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator()
+
+    elif mode == "nd": 
+        MRange = [0,6]
+        nHy = 5
+        nd = 4
+        dx = nd
+        du = nd
+        dz = 1 
+        System_models = SMGennd.SM_generator_nd(dx,dz,du,Arange,Brange,Hrange,Qrange,Rrange,num)
+        
+        T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator_nd(nHy,nd,MRange)
+        
+    SM_num = len(System_models[0]) #SM = [As,Bs,Hs,Qs,Rs]; As = []
 
     for i in range(SM_num):
         A = System_models[0][i]
@@ -54,16 +70,18 @@ def verification(num):
         for j in range(len(u_T_D)):
             uD = u_T_D[j][1]
             u_D.append(uD)
-        
+        print ("sucess once ")
         plt.title('A=' + '%.2f' % A + '; B=' + '%.2f' % B + '; H=' + '%.2f' % H + '; Q=' + '%.2f' % Q + '; R=' + '%.2f' % R)
         plt.hist(u_D, density=0, facecolor="blue", edgecolor="black", alpha=1.0)
         plt.ylabel("frequency")
         plt.xlabel('categories')
         fig_name1 = './figs/simulation_figs/' + str(i) + '_u_T_D.jpg'
         plt.savefig(fig_name1)
-        plt.close()
+        #plt.close()
 if __name__ == '__main__':
-    verification(1)
+    
+    mode = "nd" #1d/nd
+    verification(1, mode)
 
     """
     dx = 1

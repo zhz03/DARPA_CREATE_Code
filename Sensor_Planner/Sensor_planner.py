@@ -100,10 +100,6 @@ if __name__ == '__main__':
     Range = [0,5]
     means,Sigmas = InGen_nd(nHy,nd,Range)
     
-    
-    
-    
-   
     n_Hy = len(means)
     n_dim = np.size(means[0])
     

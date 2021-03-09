@@ -18,8 +18,14 @@ def Bayesian_analysis(SM,ut,Sigma,estimates,measurements):
     S = np.dot(np.dot(A,Sigma_t),A.T)+Q
     Sigma_ut_zt01 = np.dot(np.dot(H,S),H.T)+R
     
-    mean_ut_zt = [np.dot(H,B)*ut[0],np.dot(H,B)*ut[1]]
-    Sigma_ut_zt = [Sigma_ut_zt01,Sigma_ut_zt01]
+    mean_ut_zt = []
+    Sigma_ut_zt = []
+    
+    for i in range(len(ut))
+        mean_ut_zt.append(np.dot(H,B) * ut[i])
+        Sigma_ut_zt.append(Sigma_ut_zt01)
+    #mean_ut_zt = [np.dot(H,B)*ut[0],np.dot(H,B)*ut[1]]
+    #Sigma_ut_zt = [Sigma_ut_zt01,Sigma_ut_zt01]
     return ut_zt,mean_ut_zt,Sigma_ut_zt
 
     

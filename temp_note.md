@@ -9,6 +9,8 @@
    multi_nd: u (event) has multi hypothesis and u is n dimentions (or x contains n sensors)
 
    In code, multi-hypothesis of u event means there are multiple distributions list(miu_i, sigma_i), n-d means the dimention of u is n: u.ndim=(n,)
+   
+   TODO:: ts uts ts  mHy=[nd1, nd2, nd...], nd =range()
 
 
    ### Quick notes of Structure of the code:
@@ -19,7 +21,7 @@
     
     - In this code, we generate numbers of System Model (SM) and each SM with numbers of trials. In each trials, we run the SM for T timestep and use the sequence of data of the T period as our test data.
     
-    - All system model (SM) parameters are set in E2Etest/System_setup_generator.py. [nHy = multiple hypothesis；ts=[T, n]] 
+    - All system model (SM) parameters are set in E2Etest/System_setup_generator.py. (nHy = multiple hypothesis；ts=[T, n])
     
     - All system models were generated in E2Etest/SM_generator_nd.py [ABHQR of SM)
 
@@ -29,7 +31,7 @@
 
     1. In etimator part (correponding to Simulations file):
        Currently, it is only binary_1d esimator. To make it into binary_nd, we need to modify two functions: Estimator.Decision_making and Estimator.Bayesian_analysis; To turn it into multi_nd, we need to change SM_generator_1d and modify the above two functions.
-    2. In sensor planner part (corresponding to Sensor_planner file):
+    2. [Fixed] In sensor planner part (corresponding to Sensor_planner file):
        Currently, Sensor_planner.py lacks the last multi-hypothesis-test function.
     3. End-to-end test:
        Currently, we almost finished the code of estimator (namely simulation) and sensor planner. But we need to realize the end-to-end test to combine them into a whole.
@@ -37,10 +39,14 @@
 
    ### Bugs need to discuss with Zhaoliang:
 
-   1. The function mul_Hyp_test_nd in Sensor_planner/mul_hypothesis_testing_nd.py may exist bugs. Because the output of Prob_errors is not a (4,) vector, it is the (nHy, nHy) matrix.
+   1. [Solved] The function mul_Hyp_test_nd in Sensor_planner/mul_hypothesis_testing_nd.py may exist bugs. Because the output of Prob_errors is not a (4,) vector, it is the (nHy, nHy) matrix. 
 
-   2. Error_prob_cal_oldV and Error_pro_cal in  binary_HT_nd/Error_prob_cal.py
+      ​	->It's correct.
 
-   3. Complile error.（solved)
+   2. [Solved] Error_prob_cal_oldV and Error_pro_cal in  binary_HT_nd/Error_prob_cal.py 
+
+      ​	->Error_prob_cal_oldV is the method to find the intersection lamda; Error_pro_cal  is based on sampling to find the intersection point.
+
+   3. [Fixed] Complile error.
 
    4. Question: how to plot in Spyder. It randomly came out the plot figures.

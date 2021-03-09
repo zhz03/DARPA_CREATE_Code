@@ -20,9 +20,14 @@ def System_setup_generator():
 
 def System_setup_generator_nd(nHy,nd,MRange):
     uts = GenMean(nHy,nd,MRange)
-    ts = [100,1]
-    T = ts[0] + ts[1]
+    ts = []
+    for _ in range(nHy):
+        ts.append(int(np.random.randint(20,50,size=1)))
+    #ts = [100,1]
+    #T = ts[0] + ts[1]
+    T = sum(ts)
     ut = uts
+
     trials = 1000   
     dx = nd
     x0 = np.random.uniform(0, 0, (dx,1))

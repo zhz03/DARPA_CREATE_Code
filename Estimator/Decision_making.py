@@ -15,6 +15,7 @@ def Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt):
     mean1 = mean_ut_zt[1]
     ut0 = ut[0]
     ut1 = ut[1]
+    print("ut is ", ut)
     pdf_H0 = multivariate_normal(mean=mean0,cov=Sigma_ut_zt0).pdf(ut_zt) 
     pdf_H1 = multivariate_normal(mean=mean1,cov=Sigma_ut_zt1).pdf(ut_zt) 
     if pdf_H0 >= pdf_H1:
