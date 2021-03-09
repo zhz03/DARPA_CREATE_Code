@@ -23,6 +23,35 @@ def Bin_stat_hyp_test_1d(u_T_D):
     Prob_CR_stat = 1 - Prob_FA_stat
     return Prob_D_stat,Prob_FA_stat,Prob_M_stat,Prob_CR_stat
 
+def Bin_stat_hyp_test_nd(u_T_D, ut):
+    num = len(u_T_D)
+    len_ut = len(ut)
+    Prob_error_stat = np.zeros([len_ut, len_ut])
+    u_gt = np.zeros(len_ut)
+    u_est = np.zeros(len_ut)
+    count = 0
+    for i in range(num):
+
+        for j in range(len_ut):
+            if (u_T_D[i][0] == ut[j]).all():
+                gt_i = j
+        for j in range(len_ut):
+            if (u_T_D[i][1] == ut[j]).all():
+                est_i = j
+                
+        u_gt[gt_i] +=1
+        u_est[est_i] +=1
+        
+        Prob_error_stat[gt_i][est_i] += 1
+        
+    for j in range(len_ut):
+        print("u_gt[j] = ", u_gt[j])
+        if u_gt[j] != 0:
+            Prob_error_stat[j] /= u_gt[j]
+        
+    return Prob_error_stat
+
+
 def verification(num):
     Error_D = []
     Error_FA = []

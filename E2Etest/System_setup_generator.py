@@ -29,7 +29,7 @@ def System_setup_generator_nd(nHy,nd,nu,MRange):
     ut = uts
     print("ut is " , ut)
 
-    trials = 100   
+    trials = 100  
     dx = nd
     x0 = np.random.uniform(0, 0, (dx,1))
     return T,uts,ts,ut,trials,x0

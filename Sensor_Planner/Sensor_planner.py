@@ -34,8 +34,7 @@ def Sensor_planner_nd(SM,T,ut):
     B = SM[1]
     
     n_Hy = len(ut)
-    #n_dim = np.size(ut[0])
-    print ("dim n_Hy is ", n_Hy)
+    n_dim = np.size(ut[0])
     ut_hats = []
     Sigma_uts= []
     for i in range(n_Hy):
@@ -43,12 +42,13 @@ def Sensor_planner_nd(SM,T,ut):
         ut_hats.append(ut_hat)
         Sigma_uts.append(Sigma_ut)
     sam_size = 1000    
-    print("ut_hat is ", ut_hats)
-
-    Prob_error = mhtnd(ut_hats,Sigma_uts,sam_size)    
+    
+    Prob_error = mhtnd(ut_hats,Sigma_uts,sam_size)  
+    Prob_error = np.array(Prob_error)
+    print("Prob_error is ", np.array(Prob_error).shape)
     return Prob_error
     # ut_hats
-    
+
     
 if __name__ == '__main__':
     # system model

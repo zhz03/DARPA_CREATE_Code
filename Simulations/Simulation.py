@@ -28,8 +28,8 @@ def simulation(SM,x0,uts,ts,ut,trials):
         u_D = Estr.estimator(SM,z,ut)
         u_T = u[-1]
         u_td = [u_T,u_D]
-        #print("u_td is ",  u_td)
         u_T_D.append(u_td)
+        print("u_t_d is ", u_td)
     return u_T_D
 def verification(num, mode):
     
@@ -47,7 +47,7 @@ def verification(num, mode):
 
     elif mode == "nd": 
         
-        nHy = 3
+        nHy = 4
         nd = 2
         dx = nd
         du = dx
@@ -79,6 +79,7 @@ def verification(num, mode):
         fig_name1 = './figs/simulation_figs/' + str(i) + '_u_T_D.jpg'
         plt.savefig(fig_name1)
         plt.close()
+        
 if __name__ == '__main__':
     
     mode = "nd" #1d/nd

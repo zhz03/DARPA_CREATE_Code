@@ -13,6 +13,10 @@ def Error_prob_Comp(Pr_D,Pr_FA,Pr_M,Pr_CR,Pr_D_stat,Pr_FA_stat,Pr_M_stat,Pr_CR_s
     error_CR = Pr_CR_stat - Pr_CR
     return error_D,error_FA,error_M,error_CR
 
+def Error_prob_Comp_nd(Prob_error,Prob_error_stat):
+    print("planner error shape is {}, simulation error shape is {}".format(
+        Prob_error.shape, Prob_error_stat.shape))
+    return Prob_error - Prob_error_stat
 
 if __name__ == '__main__':
     Pr_D,Pr_FA,Pr_M,Pr_CR = 0.9,0.11,0.1,0.89
