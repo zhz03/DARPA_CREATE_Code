@@ -2,7 +2,7 @@
 """
 Created on Mon Sep  7 22:50:59 2020
 
-@author: Zhaoliang
+@author: Zhaoliang and Zida 
 """
 import utility_functions.plot_figures as plotfgs
 import matplotlib.pyplot as plt

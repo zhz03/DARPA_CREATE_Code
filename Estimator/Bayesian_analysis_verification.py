@@ -2,7 +2,7 @@
 """
 Created on Mon Oct 12 00:40:28 2020
 
-@author: Zhaoliang
+@author: Zhaoliang and Zida 
 """
 
 import Estimator.Bayesian_analysis as BA

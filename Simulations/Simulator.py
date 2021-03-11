@@ -2,7 +2,7 @@
 """
 Created on Mon Sep  7 22:31:00 2020
 
-@author: Zhaoliang
+@author: Zhaoliang and Zida 
 """
 
 import copy
@@ -132,9 +132,9 @@ def Simulator(SM,x0,ut_sq):
          #       yt[0][0] = yt[0][0]/1000000
         #        zt[0][0] = zt[0][0]/1000000
                 
-            if np.mean(yt[0]) >=1000000 or np.mean(yt[0]) <= -1000000:
-                yt[0] /= 1000000
-                zt[0] /= 1000000
+            if np.mean(yt[0]) >=10000000 or np.mean(yt[0]) <= -10000000:
+                yt[0] /= 10000000
+                zt[0] /= 10000000
 
             y.append(yt[0])
             z.append(zt[0])

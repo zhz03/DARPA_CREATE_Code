@@ -2,7 +2,7 @@
 """
 Created on Mon Sep  7 22:08:43 2020
 
-@author: Zhaoliang
+@author: Zhaoliang and Zida 
 """
 
 import numpy as np
@@ -41,11 +41,12 @@ def Sensor_planner_nd(SM,T,ut):
         ut_hat =  np.dot(np.dot(H,B), ut[i].reshape(n_dim))
         ut_hats.append(ut_hat)
         Sigma_uts.append(Sigma_ut)
+        
     sam_size = 1000    
     
     Prob_error = mhtnd(ut_hats,Sigma_uts,sam_size)  
     Prob_error = np.array(Prob_error)
-    print("Prob_error is ", np.array(Prob_error).shape)
+    print("Prob_error.shape is ", np.array(Prob_error).shape)
     return Prob_error
     # ut_hats
 
@@ -98,7 +99,7 @@ if __name__ == '__main__':
     nHy = 4
     nd = 2
     Range = [0,5]
-    means,Sigmas = InGen_nd(nHy,nd,Range)
+    means, _ = InGen_nd(nHy,nd,Range)
     
     n_Hy = len(means)
     n_dim = np.size(means[0])
@@ -108,7 +109,12 @@ if __name__ == '__main__':
     Hrange = [0,1]
     Qrange = [0,1]    
     Rrange = [0,1]
-    sm = SMGndsin(n_dim,n_dim,n_dim,Arange,Brange,Hrange,Qrange,Rrange)
+    
+    dx = nd
+    du = n_dim # default = 1 in InGen_nd function
+    dz = 1
+    
+    sm = SMGndsin(dx,du,dz,Arange,Brange,Hrange,Qrange,Rrange)
     
     H = sm[2]
     B = sm[1]    

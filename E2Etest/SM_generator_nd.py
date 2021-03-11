@@ -2,7 +2,7 @@
 """
 Created on Thu Jan  7 04:01:53 2021
 
-@author: Zhaoliang
+@author: Zhaoliang and Zida 
 """
 import numpy as np
 from multi_HT_nd.input_generator_nd import generate_cov_new as GenCov

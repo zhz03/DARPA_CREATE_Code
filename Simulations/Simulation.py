@@ -2,7 +2,7 @@
 """
 Created on Tue Sep  8 00:44:31 2020
 
-@author: Zhaoliang
+@author: Zhaoliang and Zida 
 """
 
 import numpy as np
@@ -48,10 +48,10 @@ def verification(num, mode):
     elif mode == "nd": 
         
         nHy = 4
-        nd = 2
+        du = 1
+        nd = 1
         dx = nd
-        du = dx
-        dz = 1 
+        dz = nd 
         MRange = [0,nHy]
         System_models = SMGennd.SM_generator_nd(dx,dz,du,Arange,Brange,Hrange,Qrange,Rrange,num)
         

@@ -2,7 +2,7 @@
 """
 Created on Tue Sep  8 01:15:26 2020
 
-@author: Zhaoliang
+@author: Zhaoliang and Zida 
 """
 
 import numpy as np
@@ -31,7 +31,7 @@ def Bin_stat_hyp_test_nd(u_T_D, ut):
     u_est = np.zeros(len_ut)
     count = 0
     for i in range(num):
-
+        print("ut is ", u_T_D[i][0])
         for j in range(len_ut):
             if (u_T_D[i][0] == ut[j]).all():
                 gt_i = j

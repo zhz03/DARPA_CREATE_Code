@@ -2,7 +2,7 @@
 """
 Created on Wed Sep  9 14:09:33 2020
 
-@author: Zhaoliang
+@author: Zhaoliang and Zida 
 """
 import numpy as np
 from multi_HT_nd.input_generator_nd import generate_mean as GenMean
@@ -22,7 +22,8 @@ def System_setup_generator_nd(nHy,nd,nu,MRange):
     uts = GenMean(nHy,nu,MRange)
     ts = []
     for _ in range(nHy):
-        ts.append(int(np.random.randint(20,50,size=1)))
+        #ts.append(int(np.random.randint(20,50,size=1)))
+        ts.append(20)
     #ts = [100,1]
     #T = ts[0] + ts[1]
     T = sum(ts)

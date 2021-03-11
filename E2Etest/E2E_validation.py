@@ -2,7 +2,7 @@
 """
 Created on Tue Sep  8 01:30:22 2020
 
-@author: Zhaoliang
+@author: Zhaoliang and Zida 
 """
 import numpy as np
 import Sensor_Planner.Sensor_planner as Spr

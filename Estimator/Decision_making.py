@@ -30,12 +30,13 @@ def Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt):
         for i in range(len(mean_ut_zt)):
             mean_cur = mean_ut_zt[i] # 1*n 
             Sigma_ut_zt_cur = Sigma_ut_zt[i] # scalar
+            ut_zt_cur = ut_zt
             
             #dim_mean = mean_cur.shape[-1]
             #sigma = np.full((dim_mean,dim_mean), Sigma_ut_zt_cur)
-            print("mean is {}, cov is {}. pdf is {}".format(mean_cur.flatten(),int(Sigma_ut_zt_cur),  ut_zt.flatten()))
+            #print("mean is {}, cov is {}. pdf is {}".format(mean_cur.flatten(),(Sigma_ut_zt_cur),  ut_zt.flatten()))
             #print("nd: pdf ut|zt is ", ut_zt)
-            pdf_H_cur = multivariate_normal(mean=mean_cur.flatten() ,cov=int(Sigma_ut_zt_cur)).pdf(ut_zt.flatten())
+            pdf_H_cur = multivariate_normal(mean=mean_cur.flatten() ,cov=(Sigma_ut_zt_cur)).pdf(ut_zt.flatten())
             pdf_H_list.append(pdf_H_cur)
   #          print("mean.dim is {}, cov.dim is {}, ut_dim is {}, pdf.dim is {}, pdf_H_cur".
   #                format(mean_cur.flatten().shape, Sigma_ut_zt_cur.shape, 
@@ -45,7 +46,6 @@ def Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt):
         max_pdf_H = pdf_H_list.index(max(pdf_H_list))
             
         decide_u  = ut[max_pdf_H]
-        print("nd: decide u is", decide_u)
         
     return decide_u
 
