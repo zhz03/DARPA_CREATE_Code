@@ -38,7 +38,7 @@ def labelling_mH(means,Sigmas,Points):
             p_u = []
             for j in range(H_num):
                 points = Points[i]
-                prob = multivariate_normal(mean=means[j],cov=Sigmas[j]).pdf(points[k])
+                prob = multivariate_normal(mean=means[j].flatten(),cov=Sigmas[j]).pdf(points[k])
                 p_u.append(prob)
             labelled_point = {'label':i,'data':points[k],'p_u':p_u}
             labelled_points.append(labelled_point)

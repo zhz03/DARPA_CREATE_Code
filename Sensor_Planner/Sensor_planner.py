@@ -38,7 +38,8 @@ def Sensor_planner_nd(SM,T,ut):
     ut_hats = []
     Sigma_uts= []
     for i in range(n_Hy):
-        ut_hat =  np.dot(np.dot(H,B), ut[i].reshape(n_dim))
+        #ut_hat =  np.dot(np.dot(H,B), ut[i].reshape(n_dim))
+        ut_hat =  np.dot(np.dot(H,B), ut[i])
         ut_hats.append(ut_hat)
         Sigma_uts.append(Sigma_ut)
         
@@ -46,7 +47,7 @@ def Sensor_planner_nd(SM,T,ut):
     
     Prob_error = mhtnd(ut_hats,Sigma_uts,sam_size)  
     Prob_error = np.array(Prob_error)
-    print("Prob_error.shape is ", np.array(Prob_error).shape)
+    print("Prob_error.shape is ", np.array(Prob_error))
     return Prob_error
     # ut_hats
 
@@ -112,12 +113,12 @@ if __name__ == '__main__':
     
     dx = nd
     du = n_dim # default = 1 in InGen_nd function
-    dz = 1
+    dz = 2
     
     sm = SMGndsin(dx,du,dz,Arange,Brange,Hrange,Qrange,Rrange)
     
     H = sm[2]
     B = sm[1]    
   
-    ut1 = np.dot(np.dot(H,B), means[0].reshape(n_dim))
+    #ut1 = np.dot(np.dot(H,B), means[0].reshape(n_dim))
     Prob_errors = Sensor_planner_nd(sm,101,means)

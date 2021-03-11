@@ -14,8 +14,10 @@ def Ut_planner_nd(SM,Sigma_xhat):
     H = SM[2]
     Q = SM[3]
     R = SM[4]
+    
     S = np.dot(np.dot(A,Sigma_xhat),A.T)+Q
     U_sigma = np.dot(np.dot(H,S),H.T)+R
+    
     return U_sigma
 
 if __name__ == '__main__':

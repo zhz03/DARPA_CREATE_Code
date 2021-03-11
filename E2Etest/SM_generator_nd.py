@@ -7,7 +7,7 @@ Created on Thu Jan  7 04:01:53 2021
 import numpy as np
 from multi_HT_nd.input_generator_nd import generate_cov_new as GenCov
 
-def SM_generator_nd_single(dx,dz,du,Arange,Brange,Hrange,Qrange,Rrange):
+def SM_generator_nd_single(dx,du,dz,Arange,Brange,Hrange,Qrange,Rrange):
     
     A = np.random.uniform(Arange[0], Arange[1], (dx,dx))
     B = np.random.uniform(Brange[0], Brange[1], (dx,du))

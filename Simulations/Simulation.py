@@ -51,7 +51,7 @@ def verification(num, mode):
         du = 1
         nd = 1
         dx = nd
-        dz = nd 
+        dz = 1 
         MRange = [0,nHy]
         System_models = SMGennd.SM_generator_nd(dx,dz,du,Arange,Brange,Hrange,Qrange,Rrange,num)
         
