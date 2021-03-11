@@ -24,7 +24,7 @@ def Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt):
         if pdf_H0 >= pdf_H1:
             decide_u = ut0
         else: decide_u = ut1
-        print("1d: decide u is", decide_u)
+        #print("1d: decide u is", decide_u)
     else:
         pdf_H_list = []
         for i in range(len(mean_ut_zt)):

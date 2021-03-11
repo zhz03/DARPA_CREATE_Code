@@ -10,10 +10,10 @@ from multi_HT_nd.input_generator_nd import generate_mean as GenMean
 def System_setup_generator():
     
     uts = [0,1]
-    ts = [100,1]
+    ts = [10,1]
     T = ts[0] + ts[1]
     ut = [0,1]
-    trials = 10
+    trials = 1000
     dx = 1
     x0 = np.array([[0]]).reshape(dx, 1)
     return T,uts,ts,ut,trials,x0

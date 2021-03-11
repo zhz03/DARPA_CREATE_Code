@@ -29,7 +29,6 @@ def simulation(SM,x0,uts,ts,ut,trials):
         u_T = u[-1]
         u_td = [u_T,u_D]
         u_T_D.append(u_td)
-        print("u_t_d is ", u_td)
     return u_T_D
 def verification(num, mode):
     

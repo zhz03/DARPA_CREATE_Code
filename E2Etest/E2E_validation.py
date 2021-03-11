@@ -16,8 +16,13 @@ import E2Etest.System_setup_generator as SSGen
 def E2E_validation_1d(SM,T,ut,x0,uts,ts,trials):
 
     Pr_D,Pr_FA,Pr_M,Pr_CR = Spr.Sensor_planner_1d(SM,T,ut)
+    
     u_T_D = Sim.simulation(SM,x0,uts,ts,ut,trials)
     Pr_D_stat,Pr_FA_stat,Pr_M_stat,Pr_CR_stat = BstatHT.Bin_stat_hyp_test_1d(u_T_D)
+    
+    print("Sensor Planner result: ", Pr_D,Pr_FA,Pr_M,Pr_CR)
+    print("Statistical result : ",Pr_D_stat,Pr_FA_stat,Pr_M_stat,Pr_CR_stat)
+    
     error_D,error_FA,error_M,error_CR = EPComp.Error_prob_Comp(Pr_D,Pr_FA,Pr_M,Pr_CR,Pr_D_stat,Pr_FA_stat,Pr_M_stat,Pr_CR_stat)
     return error_D,error_FA,error_M,error_CR
 
@@ -53,7 +58,7 @@ if __name__ == '__main__':
     Qrange = [0,2]    
     Rrange = [0,2]
     
-    mode = "nd"
+    mode = "1d"
     num = 2
     if mode == "1d":
         dx = 1
@@ -85,5 +90,6 @@ if __name__ == '__main__':
         
     if mode == "1d":
         error_D,error_FA,error_M,error_CR = E2E_validation_1d(SM,T,ut,x0,uts,ts,trials)
+        
     elif mode == "nd":
         error_comparison = E2E_validation_nd(SM,T,ut,x0,uts,ts,trials)

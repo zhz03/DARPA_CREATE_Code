@@ -15,7 +15,8 @@ def Bin_stat_hyp_test_1d(u_T_D):
     num = len(u_T_D)
     count = 0
     for i in range(num):
-        if u_T_D[i][0]==u_T_D[i][1]:
+        # It's right only u_T_D[i][0] = 1 (as we set ut[-1] always = 1 )
+        if u_T_D[i][0]==u_T_D[i][1]:  
             count = count + 1
     Prob_D_stat = count/num
     Prob_FA_stat = (num-count)/num
