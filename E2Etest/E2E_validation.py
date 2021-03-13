@@ -58,7 +58,7 @@ if __name__ == '__main__':
     Qrange = [0,2]    
     Rrange = [0,2]
     
-    mode = "1d"
+    mode = "nd"
     num = 2
     if mode == "1d":
         dx = 1
@@ -67,18 +67,18 @@ if __name__ == '__main__':
         T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator()
 
     elif mode == "nd": 
-        
-        nHy = 3
-        nd = 2
+               
+        nHy = 2
+        du = 1
+        nd = 1
         dx = nd
-        du = dx
         dz = 1 
+
         MRange = [0,nHy]
         System_models = SMGennd.SM_generator_nd(dx,dz,du,Arange,Brange,Hrange,Qrange,Rrange,num)
-        
         T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator_nd(nHy,nd,du,MRange)
-        
-    SM_num = len(System_models[0]) #SM = [As,Bs,Hs,Qs,Rs]; As = []
+       
+    SM_num = len(System_models[0])  #SM = [As,Bs,Hs,Qs,Rs]; As = []
 
     for i in range(SM_num):
         A = System_models[0][i]

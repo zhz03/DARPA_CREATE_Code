@@ -47,7 +47,7 @@ def Sensor_planner_nd(SM,T,ut):
     
     Prob_error = mhtnd(ut_hats,Sigma_uts,sam_size)  
     Prob_error = np.array(Prob_error)
-    print("Prob_error.shape is ", np.array(Prob_error))
+    #print("Prob_error.shape is ", np.array(Prob_error))
     return Prob_error
     # ut_hats
 

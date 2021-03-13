@@ -23,14 +23,12 @@ def System_setup_generator_nd(nHy,nd,nu,MRange):
     ts = []
     for _ in range(nHy):
         #ts.append(int(np.random.randint(20,50,size=1)))
-        ts.append(20)
-    #ts = [100,1]
-    #T = ts[0] + ts[1]
+        ts.append(5)
+
     T = sum(ts)
     ut = uts
-    print("ut is " , ut)
 
-    trials = 100  
+    trials = 1000  
     dx = nd
     x0 = np.random.uniform(0, 0, (dx,1))
     return T,uts,ts,ut,trials,x0

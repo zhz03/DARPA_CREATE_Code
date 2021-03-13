@@ -31,8 +31,8 @@ def Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt):
             mean_cur = mean_ut_zt[i] # 1*n 
             Sigma_ut_zt_cur = Sigma_ut_zt[i] # scalar
             ut_zt_cur = ut_zt
-            print("means[i] is {} and Sigmas[i].shape is {} and sam_size is {}".format(
-            mean_cur.flatten().shape, Sigma_ut_zt_cur.shape, ut_zt.flatten().shape))
+            #print("means[i] is {} and Sigmas[i].shape is {} and sam_size is {}".format(
+            #mean_cur.flatten().shape, Sigma_ut_zt_cur.shape, ut_zt.flatten().shape))
             #dim_mean = mean_cur.shape[-1]
             #sigma = np.full((dim_mean,dim_mean), Sigma_ut_zt_cur)
             #print("mean is {}, cov is {}. pdf is {}".format(mean_cur.flatten(),(Sigma_ut_zt_cur),  ut_zt.flatten()))

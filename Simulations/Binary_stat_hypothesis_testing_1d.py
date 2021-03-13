@@ -28,16 +28,17 @@ def Bin_stat_hyp_test_nd(u_T_D, ut):
     num = len(u_T_D)
     len_ut = len(ut)
     Prob_error_stat = np.zeros([len_ut, len_ut])
+    Prob_error = np.zeros([len_ut, len_ut])
     u_gt = np.zeros(len_ut)
     u_est = np.zeros(len_ut)
     count = 0
     for i in range(num):
-        print("ut is ", u_T_D[i][0])
+        #print("ut is ", u_T_D[i][0])
         for j in range(len_ut):
-            if (u_T_D[i][0] == ut[j]).all():
+            if (u_T_D[i][0] == ut[j]):
                 gt_i = j
         for j in range(len_ut):
-            if (u_T_D[i][1] == ut[j]).all():
+            if (u_T_D[i][1] == ut[j]):
                 est_i = j
                 
         u_gt[gt_i] +=1
@@ -45,12 +46,14 @@ def Bin_stat_hyp_test_nd(u_T_D, ut):
         
         Prob_error_stat[gt_i][est_i] += 1
         
-    for j in range(len_ut):
-        print("u_gt[j] = ", u_gt[j])
-        if u_gt[j] != 0:
-            Prob_error_stat[j] /= u_gt[j]
+    for i in range(len_ut):
+        # i = gt; j = estimation
+        for j in range(len_ut):      
+            if  sum(Prob_error_stat[i])!= 0:
+                Prob_error[i][j] = Prob_error_stat[i][j] / sum(Prob_error_stat[i]) 
         
-    return Prob_error_stat
+        
+    return Prob_error
 
 
 def verification(num):

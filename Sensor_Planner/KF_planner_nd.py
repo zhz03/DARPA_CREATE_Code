@@ -13,7 +13,7 @@ class kf_dead_reckoning(object):
 
         if(A is None or H is None):
             raise ValueError("Set proper system dynamics.")
-
+        
         self.n = A.shape[1]
         self.m = H.shape[1]
         self.A = A
