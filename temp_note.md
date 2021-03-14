@@ -10,7 +10,7 @@
 
    In code, multi-hypothesis of u event means there are multiple distributions list(miu_i, sigma_i), n-d means the dimention of u is n: u.ndim=(n,)
    
-   In system_setup_generator section, ts 
+   In system_setup_generator section, ts is the diff
    
    :: ts/uts/ut mHy=[nd1, nd2, nd...], nd =range()
 
@@ -35,9 +35,9 @@
        Currently, it is only binary_1d esimator. To make it into binary_nd, we need to modify two functions: Estimator.Decision_making and Estimator.Bayesian_analysis; To turn it into multi_nd, we need to change SM_generator_1d and modify the above two functions.
     2. [Fixed] In sensor planner part (corresponding to Sensor_planner file):
        Currently, Sensor_planner.py lacks the last multi-hypothesis-test function.
-    3. End-to-end test:
+    3. [Fixed] End-to-end test:
        Currently, we almost finished the code of estimator (namely simulation) and sensor planner. But we need to realize the end-to-end test to combine them into a whole.
-    4. Sampling based Bayesian decision makeing in Sensor Planner:
+    4. [Fixed] Sampling based Bayesian decision makeing in Sensor Planner:
        Calculation of Prob_D is wrong: Bin_stat_hyp_test_1d
    Currently, we almost finished the code of estimator (namely simulation) and sensor planner. But we need to realize the end-to-end test to combine them into a whole.
 
