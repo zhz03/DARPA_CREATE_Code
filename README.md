@@ -1,6 +1,6 @@
 # README
 
-Author: Zhaoliang Zheng
+Author: Zhaoliang Zheng and Zida Wu
 
 
 
@@ -39,11 +39,15 @@ Before you execute any code in the subfolder, you'll need to run '*addpath.py*' 
 
 In each folder, there is another README.md to explain more details about each program. And in each program, there are comments and example functions to show how to use and run the code.
 
-**2 To see the end-to-end results, please go to *E2Etest_1d* folder and run the *E2Etest* program.** 
+**3** To see the result of comprehensive test on 1d state binary hypothesis testing, please go to *binary_HT_1d* folder and run *Gd_comp.py* program.
 
-**3 To see the result of comprehensive test on 1d state binary hypothesis testing, please go to *binary_HT_1d* folder and run *Gd_comp.py* program.**
+**4** To see the results of comprehensive test on n-d state binary hypothesis testing, please go to *binary_HT_nd* folder and run *bin_HT_nd_verification.py* *Error_prob_cal_verfication.py*   
 
-**4 To see the results of comprehensive test on n-d state binary hypothesis testing, please go to *binary_HT_nd* folder and run *bin_HT_nd_verification.py* *Error_prob_cal_verfication.py* **  
+**5** To see the result of comprehensive test on nd state simulation, nd state kalman filter as well as nd state planning, please go to *Sim_KF_Pln_nd* folder to run *CompTest_diff_sysM.py* program
 
-**5 To see the result of comprehensive test on nd state simulation, nd state kalman filter as well as nd state planning, please go to *Sim_KF_Pln_nd* folder to run *CompTest_diff_sysM.py* program**
+### End-to-End Test
 
+- The algorithm can be divided into two parts. One is estimator branch based on statistical estimation of ut. Another is planner branch which based on theoratical estimation.
+- The entrance of estimator is Simulations/Simulation.py; The entrance of planner is Sensor_planner/Sensor_planner.py.
+- For convenience, we designed an end-to-end function in E2E_test/E2E_validation.py. You can adjust params of the system, such as mode(1d/nd), iteration num, nHy and etc.. After that,  just run this script.
+- The output of the end-to-end test is the probability of detection comparison between simulation (statistics) and theoretical value.

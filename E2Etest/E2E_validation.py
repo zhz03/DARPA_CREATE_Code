@@ -44,6 +44,8 @@ if __name__ == '__main__':
     
     mode = "nd"
     num = 100
+    
+    
     if mode == "1d":
         System_models = SMGen1d.SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange)
         #As,Hs,Bs,Qs,Rs,

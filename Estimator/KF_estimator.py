@@ -2,7 +2,7 @@
 """
 Created on Mon Sep  7 22:20:15 2020
 
-@author: Zhaoliang
+@author: Zhaoliang and Zida 
 """
 
 import numpy as np
@@ -68,42 +68,6 @@ def KF_estimator(SM,measurements):
         
 if __name__ == '__main__':
     
-
-    """
-    dx = 2
-    dz = 2
-    A = np.array([[1,0],[0,1]]).reshape(dx, dx)
-    B = np.array([[1],[1]]).reshape(dx, 1) 
-    H = np.array([[1,0],[0,1]]).reshape(dz, dx)
-    Q = np.array([[0.2 * 0.2,0],[0,0.2 * 0.2]]).reshape(dx, dx)
-    R = np.array([[0.2 * 0.2,0],[0,0.2 * 0.2]]).reshape(dz, dz)
-    x0 = np.array([[0],[0]]).reshape(dx, 1)
-    uts = [0,1,0,2]
-    ts = [100,10,20,10]
-    SM = [A,B,H,Q,R]
-    """
-    """
-    dx = 1
-    dz = 1
-    # system matrices parameters
-    q = 0.3
-    r = 0.2
-    a = 1
-    h = .1
-    b = 1
-    A = np.array([a]).reshape(dx, dx)
-    H = np.array([h]).reshape(dz, dx)
-    B = np.array([b]).reshape(dx, 1)
-    Q = np.array([q * q]).reshape(dx, dx)
-    R = np.array([r * r]).reshape(dz, dz)
-    x0 = np.array([[0]]).reshape(dx, 1)
-    uts = [0,1]
-    ts = [100,1]
-    ut = [0,1] 
-    trials = 1000
-    SM = [A,B,H,Q,R]
-    """
-
     dx = 1
     dz = 1
     q = .1254
