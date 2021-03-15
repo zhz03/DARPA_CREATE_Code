@@ -44,19 +44,18 @@ if __name__ == '__main__':
     
     mode = "nd"
     num = 100
-    
+    nHy = 4      
+    nd = 3
+    dx = nd
+    dz = nd 
     
     if mode == "1d":
         System_models = SMGen1d.SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange)
         #As,Hs,Bs,Qs,Rs,
         T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator()
-
+ 
     elif mode == "nd": 
                
-        nHy = 2      
-        nd = 2
-        dx = nd
-        dz = nd 
         du = int(nd/nd)
         MRange = [0,nHy]
         System_models = SMGennd.SM_generator_nd(dx,dz,du,Arange,Brange,Hrange,Qrange,Rrange,num)
