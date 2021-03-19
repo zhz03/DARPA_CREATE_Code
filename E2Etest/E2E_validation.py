@@ -36,7 +36,7 @@ def E2E_validation_nd(SM,T,ut,x0,uts,ts,trials):
 
 if __name__ == '__main__':
 
-    Arange = [1,1]
+    Arange = [-1,1]
     Brange = [0,2]
     Hrange = [0,2]
     Qrange = [0,2]    
@@ -44,10 +44,12 @@ if __name__ == '__main__':
     
     mode = "nd"
     num = 100
+    trials_ = 5
     nHy = 4      
     nd = 3
     dx = nd
     dz = nd 
+    Ts_ = 10
     
     if mode == "1d":
         System_models = SMGen1d.SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange)
@@ -56,10 +58,10 @@ if __name__ == '__main__':
  
     elif mode == "nd": 
                
-        du = int(nd/nd)
+        du = 1
         MRange = [0,nHy]
         System_models = SMGennd.SM_generator_nd(dx,dz,du,Arange,Brange,Hrange,Qrange,Rrange,num)
-        T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator_nd(nHy,nd,du,MRange)
+        T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator_nd(nHy,nd,du,MRange,Ts_,trials_)
        
     SM_num = len(System_models[0])  #SM = [As,Bs,Hs,Qs,Rs]; As = []
     
