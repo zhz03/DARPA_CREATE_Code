@@ -109,7 +109,6 @@ def KF_estimator_MM(SM,measurements,ut): #MM means multiple model meothod to cal
     H = SM[2]
     Q = SM[3]
     R = SM[4]
-    
     kf = KalmanFilter(A=A,B=B,H=H,Q=Q,R=R)
     
     predictions = []
@@ -137,7 +136,7 @@ def KF_estimator_ugt(SM,measurements,u):
     estimates = []
     Sigma = []
     for i, z in enumerate(measurements):
-        predictions.append(kf.predict(u[i])) #default u = 0 
+        predictions.append(kf.predict(u[i])) 
         P,x=kf.update(z)
         estimates.append(x)
         Sigma.append(P)
