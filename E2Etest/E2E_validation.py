@@ -26,38 +26,38 @@ def E2E_validation_1d(SM,T,ut,x0,uts,ts,trials):
     error_D,error_FA,error_M,error_CR = EPComp.Error_prob_Comp(Pr_D,Pr_FA,Pr_M,Pr_CR,Pr_D_stat,Pr_FA_stat,Pr_M_stat,Pr_CR_stat)
     return error_D,error_FA,error_M,error_CR
 
-def E2E_validation_nd(SM,T,ut,x0,uts,ts,trials):
+def E2E_validation_nd(SM,T,ut,x0,uts,ts,trials,mode_simulation):
 
     Prob_error = Spr.Sensor_planner_nd(SM,T,ut)
-    u_T_D = Sim.simulation(SM,x0,uts,ts,ut,trials)
+    u_T_D = Sim.simulation(SM,x0,uts,ts,ut,trials,mode_simulation)
     Prob_error_stat = BstatHT.Bin_stat_hyp_test_nd(u_T_D, ut)
     error_comparison = EPComp.Error_prob_Comp_nd(Prob_error,Prob_error_stat)
     return Prob_error, Prob_error_stat, error_comparison 
 
 if __name__ == '__main__':
 
-    Arange = [-1,1]
+    Arange = [-2,2]
     Brange = [0,2]
     Hrange = [0,2]
     Qrange = [0,2]    
     Rrange = [0,2]
     
     mode = "nd"
-    num = 100
-    trials_ = 5
-    nHy = 4      
-    nd = 3
+    mode_simulation = "raw_ugt" # Three mode: raw & MM & raw_ugt & both
+    num = 1
+    trials_ = 1000
+    nHy = 2      
+    nd = 2
     dx = nd
     dz = nd 
-    Ts_ = 10
+    Ts_ = 5
     
     if mode == "1d":
         System_models = SMGen1d.SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange)
         #As,Hs,Bs,Qs,Rs,
         T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator()
  
-    elif mode == "nd": 
-               
+    elif mode == "nd":              
         du = 1
         MRange = [0,nHy]
         System_models = SMGennd.SM_generator_nd(dx,dz,du,Arange,Brange,Hrange,Qrange,Rrange,num)
@@ -80,11 +80,13 @@ if __name__ == '__main__':
             error_D,error_FA,error_M,error_CR = E2E_validation_1d(SM,T,ut,x0,uts,ts,trials)
             
         elif mode == "nd":
-            Prob_error, Prob_error_stat, error_comparison  = E2E_validation_nd(SM,T,ut,x0,uts,ts,trials)
-            prob_error_list.append(Prob_error)
-            prob_error_stat_list.append(Prob_error_stat)
-            error_comparison_list.append(error_comparison)
-    
+            if mode_simulation != "both":
+                Prob_error, Prob_error_stat, error_comparison  = E2E_validation_nd(SM,T,ut,x0,uts,ts,trials,mode_simulation)
+                prob_error_list.append(Prob_error)
+                prob_error_stat_list.append(Prob_error_stat)
+                error_comparison_list.append(error_comparison)
+                
+
     prob_d_sim = np.zeros(SM_num)
     prob_d_stat = np.zeros(SM_num)
     prob_F_sim = np.zeros(SM_num)

@@ -137,8 +137,8 @@ def example1():
     var0 = 1
     mean1 = 1
     var1 = 1
-    Prob_D,Prob_FA,Prob_M,Prob_CR =  error_prob(mean0,mean1,var0,var1)
-    return Prob_D,Prob_FA,Prob_M,Prob_CR
+    Pr_D,Pr_FA,Pr_M,Pr_CR =  error_prob(mean0,mean1,var0,var1)
+    return Pr_D,Pr_FA,Pr_M,Pr_CR
             
 if __name__ == '__main__':
     #Prob_D,Prob_FA,Prob_M,Prob_CR = example1()

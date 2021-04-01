@@ -21,8 +21,13 @@ from scipy.stats import multivariate_normal
 
 
 
-def estimator(SM,z,ut):
-    Sigma,estimates = KF_est.KF_estimator(SM,z)
+def estimator(SM,z,ut,u,mode_simulation):
+    if mode_simulation == "raw":
+        Sigma,estimates = KF_est.KF_estimator(SM,z)
+    elif mode_simulation == "MM":
+        Sigma,estimates = KF_est.KF_estimator_MM(SM,z,ut)
+    elif mode_simulation == "raw_ugt":
+        Sigma,estimates = KF_est.KF_estimator_ugt(SM,z,u)
     ut_zt,mean_ut_zt,Sigma_ut_zt = BA.Bayesian_analysis(SM,ut,Sigma,estimates,z)
     u_D = DM.Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt)
     return u_D

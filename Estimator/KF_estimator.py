@@ -32,8 +32,10 @@ class KalmanFilter(object):
         self.R = np.eye(self.m) if R is None else R
         self.P = np.eye(self.n) if P is None else P
         self.x = np.zeros((self.n, 1)) if x0 is None else x0
+        self.x_last = np.zeros((self.n, 1)) if self.x is None else self.x
 
     def predict(self, u = 0):
+        self.x_last = self.x
         self.x = np.dot(self.A, self.x) + np.dot(self.B, u)
         self.P = np.dot(np.dot(self.A, self.P), self.A.T) + self.Q
         return self.x
@@ -44,6 +46,41 @@ class KalmanFilter(object):
         K = np.dot(np.dot(self.P, self.H.T), np.linalg.inv(S))
         self.x = self.x + np.dot(K, y)
         self.P = self.P - np.dot(np.dot(K,self.H),self.P)
+        return self.P,self.x
+    
+    def update_MM(self, z, ut):
+        mean_ut_zt = []
+        Sigma_ut_zt = []    
+        y = z - np.dot(self.H, self.x)
+        S = self.R + np.dot(self.H, np.dot(self.P, self.H.T))
+        K = np.dot(np.dot(self.P, self.H.T), np.linalg.inv(S))
+                
+        ut_zt = z - np.dot(self.H, self.x)
+        sigma = S
+        for i in range(len(ut)):
+            mean_ut_zt.append(np.dot(self.H,self.B) * ut[i])
+            Sigma_ut_zt.append(sigma)
+        pdf_H_list, decide_u = DM.Decision_making_MM(ut,ut_zt,mean_ut_zt,Sigma_ut_zt)
+        
+        if len(ut) == 2:    
+            bias = ((pdf_H_list[1]*100)/((sum(pdf_H_list)+1e-10)*100)) * np.dot(np.dot(self.H,self.B), ut[0]) +  \
+                    ((pdf_H_list[0]*100)/((sum(pdf_H_list)+1e-10)*100)) * np.dot(np.dot(self.H,self.B), ut[1])
+            
+            self.x = self.x + np.dot(K, y) 
+            self.x_last = self.x
+            self.x = self.x - np.dot(K, bias)
+            
+            self.P = self.P - np.dot(np.dot(K,self.H),self.P)
+            x_res = self.x - self.x_last
+            self.P = self.P + np.dot(x_res,x_res.T)
+                               
+        else:
+            #TODO: len(ut) > 2
+            bias = 0 
+            
+            self.x = self.x + np.dot(K, y)
+            self.P = self.P - np.dot(np.dot(K,self.H),self.P)
+        
         return self.P,self.x
       
 def KF_estimator(SM,measurements):
@@ -59,13 +96,54 @@ def KF_estimator(SM,measurements):
     estimates = []
     Sigma = []
     for z in measurements:
-        predictions.append(kf.predict())
+        predictions.append(kf.predict()) #default u = 0 
         P,x=kf.update(z)
         estimates.append(x)
         Sigma.append(P)
 
     return Sigma,estimates#,predictions
-        
+
+def KF_estimator_MM(SM,measurements,ut): #MM means multiple model meothod to calibrate x using U models
+    A = SM[0]
+    B = SM[1]
+    H = SM[2]
+    Q = SM[3]
+    R = SM[4]
+    
+    kf = KalmanFilter(A=A,B=B,H=H,Q=Q,R=R)
+    
+    predictions = []
+    estimates = []
+    Sigma = []
+    
+    for z in measurements:
+        predictions.append(kf.predict()) #default u = 0 
+        P,x=kf.update_MM(z,ut)
+        estimates.append(x)
+        Sigma.append(P)
+
+    return Sigma,estimates
+
+def KF_estimator_ugt(SM,measurements,u):
+    A = SM[0]
+    B = SM[1]
+    H = SM[2]
+    Q = SM[3]
+    R = SM[4]
+    
+    kf = KalmanFilter(A=A,B=B,H=H,Q=Q,R=R)
+    
+    predictions = []
+    estimates = []
+    Sigma = []
+    for i, z in enumerate(measurements):
+        predictions.append(kf.predict(u[i])) #default u = 0 
+        P,x=kf.update(z)
+        estimates.append(x)
+        Sigma.append(P)
+
+    return Sigma,estimates
+
 if __name__ == '__main__':
     
     dx = 1

@@ -20,12 +20,12 @@ import E2Etest.SM_generator_nd as SMGennd
 import E2Etest.System_setup_generator as SSGen
 import matplotlib.pyplot as plt
 
-def simulation(SM,x0,uts,ts,ut,trials):
+def simulation(SM,x0,uts,ts,ut,trials,mode_simulation):
     u_T_D = []
     for i in range(trials):
         u = Gsequ.generate_sequential_ut(uts,ts)
         y,z = Simu.Simulator(SM,x0,u)
-        u_D = Estr.estimator(SM,z,ut)
+        u_D = Estr.estimator(SM,z,ut,u,mode_simulation)
         u_T = u[-1]
         u_td = [u_T,u_D]
         u_T_D.append(u_td)
