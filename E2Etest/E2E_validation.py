@@ -91,7 +91,7 @@ if __name__ == '__main__':
     nd = 2
     dx = nd
     dz = nd 
-    Ts_ = 5
+    Ts_ = 10
     
     if mode == "1d":
         System_models = SMGen1d.SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange)
@@ -144,7 +144,7 @@ if __name__ == '__main__':
                 prob_error_stat_list_ugt.append(Prob_error_stat[2])
                 error_comparison_list_ugt.append(error_comparison[2])
                 
-                
+    
     prob_d_sim = np.zeros(SM_num)
     prob_d_stat = np.zeros(SM_num)
     prob_d_stat_MM = np.zeros(SM_num)

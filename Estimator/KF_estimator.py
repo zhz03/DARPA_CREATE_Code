@@ -64,11 +64,11 @@ class KalmanFilter(object):
         
         
         if len(ut) == 2:    
-            bias = ((pdf_H_list[1]*100)/((sum(pdf_H_list)+1e-10)*100)) * np.dot(np.dot(self.H,self.B), ut[0]) +  \
-                    ((pdf_H_list[0]*100)/((sum(pdf_H_list)+1e-10)*100)) * np.dot(np.dot(self.H,self.B), ut[1])
+            bias = ((pdf_H_list[0]*100)/((sum(pdf_H_list)+1e-10)*100)) * np.dot(np.dot(self.H,self.B), ut[0]) +  \
+                    ((pdf_H_list[1]*100)/((sum(pdf_H_list)+1e-10)*100)) * np.dot(np.dot(self.H,self.B), ut[1])
             self.x = self.x + np.dot(K, y) 
             self.x_last = self.x
-            self.x = self.x - np.dot(K, bias)
+            self.x = self.x - np.dot(1-K, bias)
             
             self.P = self.P - np.dot(np.dot(K,self.H),self.P)
             x_res = self.x - self.x_last
