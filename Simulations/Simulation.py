@@ -19,17 +19,50 @@ import E2Etest.SM_generator_1d as SMGen1d
 import E2Etest.SM_generator_nd as SMGennd
 import E2Etest.System_setup_generator as SSGen
 import matplotlib.pyplot as plt
+from E2Etest.E2E_validation import Mode_simulation
 
-def simulation(SM,x0,uts,ts,ut,trials,mode_simulation):
+def simulation(SM,x0,uts,ts,ut,trials):
     u_T_D = []
     for i in range(trials):
         u = Gsequ.generate_sequential_ut(uts,ts)
         y,z = Simu.Simulator(SM,x0,u)
-        u_D = Estr.estimator(SM,z,ut,u,mode_simulation)
+        u_D = Estr.estimator(SM,z,ut)
         u_T = u[-1]
         u_td = [u_T,u_D]
         u_T_D.append(u_td)
     return u_T_D
+
+def simulation_with_mode(SM,x0,uts,ts,ut,trials,mode_simulation):
+    u_T_D = []
+    u_T_D_MM = []
+    u_T_D_ugt = []
+    for i in range(trials):
+        u = Gsequ.generate_sequential_ut(uts,ts)
+        y,z = Simu.Simulator(SM,x0,u)
+        if mode_simulation.value == Mode_simulation.both.value:
+            u_T = u[-1]
+            u_D = Estr.estimator_with_mode(SM,z,ut,u,Mode_simulation.raw)           
+            u_td = [u_T,u_D]
+            u_T_D.append(u_td)
+            
+            u_D_MM = Estr.estimator_with_mode(SM,z,ut,u,Mode_simulation.MM)           
+            u_td_MM = [u_T,u_D_MM]
+            u_T_D_MM.append(u_td_MM)
+            
+            u_D_ugt = Estr.estimator_with_mode(SM,z,ut,u,Mode_simulation.raw_ugt)           
+            u_td_ugt = [u_T,u_D_ugt]
+            u_T_D_ugt.append(u_td_ugt)
+        else:
+            u_D = Estr.estimator_with_mode(SM,z,ut,u,mode_simulation)
+            u_T = u[-1]
+            u_td = [u_T,u_D]
+            u_T_D.append(u_td)
+            
+    if mode_simulation.value == Mode_simulation.both.value:
+        return u_T_D, u_T_D_MM, u_T_D_ugt
+    else:
+        return u_T_D
+
 def verification(num, mode):
     
     Arange = [1,1]

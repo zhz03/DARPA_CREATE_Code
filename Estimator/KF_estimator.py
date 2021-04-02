@@ -62,10 +62,10 @@ class KalmanFilter(object):
             Sigma_ut_zt.append(sigma)
         pdf_H_list, decide_u = DM.Decision_making_MM(ut,ut_zt,mean_ut_zt,Sigma_ut_zt)
         
+        
         if len(ut) == 2:    
             bias = ((pdf_H_list[1]*100)/((sum(pdf_H_list)+1e-10)*100)) * np.dot(np.dot(self.H,self.B), ut[0]) +  \
                     ((pdf_H_list[0]*100)/((sum(pdf_H_list)+1e-10)*100)) * np.dot(np.dot(self.H,self.B), ut[1])
-            
             self.x = self.x + np.dot(K, y) 
             self.x_last = self.x
             self.x = self.x - np.dot(K, bias)

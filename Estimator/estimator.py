@@ -18,15 +18,21 @@ import E2Etest.System_setup_generator as SSGen
 import matplotlib.pyplot as plt
 import utility_functions.CompP2SHist as CompP2SHist
 from scipy.stats import multivariate_normal
+from E2Etest.E2E_validation import Mode_simulation
 
 
+def estimator(SM,z,ut):
+    Sigma,estimates = KF_est.KF_estimator(SM,z)
+    ut_zt,mean_ut_zt,Sigma_ut_zt = BA.Bayesian_analysis(SM,ut,Sigma,estimates,z)
+    u_D = DM.Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt)
+    return u_D
 
-def estimator(SM,z,ut,u,mode_simulation):
-    if mode_simulation == "raw":
+def estimator_with_mode(SM,z,ut,u,mode_simulation):
+    if mode_simulation.value == Mode_simulation.raw.value:
         Sigma,estimates = KF_est.KF_estimator(SM,z)
-    elif mode_simulation == "MM":
+    elif mode_simulation.value == Mode_simulation.MM.value:
         Sigma,estimates = KF_est.KF_estimator_MM(SM,z,ut)
-    elif mode_simulation == "raw_ugt":
+    elif mode_simulation.value == Mode_simulation.raw_ugt.value:
         Sigma,estimates = KF_est.KF_estimator_ugt(SM,z,u)
     ut_zt,mean_ut_zt,Sigma_ut_zt = BA.Bayesian_analysis(SM,ut,Sigma,estimates,z)
     u_D = DM.Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt)
