@@ -33,7 +33,6 @@ def Bin_stat_hyp_test_nd(u_T_D, ut):
     u_est = np.zeros(len_ut)
     count = 0
     for i in range(num):
-        #print("ut is ", u_T_D[i][0])
         for j in range(len_ut):
             if (u_T_D[i][0] == ut[j]):
                 gt_i = j

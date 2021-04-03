@@ -86,12 +86,12 @@ if __name__ == '__main__':
     mode = "nd"    
     mode_simulation = Mode_simulation.both # Four mode: raw & MM & raw_ugt & both
     num = 2
-    trials_ = 1000
+    trials_ = 40
     nHy = 2      
     nd = 2
     dx = nd
     dz = nd 
-    Ts_ = 10
+    Ts_ = 100
     
     if mode == "1d":
         System_models = SMGen1d.SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange)
@@ -128,21 +128,20 @@ if __name__ == '__main__':
             error_D,error_FA,error_M,error_CR = E2E_validation_1d(SM,T,ut,x0,uts,ts,trials)
             
         elif mode == "nd":
-            if mode_simulation.value != Mode_simulation.both.value:
-                Prob_error, Prob_error_stat, error_comparison  = E2E_validation_nd(SM,T,ut,x0,uts,ts,trials)
-                prob_error_list.append(Prob_error)
-                prob_error_stat_list.append(Prob_error_stat)
-                error_comparison_list.append(error_comparison)
-                
-            if mode_simulation.value == Mode_simulation.both.value:   
-                Prob_error, Prob_error_stat, error_comparison  = E2E_validation_nd_with_mode(SM,T,ut,x0,uts,ts,trials,mode_simulation)
-                prob_error_list.append(Prob_error)
-                prob_error_stat_list.append(Prob_error_stat[0])
-                error_comparison_list.append(error_comparison[0])
-                prob_error_stat_list_MM.append(Prob_error_stat[1])
-                error_comparison_list_MM.append(error_comparison[1])
-                prob_error_stat_list_ugt.append(Prob_error_stat[2])
-                error_comparison_list_ugt.append(error_comparison[2])
+            #if mode_simulation.value != Mode_simulation.both.value:
+                #Prob_error, Prob_error_stat, error_comparison  = E2E_validation_nd(SM,T,ut,x0,uts,ts,trials)
+                #prob_error_list.append(Prob_error)
+                #prob_error_stat_list.append(Prob_error_stat)
+                #error_comparison_list.append(error_comparison)
+
+            Prob_error, Prob_error_stat, error_comparison  = E2E_validation_nd_with_mode(SM,T,ut,x0,uts,ts,trials,mode_simulation)
+            prob_error_list.append(Prob_error)
+            prob_error_stat_list.append(Prob_error_stat[0])
+            error_comparison_list.append(error_comparison[0])
+            prob_error_stat_list_MM.append(Prob_error_stat[1])
+            error_comparison_list_MM.append(error_comparison[1])
+            prob_error_stat_list_ugt.append(Prob_error_stat[2])
+            error_comparison_list_ugt.append(error_comparison[2])
                 
     
     prob_d_sim = np.zeros(SM_num)

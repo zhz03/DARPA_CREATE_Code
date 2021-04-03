@@ -33,6 +33,8 @@ class KalmanFilter(object):
         self.P = np.eye(self.n) if P is None else P
         self.x = np.zeros((self.n, 1)) if x0 is None else x0
         self.x_last = np.zeros((self.n, 1)) if self.x is None else self.x
+        self.p0 = 0.5
+        self.p1 = 0.5
 
     def predict(self, u = 0):
         self.x_last = self.x
@@ -46,6 +48,7 @@ class KalmanFilter(object):
         K = np.dot(np.dot(self.P, self.H.T), np.linalg.inv(S))
         self.x = self.x + np.dot(K, y)
         self.P = self.P - np.dot(np.dot(K,self.H),self.P)
+        print("sigma is {}, ut_zt is {}".format(S,y))
         return self.P,self.x
     
     def update_MM(self, z, ut):
@@ -55,24 +58,34 @@ class KalmanFilter(object):
         S = self.R + np.dot(self.H, np.dot(self.P, self.H.T))
         K = np.dot(np.dot(self.P, self.H.T), np.linalg.inv(S))
                 
-        ut_zt = z - np.dot(self.H, self.x)
+        ut_zt = y
         sigma = S
+
         for i in range(len(ut)):
             mean_ut_zt.append(np.dot(self.H,self.B) * ut[i])
             Sigma_ut_zt.append(sigma)
+
         pdf_H_list, decide_u = DM.Decision_making_MM(ut,ut_zt,mean_ut_zt,Sigma_ut_zt)
         
         
-        if len(ut) == 2:    
-            bias = ((pdf_H_list[0]*100)/((sum(pdf_H_list)+1e-10)*100)) * np.dot(np.dot(self.H,self.B), ut[0]) +  \
-                    ((pdf_H_list[1]*100)/((sum(pdf_H_list)+1e-10)*100)) * np.dot(np.dot(self.H,self.B), ut[1])
+        if len(ut) == 2: 
+
+            self.p0 = (pdf_H_list[0]*100)/((sum(pdf_H_list))*100)
+            self.p1 = (pdf_H_list[1]*100)/((sum(pdf_H_list))*100)
+            
+            self.p0 = self.p0/(self.p0+self.p1)
+            self.p1 = self.p1/(self.p0+self.p1)
+
+            bias = (self.p0) * mean_ut_zt[0] +  \
+                    (self.p1) * mean_ut_zt[1]
             self.x = self.x + np.dot(K, y) 
             self.x_last = self.x
-            self.x = self.x - np.dot(1-K, bias)
-            
+            #self.x = self.x + np.dot(1-K, bias)
+
             self.P = self.P - np.dot(np.dot(K,self.H),self.P)
             x_res = self.x - self.x_last
-            self.P = self.P + np.dot(x_res,x_res.T)
+
+            #self.P = self.P + np.dot(x_res,x_res.T)
                                
         else:
             #TODO: len(ut) > 2

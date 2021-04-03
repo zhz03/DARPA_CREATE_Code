@@ -30,18 +30,11 @@ def Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt):
             mean_cur = mean_ut_zt[i] # 1*n 
             Sigma_ut_zt_cur = Sigma_ut_zt[i] # scalar
             ut_zt_cur = ut_zt
-            #print("means[i] is {} and Sigmas[i].shape is {} and sam_size is {}".format(
-            #mean_cur.flatten().shape, Sigma_ut_zt_cur.shape, ut_zt.flatten().shape))
             #dim_mean = mean_cur.shape[-1]
             #sigma = np.full((dim_mean,dim_mean), Sigma_ut_zt_cur)
-            #print("mean is {}, cov is {}. pdf is {}".format(mean_cur.flatten(),(Sigma_ut_zt_cur),  ut_zt.flatten()))
-            #print("nd: pdf ut|zt is ", ut_zt)
+
             pdf_H_cur = multivariate_normal(mean=mean_cur.flatten() ,cov=(Sigma_ut_zt_cur)).pdf(ut_zt.flatten())
-            pdf_H_list.append(pdf_H_cur)
-  #          print("mean.dim is {}, cov.dim is {}, ut_dim is {}, pdf.dim is {}, pdf_H_cur".
-  #                format(mean_cur.flatten().shape, Sigma_ut_zt_cur.shape, 
-  #                       ut_zt.T.shape, pdf_H_cur.shape, pdf_H_cur)
-  #                )          
+            pdf_H_list.append(pdf_H_cur)        
             
         max_pdf_H = pdf_H_list.index(max(pdf_H_list))
             
@@ -71,6 +64,7 @@ def Decision_making_MM(ut,ut_zt,mean_ut_zt,Sigma_ut_zt):
             mean_cur = mean_ut_zt[i] # 1*n 
             Sigma_ut_zt_cur = Sigma_ut_zt[i] # scalar
             ut_zt_cur = ut_zt
+            
             pdf_H_cur = multivariate_normal(mean=mean_cur.flatten() ,cov=(Sigma_ut_zt_cur)).pdf(ut_zt.flatten())
             pdf_H_list.append(pdf_H_cur)
           
