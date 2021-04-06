@@ -135,7 +135,7 @@ def Simulator(SM,x0,ut_sq):
             if np.mean(yt[0]) >=10000000 or np.mean(yt[0]) <= -10000000:
                 yt[0] /= 10000000
                 zt[0] /= 10000000
-
+            print("Info: y: {}, z: {}".format(yt[0], zt[0]) )
             y.append(yt[0])
             z.append(zt[0])
     return y,z

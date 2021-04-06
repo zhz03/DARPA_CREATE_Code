@@ -37,9 +37,9 @@ def Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt):
             pdf_H_list.append(pdf_H_cur)        
             
         max_pdf_H = pdf_H_list.index(max(pdf_H_list))
-            
+
         decide_u  = ut[max_pdf_H]
-        
+
     return decide_u
 
 def Decision_making_MM(ut,ut_zt,mean_ut_zt,Sigma_ut_zt):

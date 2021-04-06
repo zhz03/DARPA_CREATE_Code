@@ -35,6 +35,7 @@ class KalmanFilter(object):
         self.x_last = np.zeros((self.n, 1)) if self.x is None else self.x
         self.p0 = 0.5
         self.p1 = 0.5
+        self.p = []
 
     def predict(self, u = 0):
         self.x_last = self.x
@@ -45,10 +46,17 @@ class KalmanFilter(object):
     def update(self, z):
         y = z - np.dot(self.H, self.x)
         S = self.R + np.dot(self.H, np.dot(self.P, self.H.T))
-        K = np.dot(np.dot(self.P, self.H.T), np.linalg.inv(S))
+        K = np.dot(np.dot(self.P, self.H.T), np.linalg.inv(S))  
         self.x = self.x + np.dot(K, y)
         self.P = self.P - np.dot(np.dot(K,self.H),self.P)
-        print("sigma is {}, ut_zt is {}".format(S,y))
+        return self.P,self.x
+    
+    def update_ugt(self, z, u):
+        y = z - np.dot(self.H, self.x) - np.dot(np.dot(self.H,self.B),u)
+        S = self.R + np.dot(self.H, np.dot(self.P, self.H.T))
+        K = np.dot(np.dot(self.P, self.H.T), np.linalg.inv(S))  
+        self.x = self.x + np.dot(K, y)
+        self.P = self.P - np.dot(np.dot(K,self.H),self.P)
         return self.P,self.x
     
     def update_MM(self, z, ut):
@@ -62,30 +70,32 @@ class KalmanFilter(object):
         sigma = S
 
         for i in range(len(ut)):
-            mean_ut_zt.append(np.dot(self.H,self.B) * ut[i])
+            mean_ut_zt.append(np.dot(np.dot(self.H,self.B),ut[i]) )
             Sigma_ut_zt.append(sigma)
-
+        print("ut_zt:{}, Sigma_ut_zt: {}, mean: {}".format(ut_zt, Sigma_ut_zt,mean_ut_zt))
         pdf_H_list, decide_u = DM.Decision_making_MM(ut,ut_zt,mean_ut_zt,Sigma_ut_zt)
-        
-        
+             
         if len(ut) == 2: 
 
             self.p0 = (pdf_H_list[0]*100)/((sum(pdf_H_list))*100)
             self.p1 = (pdf_H_list[1]*100)/((sum(pdf_H_list))*100)
-            
+
             self.p0 = self.p0/(self.p0+self.p1)
             self.p1 = self.p1/(self.p0+self.p1)
 
-            bias = (self.p0) * mean_ut_zt[0] +  \
-                    (self.p1) * mean_ut_zt[1]
+            bias = (self.p0) * mean_ut_zt[0] + (self.p1) * mean_ut_zt[1]
+                    
             self.x = self.x + np.dot(K, y) 
             self.x_last = self.x
-            #self.x = self.x + np.dot(1-K, bias)
 
             self.P = self.P - np.dot(np.dot(K,self.H),self.P)
             x_res = self.x - self.x_last
-
-            #self.P = self.P + np.dot(x_res,x_res.T)
+            
+            delta_P = np.dot(x_res,x_res.T)
+            
+            if np.linalg.det(delta_P) < np.linalg.det(self.P):
+                self.P = self.P + delta_P
+                self.x = self.x + np.dot(1-K, bias)
                                
         else:
             #TODO: len(ut) > 2
@@ -150,7 +160,7 @@ def KF_estimator_ugt(SM,measurements,u):
     Sigma = []
     for i, z in enumerate(measurements):
         predictions.append(kf.predict(u[i])) 
-        P,x=kf.update(z)
+        P,x=kf.update_ugt(z,u[i])
         estimates.append(x)
         Sigma.append(P)
 

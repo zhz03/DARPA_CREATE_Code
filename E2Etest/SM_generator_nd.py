@@ -40,6 +40,26 @@ def SM_generator_nd(dx,dz,du,Arange,Brange,Hrange,Qrange,Rrange,num):
     SM = [As,Bs,Hs,Qs,Rs]
     return SM
 
+def SM_generator_constant(Qrange,Rrange,num):
+    As = []
+    Hs = []
+    Bs = []
+    Qs = []
+    Rs = []    
+    for i in range(num):
+        A = np.random.uniform(Arange[0], Arange[1], (dx,dx))
+        B = np.random.uniform(Brange[0], Brange[1], (dx,du))
+        H = np.random.uniform(Hrange[0], Hrange[1], (dz,dx))
+        Q = GenCov(Qrange,dx)[0]
+        R = GenCov(Rrange,dz)[0]
+        As.append(A)
+        Bs.append(B)
+        Hs.append(H)
+        Rs.append(R)
+        Qs.append(Q)
+    SM = [As,Bs,Hs,Qs,Rs]
+    return SM
+
 if __name__ == "__main__":
     dx = 3
     dz = 2

@@ -19,7 +19,7 @@ import E2Etest.SM_generator_1d as SMGen1d
 import E2Etest.SM_generator_nd as SMGennd
 import E2Etest.System_setup_generator as SSGen
 import matplotlib.pyplot as plt
-from E2Etest.E2E_validation import Mode_simulation
+from E2Etest.E2E_validation_2d import Mode_simulation
 
 def simulation(SM,x0,uts,ts,ut,trials):
     u_T_D = []

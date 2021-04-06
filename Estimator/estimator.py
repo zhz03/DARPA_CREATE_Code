@@ -18,7 +18,7 @@ import E2Etest.System_setup_generator as SSGen
 import matplotlib.pyplot as plt
 import utility_functions.CompP2SHist as CompP2SHist
 from scipy.stats import multivariate_normal
-from E2Etest.E2E_validation import Mode_simulation
+from E2Etest.E2E_validation_2d import Mode_simulation
 
 
 def estimator(SM,z,ut):
