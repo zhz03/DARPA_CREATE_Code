@@ -83,10 +83,10 @@ if __name__ == '__main__':
     Qrange = [0,2]    
     Rrange = [0,2]
     
-    mode = "const_2d"    
+    mode = "nd"    
     mode_simulation = Mode_simulation.both # Four mode: raw & MM & raw_ugt & both
-    num = 20
-    trials_ = 1000
+    num = 10
+    trials_ = 50
     nHy = 2      
     nd = 2
     dx = nd
@@ -112,8 +112,6 @@ if __name__ == '__main__':
         MRange = [0,nHy]
         System_models = SMGennd.SM_generator_constant(Qrange,Rrange,num)
         T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator_nd(nHy,nd,du,MRange,Ts_,trials_)
-        
-        
         
     SM_num = len(System_models[0])  #SM = [As,Bs,Hs,Qs,Rs]; As = []
     
@@ -213,7 +211,7 @@ if __name__ == '__main__':
         plt.legend(['Planner','Simulation'], loc='upper left')
     plt.title("Sensor Detection Error bound with {} trials/Iteration: Prob_D".format(trials))
     plt.ylabel('Positive Probability')
-    plt.xlabel('Test Iteration')
+    plt.xlabel('Different System Models')
     plt.figure()
     plt.show()
     
@@ -227,7 +225,7 @@ if __name__ == '__main__':
         plt.legend(['Planner','Simulation'], loc='upper left')
     plt.title("Sensor Detection Error bound with {} trials/Iteration: Prob_F".format(trials))
     plt.ylabel('Flase Probability')
-    plt.xlabel('Test Iteration')
+    plt.xlabel('Different System Models')
     plt.legend(['Planner','Simulation_raw'], loc='upper left')
     plt.figure()
     plt.show()
@@ -241,5 +239,18 @@ if __name__ == '__main__':
         plt.legend(['Prob_d Diff'], loc='upper left')
     plt.title("Sensor Detection Error Difference with {} trials/Iteration".format(trials))
     plt.ylabel('Error Probability Diff')
-    plt.xlabel('Test Iteration')
+    plt.xlabel('Different System Models')
+    plt.figure()
+    plt.show()
+    
+    #plt.axhline(y=np.mean(error_comp_prob_d), color='g', linestyle='-')
+    #plt.axhline(y=np.mean(error_comp_prob_d_MM), color='b', linestyle='-')
+
+    plt.bar(np.arange(SM_num)-0.2, prob_d_stat_MM, alpha=0.8, width=0.37, color='blue', label='Current Planner', lw=4)
+    plt.bar(np.arange(SM_num)+0.2, prob_d_stat, alpha=0.9, width=0.37, color='green', label='MM Planner', lw=4)
+    plt.ylabel('Positive Probability', fontsize=15)
+    plt.xlabel('Different System Models', fontsize=15)
+    plt.xticks(fontsize=15)
+    plt.yticks(fontsize=15)
+    plt.legend(loc='upper left',fontsize=15)
     plt.show()

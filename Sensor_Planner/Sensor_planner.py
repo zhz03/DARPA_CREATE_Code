@@ -16,6 +16,23 @@ from Sensor_Planner.mul_hypothesis_testing_nd import mul_Hyp_test_nd as mhtnd
 from multi_HT_nd.input_generator_nd import input_generator_nd as InGen_nd
 from E2Etest.SM_generator_nd import SM_generator_nd_single as SMGndsin
 
+import binary_HT_1d.Gaussian_dist as Gd
+import Sim_KF_Pln_nd.simulation as sim1
+import Sim_KF_Pln_nd.kalman_filter as kf
+import Sim_KF_Pln_nd.planning as kfpln
+
+def Sensor_planner(A,B,H,Q,R,uts,ts):
+    """
+    This function outputs sensor planning error probabilities
+    """
+    USigma0 = kfpln.KF_planning_Uz(A, B, H, Q, R,ts[0])
+    USigma1 = kfpln.KF_planning_Uz(A, B, H, Q, R,ts[0])
+    mean_1 = np.dot(H,B)*uts[1]
+    mean_0 = np.dot(H,B)*uts[0]
+
+    Prob_D,Prob_FA,Prob_M,Prob_CR = Gd.error_prob(mean_0,mean_1,USigma0,USigma1)
+    return Prob_D,Prob_FA,Prob_M,Prob_CR
+
 def Sensor_planner_1d(SM,T,ut):
     Sigma_xhat = kfplnnd.KF_planner(SM,T)
     Sigma_ut = Uplnnd.Ut_planner_nd(SM,Sigma_xhat)

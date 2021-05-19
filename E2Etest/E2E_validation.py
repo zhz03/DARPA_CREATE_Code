@@ -51,10 +51,10 @@ if __name__ == '__main__':
     Rrange = [0,2]
     
     mode = "nd"
-    num = 10
+    num = 20
     trials_ = 5000
-    nHy = 4      
-    nd = 3
+    nHy = 2      
+    nd = 2
     dx = nd
     dz = nd 
     Ts_ = 5
@@ -113,8 +113,7 @@ if __name__ == '__main__':
     error_comp_prob_F = prob_F_sim - prob_F_stat
     
     print("mean error comparison is ", np.mean(error_comp_prob_d))
-    
-    
+  
     plt.plot(range(SM_num), prob_d_sim)
     plt.plot(range(SM_num), prob_d_stat)
     plt.title("Sensor Detection Error bound with {} trials/Iteration: Prob_D".format(trials))
@@ -138,4 +137,11 @@ if __name__ == '__main__':
     plt.ylabel('Error Probability Diff')
     plt.xlabel('Test Iteration')
     plt.legend(['Prob_d Diff'], loc='upper left')
+    plt.figure()
+    plt.show()
+    
+    plt.axhline(y=np.mean(error_comp_prob_d), color='r', linestyle='-')
+    plt.bar(np.arange(SM_num)-0.2, prob_d_sim/2, alpha=0.8, width=0.37, color='blue', label='Planner', lw=4)
+    plt.bar(np.arange(SM_num)+0.2, prob_d_stat/2, alpha=0.9, width=0.37, color='green', label='Simulation', lw=4)
+    plt.legend(loc='upper left')
     plt.show()
