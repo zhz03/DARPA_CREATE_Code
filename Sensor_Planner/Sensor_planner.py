@@ -17,9 +17,9 @@ from multi_HT_nd.input_generator_nd import input_generator_nd as InGen_nd
 from E2Etest.SM_generator_nd import SM_generator_nd_single as SMGndsin
 
 import binary_HT_1d.Gaussian_dist as Gd
-import Sim_KF_Pln_nd.simulation as sim1
-import Sim_KF_Pln_nd.kalman_filter as kf
-import Sim_KF_Pln_nd.planning as kfpln
+import Oldversion.Sim_KF_Pln_nd.simulation as sim1
+import Oldversion.Sim_KF_Pln_nd.kalman_filter as kf
+import Oldversion.Sim_KF_Pln_nd.planning as kfpln
 
 def Sensor_planner(A,B,H,Q,R,uts,ts):
     """

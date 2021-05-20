@@ -83,7 +83,7 @@ if __name__ == '__main__':
     Qrange = [0,2]    
     Rrange = [0,2]
     
-    mode = "nd"    
+    mode = "1d"    
     mode_simulation = Mode_simulation.both # Four mode: raw & MM & raw_ugt & both
     num = 10
     trials_ = 50
