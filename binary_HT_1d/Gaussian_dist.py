@@ -123,7 +123,7 @@ def error_prob(mean0,mean1,var0,var1):
         Prob_D = 1 - Prob_M
         Prob_FA = 1 - Prob_CR
 
-    
+    print("Prob_D", Prob_D)
     Pr_D,Pr_FA,Pr_M,Pr_CR = Prob_D,Prob_FA,Prob_M,Prob_CR
     return Pr_D,Pr_FA,Pr_M,Pr_CR 
 

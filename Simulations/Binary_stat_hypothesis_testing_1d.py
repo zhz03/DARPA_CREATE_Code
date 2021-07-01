@@ -36,20 +36,21 @@ def Bin_stat_hyp_test_nd(u_T_D, ut):
         for j in range(len_ut):
             if (u_T_D[i][0] == ut[j]):
                 gt_i = j
+                continue
         for j in range(len_ut):
             if (u_T_D[i][1] == ut[j]):
                 est_i = j
-                
+                continue
+            
         u_gt[gt_i] +=1
         u_est[est_i] +=1
         
         Prob_error_stat[gt_i][est_i] += 1
         
     for i in range(len_ut):
-        # i = gt; j = estimation
-        for j in range(len_ut):      
-            if  sum(Prob_error_stat[i])!= 0:
-                Prob_error[i][j] = Prob_error_stat[i][j] / sum(Prob_error_stat[i]) 
+        for j in range(len_ut):     
+            if sum(Prob_error_stat[i]) != 0:
+                   Prob_error[i][j] = Prob_error_stat[i][j] / sum(Prob_error_stat[i]) 
         
         
     return Prob_error

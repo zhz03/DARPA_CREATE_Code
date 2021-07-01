@@ -72,17 +72,24 @@ class KalmanFilter(object):
         for i in range(len(ut)):
             mean_ut_zt.append(np.dot(np.dot(self.H,self.B),ut[i]) )
             Sigma_ut_zt.append(sigma)
-        print("ut_zt:{}, Sigma_ut_zt: {}, mean: {}".format(ut_zt, Sigma_ut_zt,mean_ut_zt))
+        # print("ut_zt:{}, Sigma_ut_zt: {}, mean: {}".format(ut_zt, Sigma_ut_zt,mean_ut_zt))
         pdf_H_list, decide_u = DM.Decision_making_MM(ut,ut_zt,mean_ut_zt,Sigma_ut_zt)
              
         if len(ut) == 2: 
 
-            self.p0 = (pdf_H_list[0]*100)/((sum(pdf_H_list))*100)
-            self.p1 = (pdf_H_list[1]*100)/((sum(pdf_H_list))*100)
+            p0 = (pdf_H_list[0]*1000)/((sum(pdf_H_list))*1000)
+            p1 = (pdf_H_list[1]*1000)/((sum(pdf_H_list))*1000)
 
-            self.p0 = self.p0/(self.p0+self.p1)
-            self.p1 = self.p1/(self.p0+self.p1)
-
+            self.p0 = (self.p0*p0)/(self.p0*p0 + self.p1*p1)
+            self.p1 = (self.p1*p1)/(self.p0*p0 + self.p1*p1)
+            print(self.p1)
+            if self.p1 > 0.99:
+                self.p1 = 1
+                self.p0 = 0
+            elif self.p0 > 0.99:
+                self.p0 = 1
+                self.p1 = 0
+                
             bias = (self.p0) * mean_ut_zt[0] + (self.p1) * mean_ut_zt[1]
                     
             self.x = self.x + np.dot(K, y) 
