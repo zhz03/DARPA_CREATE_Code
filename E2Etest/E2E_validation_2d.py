@@ -85,7 +85,7 @@ if __name__ == '__main__':
     
     mode = "nd"    
     mode_simulation = Mode_simulation.both # Four mode: raw & MM & raw_ugt & both
-    num = 2
+    num = 5
     trials_ = 1000
     nHy = 2      
     nd = 2

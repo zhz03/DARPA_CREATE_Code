@@ -51,14 +51,6 @@ class KalmanFilter(object):
         self.P = self.P - np.dot(np.dot(K,self.H),self.P)
         return self.P,self.x
     
-    def update_ugt(self, z, u):
-        y = z - np.dot(self.H, self.x) - np.dot(np.dot(self.H,self.B),u)
-        S = self.R + np.dot(self.H, np.dot(self.P, self.H.T))
-        K = np.dot(np.dot(self.P, self.H.T), np.linalg.inv(S))  
-        self.x = self.x + np.dot(K, y)
-        self.P = self.P - np.dot(np.dot(K,self.H),self.P)
-        return self.P,self.x
-    
     def update_MM(self, z, ut):
         mean_ut_zt = []
         Sigma_ut_zt = []    
@@ -167,7 +159,7 @@ def KF_estimator_ugt(SM,measurements,u):
     Sigma = []
     for i, z in enumerate(measurements):
         predictions.append(kf.predict(u[i])) 
-        P,x=kf.update_ugt(z,u[i])
+        P,x=kf.update(z)
         estimates.append(x)
         Sigma.append(P)
 
