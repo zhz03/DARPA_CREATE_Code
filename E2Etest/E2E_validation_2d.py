@@ -83,15 +83,15 @@ if __name__ == '__main__':
     Qrange = [0,2]    
     Rrange = [0,2]
     
-    mode = "nd"    
+    mode = "const_2d"    
     mode_simulation = Mode_simulation.both # Four mode: raw & MM & raw_ugt & both
-    num = 5
-    trials_ = 1000
+    num = 3
+    trials_ = 200
     nHy = 2      
     nd = 2
     dx = nd
     dz = nd 
-    Ts_ = 10
+    Ts_ = 20
     
     if mode == "1d":
         System_models = SMGen1d.SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange)
@@ -103,12 +103,8 @@ if __name__ == '__main__':
         System_models = SMGennd.SM_generator_nd(dx,dz,du,Arange,Brange,Hrange,Qrange,Rrange,num)
         T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator_nd(nHy,nd,du,MRange,Ts_,trials_)
    
-    elif mode == "const_2d":  #TODO
+    elif mode == "const_2d":  
         du = 1
-        nHy = 2      
-        nd = 2
-        dx = nd
-        dz = nd 
         MRange = [0,nHy]
         System_models = SMGennd.SM_generator_constant(Qrange,Rrange,num)
         T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator_nd(nHy,nd,du,MRange,Ts_,trials_)
@@ -133,10 +129,10 @@ if __name__ == '__main__':
         R = System_models[4][i]
         SM = [A,B,H,Q,R]
         
-        if mode == "1d":
+        if mode=="1d":
             error_D,error_FA,error_M,error_CR = E2E_validation_1d(SM,T,ut,x0,uts,ts,trials)
             
-        elif mode == "nd":
+        elif mode=="nd" or mode=="const_2d":
 
             Prob_error, Prob_error_stat, error_comparison  = E2E_validation_nd_with_mode(SM,T,ut,x0,uts,ts,trials,mode_simulation)
             prob_error_list.append(Prob_error)
@@ -147,7 +143,7 @@ if __name__ == '__main__':
             prob_error_stat_list_ugt.append(Prob_error_stat[2])
             error_comparison_list_ugt.append(error_comparison[2])
     
-    if mode =="nd":                   
+    if mode=="nd" or mode=="const_2d":                   
         prob_d_sim = np.zeros(SM_num)
         prob_d_stat = np.zeros(SM_num)
         prob_d_stat_MM = np.zeros(SM_num)
@@ -242,9 +238,9 @@ if __name__ == '__main__':
         #plt.axhline(y=np.mean(error_comp_prob_d), color='g', linestyle='-')
         #plt.axhline(y=np.mean(error_comp_prob_d_MM), color='b', linestyle='-')
     
-        plt.bar(np.arange(SM_num)-0.2, prob_d_stat , alpha=0.8, width=0.2, color='blue', label='Origin Estimator', lw=4)
-        plt.bar(np.arange(SM_num), prob_d_stat_MM, alpha=0.9, width=0.2, color='green', label='MM Planner', lw=4)
-        plt.bar(np.arange(SM_num)+0.2, prob_d_stat_ugt, alpha=0.9, width=0.2, color='red', label='ugt Planner', lw=4)
+        plt.bar(np.arange(SM_num)-0.2, prob_d_stat , alpha=0.8, width=0.2, color='blue', label='Raw Estimator', lw=4)
+        plt.bar(np.arange(SM_num), prob_d_stat_MM, alpha=0.9, width=0.2, color='green', label='MM Estimator', lw=4)
+        plt.bar(np.arange(SM_num)+0.2, prob_d_stat_ugt, alpha=0.9, width=0.2, color='red', label='UGT Estimator', lw=4)
         plt.ylabel('Positive Probability', fontsize=15)
         plt.xlabel('Different System Models', fontsize=15)
         plt.xticks(fontsize=15)

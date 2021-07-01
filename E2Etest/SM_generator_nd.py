@@ -47,11 +47,11 @@ def SM_generator_constant(Qrange,Rrange,num):
     Qs = []
     Rs = []    
     for i in range(num):
-        A = np.random.uniform(Arange[0], Arange[1], (dx,dx))
-        B = np.random.uniform(Brange[0], Brange[1], (dx,du))
-        H = np.random.uniform(Hrange[0], Hrange[1], (dz,dx))
-        Q = GenCov(Qrange,dx)[0]
-        R = GenCov(Rrange,dz)[0]
+        A = np.load('As.npy')
+        B = np.load('Bs.npy')
+        H = np.load('Hs.npy')
+        Q = np.load('Qs.npy')
+        R = np.load('Rs.npy')
         As.append(A)
         Bs.append(B)
         Hs.append(H)

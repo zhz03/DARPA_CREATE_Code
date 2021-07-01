@@ -10,7 +10,7 @@ from multi_HT_nd.input_generator_nd import generate_mean as GenMean
 def System_setup_generator():
     
     uts = [0,1]
-    ts = [10,1]
+    ts = [10,10]
     T = ts[0] + ts[1]
     ut = [0,1]
     trials = 1000
