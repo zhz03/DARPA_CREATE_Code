@@ -49,22 +49,30 @@ def E2E_validation_nd_with_mode(SM,T,ut,x0,uts,ts,trials,mode_simulation):
         Prob_error_stat_list = []
         error_comparison_list = []
         
-        u_T_D, u_T_D_MM, u_T_D_ugt = Sim.simulation_with_mode(SM,x0,uts,ts,ut,trials,mode_simulation)
+        # u_T_D, u_T_D_MM, u_T_D_ugt = Sim.simulation_with_mode(SM,x0,uts,ts,ut,trials,mode_simulation)
+        
+        u_T_D_list = Sim.simulation_with_mode(SM,x0,uts,ts,ut,trials,mode_simulation)
 
-        Prob_error_stat = BstatHT.Bin_stat_hyp_test_nd(u_T_D, ut)
-        error_comparison = EPComp.Error_prob_Comp_nd(Prob_error,Prob_error_stat)
-        Prob_error_stat_list.append(Prob_error_stat)
-        error_comparison_list.append(error_comparison)
+        for i in range(len(u_T_D_list)):
+            Prob_error_stat = BstatHT.Bin_stat_hyp_test_nd(u_T_D_list[i], ut)
+            error_comparison = EPComp.Error_prob_Comp_nd(Prob_error,Prob_error_stat)
+            Prob_error_stat_list.append(Prob_error_stat)
+            error_comparison_list.append(error_comparison)
+            
+        # Prob_error_stat = BstatHT.Bin_stat_hyp_test_nd(u_T_D_list[0], ut)
+        # error_comparison = EPComp.Error_prob_Comp_nd(Prob_error,Prob_error_stat)
+        # Prob_error_stat_list.append(Prob_error_stat)
+        # error_comparison_list.append(error_comparison)
         
-        Prob_error_stat_MM = BstatHT.Bin_stat_hyp_test_nd(u_T_D_MM, ut)
-        error_comparison_MM = EPComp.Error_prob_Comp_nd(Prob_error,Prob_error_stat_MM)
-        Prob_error_stat_list.append(Prob_error_stat_MM)
-        error_comparison_list.append(error_comparison_MM)
+        # Prob_error_stat_MM = BstatHT.Bin_stat_hyp_test_nd(u_T_D_list[1], ut)
+        # error_comparison_MM = EPComp.Error_prob_Comp_nd(Prob_error,Prob_error_stat_MM)
+        # Prob_error_stat_list.append(Prob_error_stat_MM)
+        # error_comparison_list.append(error_comparison_MM)
         
-        Prob_error_stat_ugt = BstatHT.Bin_stat_hyp_test_nd(u_T_D_ugt, ut)
-        error_comparison_ugt = EPComp.Error_prob_Comp_nd(Prob_error,Prob_error_stat_ugt)
-        Prob_error_stat_list.append(Prob_error_stat_ugt)
-        error_comparison_list.append(error_comparison_ugt)
+        # Prob_error_stat_ugt = BstatHT.Bin_stat_hyp_test_nd(u_T_D_list[2], ut)
+        # error_comparison_ugt = EPComp.Error_prob_Comp_nd(Prob_error,Prob_error_stat_ugt)
+        # Prob_error_stat_list.append(Prob_error_stat_ugt)
+        # error_comparison_list.append(error_comparison_ugt)
         
         return Prob_error, Prob_error_stat_list, error_comparison_list
         
@@ -86,13 +94,19 @@ if __name__ == '__main__':
     mode = "const_2d"    
     mode_simulation = Mode_simulation.both # Four mode: raw & MM & raw_ugt & both
     num = 3
-    trials_ = 200
+    trials_ = 100
     nHy = 2      
     nd = 2
     dx = nd
     dz = nd 
-    Ts_ = 20
-    
+    Ts_ = 10
+    mode_num = 4
+        
+    if mode_simulation.value == Mode_simulation.both.value:
+        mode_num = 4
+    else:
+        mode_num = 2 
+        
     if mode == "1d":
         System_models = SMGen1d.SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange)
         T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator()
@@ -103,7 +117,7 @@ if __name__ == '__main__':
         System_models = SMGennd.SM_generator_nd(dx,dz,du,Arange,Brange,Hrange,Qrange,Rrange,num)
         T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator_nd(nHy,nd,du,MRange,Ts_,trials_)
    
-    elif mode == "const_2d":  
+    elif mode == "const_2d":   #read ABHQR from .npy
         du = 1
         MRange = [0,nHy]
         System_models = SMGennd.SM_generator_constant(Qrange,Rrange,num)
@@ -114,10 +128,8 @@ if __name__ == '__main__':
     prob_error_list = []
     prob_error_stat_list_raw = []
     error_comparison_list = []
-
     prob_error_stat_list_MM = []
     error_comparison_list_MM = []
-    
     prob_error_stat_list_ugt = []
     error_comparison_list_ugt = []
     
@@ -135,6 +147,7 @@ if __name__ == '__main__':
         elif mode=="nd" or mode=="const_2d":
 
             Prob_error, Prob_error_stat, error_comparison  = E2E_validation_nd_with_mode(SM,T,ut,x0,uts,ts,trials,mode_simulation)
+            
             prob_error_list.append(Prob_error)
             prob_error_stat_list_raw.append(Prob_error_stat[0])
             error_comparison_list.append(error_comparison[0])
@@ -143,61 +156,46 @@ if __name__ == '__main__':
             prob_error_stat_list_ugt.append(Prob_error_stat[2])
             error_comparison_list_ugt.append(error_comparison[2])
     
-    if mode=="nd" or mode=="const_2d":                   
-        prob_d_sim = np.zeros(SM_num)
-        prob_d_stat = np.zeros(SM_num)
-        prob_d_stat_MM = np.zeros(SM_num)
-        prob_d_stat_ugt = np.zeros(SM_num)
-        prob_F_sim = np.zeros(SM_num)
-        prob_F_stat = np.zeros(SM_num)
-        prob_F_stat_MM = np.zeros(SM_num)
-        prob_F_stat_ugt = np.zeros(SM_num)
-        error_comp_prob_d = np.zeros(SM_num)
-        error_comp_prob_F = np.zeros(SM_num)
-        error_comp_prob_d_MM = np.zeros(SM_num)
-        error_comp_prob_F_MM = np.zeros(SM_num)
-        error_comp_prob_d_ugt = np.zeros(SM_num)
-        error_comp_prob_F_ugt = np.zeros(SM_num)
+    if mode=="nd" or mode=="const_2d":     
+   
+        prob_d_list = np.zeros([mode_num, SM_num]) #4: sim; raw; MM; ugt
+        prob_f_list = np.zeros([mode_num, SM_num]) #4: sim; raw; MM; ugt
+        prob_d_error_list = np.zeros([mode_num-1, SM_num]) #3: raw; MM; ugt
+        prob_f_error_list = np.zeros([mode_num-1, SM_num]) #3: raw; MM; ugt    
         
         for i in range(SM_num):
             len_ut = prob_error_list[i].shape[0]
             for j in range(len_ut):
-                prob_d_sim[i] += prob_error_list[i][j][j]/2
-                prob_d_stat[i] += prob_error_stat_list_raw[i][j][j]
+                prob_d_list[0][i] += prob_error_list[i][j][j]/2
+                prob_d_list[1][i] += prob_error_stat_list_raw[i][j][j]
                 if mode_simulation == Mode_simulation.both:
-                    prob_d_stat_MM[i] += prob_error_stat_list_MM[i][j][j]
-                    prob_d_stat_ugt[i] += prob_error_stat_list_ugt[i][j][j]
+                    prob_d_list[2][i] += prob_error_stat_list_MM[i][j][j]
+                    prob_d_list[3][i] += prob_error_stat_list_ugt[i][j][j]
                     
                 for k in range(len_ut):
                     if k != j:
-                        prob_F_sim[i] += prob_error_list[i][j][k]
-                        prob_F_stat[i] += prob_error_stat_list_raw[i][j][k]
+                        prob_f_list[0][i] += prob_error_list[i][j][k]
+                        prob_f_list[1][i] += prob_error_stat_list_raw[i][j][k]
                         if mode_simulation == Mode_simulation.both:
-                            prob_F_stat_MM[i] += prob_error_stat_list_MM[i][j][k]
-                            prob_F_stat_ugt[i] += prob_error_stat_list_ugt[i][j][k]
-                            
-        error_comp_prob_d = prob_d_sim - prob_d_stat
-        error_comp_prob_F = prob_F_sim - prob_F_stat
-        if mode_simulation == Mode_simulation.both:
-            error_comp_prob_d_MM = prob_d_sim - prob_d_stat_MM
-            error_comp_prob_F_MM = prob_F_sim - prob_F_stat_MM    
-            error_comp_prob_d_ugt = prob_d_sim - prob_d_stat_ugt
-            error_comp_prob_F_ugt = prob_F_sim - prob_F_stat_ugt
-            
-            print("mean error comparison is {}\n", np.mean(error_comp_prob_d), \
-                  "mean error comparison of MM is {}\n", np.mean(error_comp_prob_d_MM),\
-                  "mean error comparison of ugt is {}\n", np.mean(error_comp_prob_d_ugt))
+                            prob_f_list[2][i] += prob_error_stat_list_MM[i][j][k]
+                            prob_f_list[3][i] += prob_error_stat_list_ugt[i][j][k]
+                                                      
+        for i in range(mode_num-1):
+            prob_d_error_list[i] = prob_d_list[0] - prob_d_list[i+1]
+            prob_f_error_list[i] = prob_f_list[0] - prob_f_list[i+1]
+        if mode_num == 4:  
+            print("mean error comparison is {}\n", np.mean(prob_d_error_list[0]), \
+                  "mean error comparison of MM is {}\n", np.mean(prob_d_error_list[1]),\
+                  "mean error comparison of ugt is {}\n", np.mean(prob_d_error_list[2]))
         else:
-            print("mean error comparison is {}\n", np.mean(error_comp_prob_d))
+            print("mean error comparison is {}\n", np.mean(prob_d_error_list[0]))
             
         '''
         Plot Section
-        '''
-        plt.plot(range(SM_num), prob_d_sim)
-        plt.plot(range(SM_num), prob_d_stat)
-        if mode_simulation.value == Mode_simulation.both.value:
-            plt.plot(range(SM_num), prob_d_stat_MM)
-            plt.plot(range(SM_num), prob_d_stat_ugt)
+        '''    
+        for i in range(mode_num):
+            plt.plot(range(SM_num), prob_d_list[i])
+        if mode_num == 4:
             plt.legend(['Planner','Simulation_raw','Simulation_MM','Simulation_ugt'], loc='upper left')
         else:
             plt.legend(['Planner','Simulation'], loc='upper left')
@@ -207,11 +205,10 @@ if __name__ == '__main__':
         plt.figure()
         plt.show()
         
-        # plt.plot(range(SM_num), prob_F_sim)
-        # plt.plot(range(SM_num), prob_F_stat)
-        # if mode_simulation.value == Mode_simulation.both.value:
-        #     plt.plot(range(SM_num), prob_F_stat_MM)
-        #     plt.plot(range(SM_num), prob_F_stat_ugt)
+        # for i in range(mode_num):
+        #     plt.plot(range(SM_num), prob_f_list[i])
+            
+        # if mode_num == 4:
         #     plt.legend(['Planner','Simulation_raw','Simulation_MM','Simulation_ugt'], loc='upper left')
         # else:
         #     plt.legend(['Planner','Simulation'], loc='upper left')
@@ -222,10 +219,9 @@ if __name__ == '__main__':
         # plt.figure()
         # plt.show()
         
-        plt.plot(range(SM_num), error_comp_prob_d)
-        if mode_simulation.value == Mode_simulation.both.value:
-            plt.plot(range(SM_num), error_comp_prob_d_MM)
-            plt.plot(range(SM_num), error_comp_prob_d_ugt)
+        for i in range(mode_num-1):
+            plt.plot(range(SM_num), prob_d_error_list[i])     
+        if mode_num == 4:
             plt.legend(['Prob_d Diff_raw','Prob_d Diff_MM','Prob_d Diff_ugt'], loc='upper left')
         else:
             plt.legend(['Prob_d Diff'], loc='upper left')
@@ -235,12 +231,12 @@ if __name__ == '__main__':
         plt.figure()
         plt.show()
         
-        #plt.axhline(y=np.mean(error_comp_prob_d), color='g', linestyle='-')
-        #plt.axhline(y=np.mean(error_comp_prob_d_MM), color='b', linestyle='-')
+        #plt.axhline(y=np.mean(prob_d_error_list[0]), color='g', linestyle='-')
+        #plt.axhline(y=np.mean(prob_d_error_list[1]), color='b', linestyle='-')
     
-        plt.bar(np.arange(SM_num)-0.2, prob_d_stat , alpha=0.8, width=0.2, color='blue', label='Raw Estimator', lw=4)
-        plt.bar(np.arange(SM_num), prob_d_stat_MM, alpha=0.9, width=0.2, color='green', label='MM Estimator', lw=4)
-        plt.bar(np.arange(SM_num)+0.2, prob_d_stat_ugt, alpha=0.9, width=0.2, color='red', label='UGT Estimator', lw=4)
+        plt.bar(np.arange(SM_num)-0.2, prob_d_list[1] , alpha=0.8, width=0.2, color='blue', label='Raw Estimator', lw=4)
+        plt.bar(np.arange(SM_num), prob_d_list[2], alpha=0.9, width=0.2, color='green', label='MM Estimator', lw=4)
+        plt.bar(np.arange(SM_num)+0.2, prob_d_list[3], alpha=0.9, width=0.2, color='red', label='UGT Estimator', lw=4)
         plt.ylabel('Positive Probability', fontsize=15)
         plt.xlabel('Different System Models', fontsize=15)
         plt.xticks(fontsize=15)
