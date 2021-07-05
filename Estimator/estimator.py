@@ -27,16 +27,35 @@ def estimator(SM,z,ut):
     u_D = DM.Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt)
     return u_D
 
-def estimator_with_mode(SM,z,ut,u,mode_simulation):
-    if mode_simulation.value == Mode_simulation.raw.value:
-        Sigma,estimates = KF_est.KF_estimator(SM,z)
+def estimator_with_mode(SM,z,ut,u,x0,mode_simulation):
+    u_D_list = []
+    
+    
+    if mode_simulation.value == Mode_simulation.rkf.value:
+        Sigma,x_estimates, u_estimates = KF_est.KF_estimator_rkf(SM,z,u)
+        return u_estimates
+    
+    elif mode_simulation.value == Mode_simulation.raw.value:
+        Sigma,x_estimates = KF_est.KF_estimator(SM,z)
     elif mode_simulation.value == Mode_simulation.MM.value:
-        Sigma,estimates = KF_est.KF_estimator_MM(SM,z,ut)
+        Sigma,x_estimates = KF_est.KF_estimator_MM(SM,z,ut)
     elif mode_simulation.value == Mode_simulation.raw_ugt.value:
-        Sigma,estimates = KF_est.KF_estimator_ugt(SM,z,u)
-    ut_zt,mean_ut_zt,Sigma_ut_zt = BA.Bayesian_analysis(SM,ut,Sigma,estimates,z)
-    u_D = DM.Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt)
-    return u_D
+        Sigma,x_estimates = KF_est.KF_estimator_ugt(SM,z,u)   
+        
+    for i in range(len(x_estimates)):
+        x_slice = []
+        if i == 0:
+            x_slice.append(x0)
+            x_slice.append(x_estimates[0])
+        else:
+            x_slice = x_estimates[0:i+1]
+        z_slice = z[0:i+1]
+        sigma_slice = Sigma[0:i+1]
+        ut_zt,mean_ut_zt,Sigma_ut_zt = BA.Bayesian_analysis(SM,ut,sigma_slice,x_slice,z_slice)
+        u_D = DM.Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt)
+        u_D_list.append(u_D)
+          
+    return u_D_list
 
 def verification(num):
 

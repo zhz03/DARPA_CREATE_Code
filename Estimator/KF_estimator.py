@@ -102,7 +102,7 @@ class KalmanFilter(object):
         
         return self.P,self.x
     
-    def update_rkf(self, z, ut):
+    def update_rkf(self, z):
         mean_ut_zt = []
         Sigma_ut_zt = []    
         y = z - np.dot(self.H, self.x)
@@ -111,10 +111,10 @@ class KalmanFilter(object):
         HB = np.dot(self.H, self.B)
         
         M_k = np.dot(np.dot(np.linalg.inv(np.dot(np.dot(HB.T, np.linalg.inv(S)), HB)), HB.T), np.linalg.inv(S))     
-        L_k = K + np.dot((np.identity(K.shape(0)) - np.dot(K, self.H)), np.dot(self.B, M_k))
-        u_est = np.dot(M_k, y)
+        L_k = K + np.dot((np.identity(K.shape[0]) - np.dot(K, self.H)), np.dot(self.B, M_k))
+        u_est_k = np.dot(M_k, y)
         
-        A_star = (np.identity(self.B.shape(0)) - np.dot(np.dot(self.B, M_k), self.H)) #A* = (I-GMC)
+        A_star = (np.identity(self.B.shape[0]) - np.dot(np.dot(self.B, M_k), self.H)) #A* = (I-GMC)
         GM = np.dot(self.B, M_k)
         Q_star = np.dot(np.dot(GM, self.R), GM.T)
         P_star = np.dot(np.dot(A_star, self.P), A_star.T) + Q_star # P* = (I-GMC)P_k|k-1(I-GMC).T + Q*
@@ -122,9 +122,8 @@ class KalmanFilter(object):
         
         self.x = self.x + np.dot(L_k, y)
         self.P = P_star - np.dot(K, (np.dot(P_star, self.H.T) + S_star).T) 
-        # self.P = self.P - np.dot(np.dot(K,self.H),self.P)
 
-        return self.P,self.x, u_est
+        return self.P,self.x, u_est_k
       
 def KF_estimator(SM,measurements):
     A = SM[0]
@@ -196,15 +195,16 @@ def KF_estimator_rkf(SM,measurements,u):
     kf = KalmanFilter(A=A,B=B,H=H,Q=Q,R=R)
     
     predictions = []
-    estimates = []
+    x_estimates = []
+    u_estimates = []
     Sigma = []
-    for i, z in enumerate(measurements):
+    for _, z in enumerate(measurements):
         predictions.append(kf.predict()) 
-        P,x=kf.update_rkf(z)
-        estimates.append(x)
+        P,x,u_est_k=kf.update_rkf(z)
+        x_estimates.append(x)
         Sigma.append(P)
-
-    return Sigma,estimates
+        u_estimates.append(u_est_k)
+    return Sigma,x_estimates, u_estimates
 
 if __name__ == '__main__':
     

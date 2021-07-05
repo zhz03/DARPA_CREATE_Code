@@ -20,6 +20,7 @@ import E2Etest.SM_generator_nd as SMGennd
 import E2Etest.System_setup_generator as SSGen
 import matplotlib.pyplot as plt
 from E2Etest.E2E_validation_2d import Mode_simulation
+import E2Etest.E2E_plot as E2Eplt
 
 def simulation(SM,x0,uts,ts,ut,trials):
     u_T_D = []
@@ -33,11 +34,10 @@ def simulation(SM,x0,uts,ts,ut,trials):
     return u_T_D
 
 def simulation_with_mode(SM,x0,uts,ts,ut,trials,mode_simulation):
-    u_T_D = []
-    u_T_D_MM = []
-    u_T_D_ugt = []
-    u_T_D_list = [[],[],[]]  
+    u_T_D_list = []
     for _, mode_m in Mode_simulation.__members__.items():
+        if mode_m.value == Mode_simulation.rkf.value:
+                continue
         u_T_D_list.append([])
     
     for i in range(trials):
@@ -45,9 +45,11 @@ def simulation_with_mode(SM,x0,uts,ts,ut,trials,mode_simulation):
         u_T = u[-1]
         y,z = Simu.Simulator(SM,x0,u)
         i_mode = 0
-        for _, mode_m in mode_simulation.__members__.items():
-            u_D = Estr.estimator_with_mode(SM,z,ut,u,mode_m)           
-            u_td = [u_T,u_D]
+        for name, mode_m in mode_simulation.__members__.items():
+            u_D = Estr.estimator_with_mode(SM,z,ut,u,x0,mode_m)  
+            if mode_m.value == Mode_simulation.rkf.value:
+                continue
+            u_td = [u_T,u_D[-1]]
             u_T_D_list[i_mode].append(u_td)
             i_mode +=1
         

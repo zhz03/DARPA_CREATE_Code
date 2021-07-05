@@ -52,9 +52,7 @@ def Bin_stat_hyp_test_nd(u_T_D, ut):
             if sum(Prob_error_stat[i]) != 0:
                    Prob_error[i][j] = Prob_error_stat[i][j] / sum(Prob_error_stat[i]) 
         
-        
     return Prob_error
-
 
 def verification(num):
     Error_D = []

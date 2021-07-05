@@ -31,9 +31,7 @@ def Bayesian_analysis(SM,ut,Sigma,estimates,measurements):
             #sigma = np.full((H.shape[0], ut[i].shape[-1]), Sigma_ut_zt01)
             sigma = Sigma_ut_zt01  
             Sigma_ut_zt.append(sigma)
-        
-    #mean_ut_zt = [np.dot(H,B)*ut[0],np.dot(H,B)*ut[1]]
-    #Sigma_ut_zt = [Sigma_ut_zt01,Sigma_ut_zt01]
+    
     return ut_zt,mean_ut_zt,Sigma_ut_zt
 
     
