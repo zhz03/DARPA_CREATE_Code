@@ -74,7 +74,6 @@ class KalmanFilter(object):
 
             self.p0 = (self.p0*p0)/(self.p0*p0 + self.p1*p1)
             self.p1 = (self.p1*p1)/(self.p0*p0 + self.p1*p1)
-            print(self.p1)
             if self.p1 > 0.99:
                 self.p1 = 1
                 self.p0 = 0
@@ -86,7 +85,6 @@ class KalmanFilter(object):
                     
             self.x = self.x + np.dot(K, y) 
             self.x_last = self.x
-
             self.P = self.P - np.dot(np.dot(K,self.H),self.P)
             x_res = self.x - self.x_last
             
@@ -95,7 +93,6 @@ class KalmanFilter(object):
             if np.linalg.det(delta_P) < np.linalg.det(self.P):
                 self.P = self.P + delta_P
                 self.x = self.x + np.dot(1-K, bias)
-                               
         else:
             #TODO: len(ut) > 2
             bias = 0 
@@ -104,6 +101,30 @@ class KalmanFilter(object):
             self.P = self.P - np.dot(np.dot(K,self.H),self.P)
         
         return self.P,self.x
+    
+    def update_rkf(self, z, ut):
+        mean_ut_zt = []
+        Sigma_ut_zt = []    
+        y = z - np.dot(self.H, self.x)
+        S = self.R + np.dot(self.H, np.dot(self.P, self.H.T))
+        K = np.dot(np.dot(self.P, self.H.T), np.linalg.inv(S))
+        HB = np.dot(self.H, self.B)
+        
+        M_k = np.dot(np.dot(np.linalg.inv(np.dot(np.dot(HB.T, np.linalg.inv(S)), HB)), HB.T), np.linalg.inv(S))     
+        L_k = K + np.dot((np.identity(K.shape(0)) - np.dot(K, self.H)), np.dot(self.B, M_k))
+        u_est = np.dot(M_k, y)
+        
+        A_star = (np.identity(self.B.shape(0)) - np.dot(np.dot(self.B, M_k), self.H)) #A* = (I-GMC)
+        GM = np.dot(self.B, M_k)
+        Q_star = np.dot(np.dot(GM, self.R), GM.T)
+        P_star = np.dot(np.dot(A_star, self.P), A_star.T) + Q_star # P* = (I-GMC)P_k|k-1(I-GMC).T + Q*
+        S_star = -np.dot(np.dot(self.B, M_k), self.R)
+        
+        self.x = self.x + np.dot(L_k, y)
+        self.P = P_star - np.dot(K, (np.dot(P_star, self.H.T) + S_star).T) 
+        # self.P = self.P - np.dot(np.dot(K,self.H),self.P)
+
+        return self.P,self.x, u_est
       
 def KF_estimator(SM,measurements):
     A = SM[0]
@@ -160,6 +181,26 @@ def KF_estimator_ugt(SM,measurements,u):
     for i, z in enumerate(measurements):
         predictions.append(kf.predict(u[i])) 
         P,x=kf.update(z)
+        estimates.append(x)
+        Sigma.append(P)
+
+    return Sigma,estimates
+
+def KF_estimator_rkf(SM,measurements,u):
+    A = SM[0]
+    B = SM[1]
+    H = SM[2]
+    Q = SM[3]
+    R = SM[4]
+    
+    kf = KalmanFilter(A=A,B=B,H=H,Q=Q,R=R)
+    
+    predictions = []
+    estimates = []
+    Sigma = []
+    for i, z in enumerate(measurements):
+        predictions.append(kf.predict()) 
+        P,x=kf.update_rkf(z)
         estimates.append(x)
         Sigma.append(P)
 

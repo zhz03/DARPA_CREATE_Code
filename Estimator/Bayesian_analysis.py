@@ -27,8 +27,7 @@ def Bayesian_analysis(SM,ut,Sigma,estimates,measurements):
         if (type(ut[i]) == int): # int means 1d
             Sigma_ut_zt.append(Sigma_ut_zt01)
         else:
-            #Currently, we call suppose ut is 1d
-            print("Warning: U setting should be 1d, but now is nd")
+            print("Warning: Current U setting should be 1d, but now is nd")
             #sigma = np.full((H.shape[0], ut[i].shape[-1]), Sigma_ut_zt01)
             sigma = Sigma_ut_zt01  
             Sigma_ut_zt.append(sigma)

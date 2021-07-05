@@ -16,11 +16,10 @@ import matplotlib.pyplot as plt
 from enum import Enum
 
 class Mode_simulation(Enum):
-    both = 0
     raw = 1 
     MM = 2 #MM
     raw_ugt = 3 #groudtruth
-    
+
 def E2E_validation_1d(SM,T,ut,x0,uts,ts,trials):
 
     Pr_D,Pr_FA,Pr_M,Pr_CR = Spr.Sensor_planner_1d(SM,T,ut)
@@ -45,43 +44,18 @@ def E2E_validation_nd(SM,T,ut,x0,uts,ts,trials):
 def E2E_validation_nd_with_mode(SM,T,ut,x0,uts,ts,trials,mode_simulation):
 
     Prob_error = Spr.Sensor_planner_nd(SM,T,ut)
-    if mode_simulation.value == Mode_simulation.both.value:
-        Prob_error_stat_list = []
-        error_comparison_list = []
-        
-        # u_T_D, u_T_D_MM, u_T_D_ugt = Sim.simulation_with_mode(SM,x0,uts,ts,ut,trials,mode_simulation)
-        
-        u_T_D_list = Sim.simulation_with_mode(SM,x0,uts,ts,ut,trials,mode_simulation)
+    Prob_error_stat_list = []
+    error_comparison_list = []
+    
+    u_T_D_list = Sim.simulation_with_mode(SM,x0,uts,ts,ut,trials,mode_simulation)
 
-        for i in range(len(u_T_D_list)):
-            Prob_error_stat = BstatHT.Bin_stat_hyp_test_nd(u_T_D_list[i], ut)
-            error_comparison = EPComp.Error_prob_Comp_nd(Prob_error,Prob_error_stat)
-            Prob_error_stat_list.append(Prob_error_stat)
-            error_comparison_list.append(error_comparison)
-            
-        # Prob_error_stat = BstatHT.Bin_stat_hyp_test_nd(u_T_D_list[0], ut)
-        # error_comparison = EPComp.Error_prob_Comp_nd(Prob_error,Prob_error_stat)
-        # Prob_error_stat_list.append(Prob_error_stat)
-        # error_comparison_list.append(error_comparison)
-        
-        # Prob_error_stat_MM = BstatHT.Bin_stat_hyp_test_nd(u_T_D_list[1], ut)
-        # error_comparison_MM = EPComp.Error_prob_Comp_nd(Prob_error,Prob_error_stat_MM)
-        # Prob_error_stat_list.append(Prob_error_stat_MM)
-        # error_comparison_list.append(error_comparison_MM)
-        
-        # Prob_error_stat_ugt = BstatHT.Bin_stat_hyp_test_nd(u_T_D_list[2], ut)
-        # error_comparison_ugt = EPComp.Error_prob_Comp_nd(Prob_error,Prob_error_stat_ugt)
-        # Prob_error_stat_list.append(Prob_error_stat_ugt)
-        # error_comparison_list.append(error_comparison_ugt)
-        
-        return Prob_error, Prob_error_stat_list, error_comparison_list
-        
-    else:
-        u_T_D = Sim.simulation_with_mode(SM,x0,uts,ts,ut,trials,mode_simulation)
-        Prob_error_stat = BstatHT.Bin_stat_hyp_test_nd(u_T_D, ut)
+    for i in range(len(u_T_D_list)):
+        Prob_error_stat = BstatHT.Bin_stat_hyp_test_nd(u_T_D_list[i], ut)
         error_comparison = EPComp.Error_prob_Comp_nd(Prob_error,Prob_error_stat)
+        Prob_error_stat_list.append(Prob_error_stat)
+        error_comparison_list.append(error_comparison)
         
-        return Prob_error, Prob_error_stat, error_comparison 
+    return Prob_error, Prob_error_stat_list, error_comparison_list
 
 if __name__ == '__main__':
 
@@ -92,7 +66,7 @@ if __name__ == '__main__':
     Rrange = [0,2]
     
     mode = "const_2d"    
-    mode_simulation = Mode_simulation.both # Four mode: raw & MM & raw_ugt & both
+    mode_simulation = Mode_simulation # Four mode: raw & MM & raw_ugt & rkf
     num = 3
     trials_ = 100
     nHy = 2      
@@ -100,12 +74,7 @@ if __name__ == '__main__':
     dx = nd
     dz = nd 
     Ts_ = 10
-    mode_num = 4
-        
-    if mode_simulation.value == Mode_simulation.both.value:
-        mode_num = 4
-    else:
-        mode_num = 2 
+    mode_num = 4        
         
     if mode == "1d":
         System_models = SMGen1d.SM_generator_1d(num,Arange,Brange,Hrange,Qrange,Rrange)
@@ -124,7 +93,6 @@ if __name__ == '__main__':
         T,uts,ts,ut,trials,x0 = SSGen.System_setup_generator_nd(nHy,nd,du,MRange,Ts_,trials_)
         
     SM_num = len(System_models[0])  #SM = [As,Bs,Hs,Qs,Rs]; As = []
-    
     prob_error_list = []
     prob_error_stat_list_raw = []
     error_comparison_list = []
@@ -145,7 +113,6 @@ if __name__ == '__main__':
             error_D,error_FA,error_M,error_CR = E2E_validation_1d(SM,T,ut,x0,uts,ts,trials)
             
         elif mode=="nd" or mode=="const_2d":
-
             Prob_error, Prob_error_stat, error_comparison  = E2E_validation_nd_with_mode(SM,T,ut,x0,uts,ts,trials,mode_simulation)
             
             prob_error_list.append(Prob_error)
@@ -168,17 +135,15 @@ if __name__ == '__main__':
             for j in range(len_ut):
                 prob_d_list[0][i] += prob_error_list[i][j][j]/2
                 prob_d_list[1][i] += prob_error_stat_list_raw[i][j][j]
-                if mode_simulation == Mode_simulation.both:
-                    prob_d_list[2][i] += prob_error_stat_list_MM[i][j][j]
-                    prob_d_list[3][i] += prob_error_stat_list_ugt[i][j][j]
+                prob_d_list[2][i] += prob_error_stat_list_MM[i][j][j]
+                prob_d_list[3][i] += prob_error_stat_list_ugt[i][j][j]
                     
                 for k in range(len_ut):
                     if k != j:
                         prob_f_list[0][i] += prob_error_list[i][j][k]
                         prob_f_list[1][i] += prob_error_stat_list_raw[i][j][k]
-                        if mode_simulation == Mode_simulation.both:
-                            prob_f_list[2][i] += prob_error_stat_list_MM[i][j][k]
-                            prob_f_list[3][i] += prob_error_stat_list_ugt[i][j][k]
+                        prob_f_list[2][i] += prob_error_stat_list_MM[i][j][k]
+                        prob_f_list[3][i] += prob_error_stat_list_ugt[i][j][k]
                                                       
         for i in range(mode_num-1):
             prob_d_error_list[i] = prob_d_list[0] - prob_d_list[i+1]

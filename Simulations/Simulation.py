@@ -36,33 +36,23 @@ def simulation_with_mode(SM,x0,uts,ts,ut,trials,mode_simulation):
     u_T_D = []
     u_T_D_MM = []
     u_T_D_ugt = []
+    u_T_D_list = [[],[],[]]  
+    for _, mode_m in Mode_simulation.__members__.items():
+        u_T_D_list.append([])
+    
     for i in range(trials):
         u = Gsequ.generate_sequential_ut(uts,ts)
+        u_T = u[-1]
         y,z = Simu.Simulator(SM,x0,u)
-        if mode_simulation.value == Mode_simulation.both.value:
-            u_T = u[-1]
-            u_D = Estr.estimator_with_mode(SM,z,ut,u,Mode_simulation.raw)           
+        i_mode = 0
+        for _, mode_m in mode_simulation.__members__.items():
+            u_D = Estr.estimator_with_mode(SM,z,ut,u,mode_m)           
             u_td = [u_T,u_D]
-            u_T_D.append(u_td)
-            
-            u_D_MM = Estr.estimator_with_mode(SM,z,ut,u,Mode_simulation.MM)           
-            u_td_MM = [u_T,u_D_MM]
-            u_T_D_MM.append(u_td_MM)
-            
-            u_D_ugt = Estr.estimator_with_mode(SM,z,ut,u,Mode_simulation.raw_ugt)           
-            u_td_ugt = [u_T,u_D_ugt]
-            u_T_D_ugt.append(u_td_ugt)
-        else:
-            u_D = Estr.estimator_with_mode(SM,z,ut,u,mode_simulation)
-            u_T = u[-1]
-            u_td = [u_T,u_D]
-            u_T_D.append(u_td)
-            
-    if mode_simulation.value == Mode_simulation.both.value:
-        return u_T_D, u_T_D_MM, u_T_D_ugt
-    else:
-        return u_T_D
-
+            u_T_D_list[i_mode].append(u_td)
+            i_mode +=1
+        
+    return u_T_D_list
+    
 def verification(num, mode):
     
     Arange = [1,1]
