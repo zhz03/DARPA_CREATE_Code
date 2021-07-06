@@ -8,7 +8,19 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def uPlot(u, u_estimates):
+def uComparisonPlot(u, u_rkf, u_raw):
+
+    plt.plot(range(len(u)), u)
+    plt.plot(range(len(u_rkf)), np.array(u_rkf).reshape(-1,))
+    plt.plot(range(len(u_raw)), np.array(u_raw).reshape(-1,))
+    plt.legend(['u_gt','u_rkf','u_raw'], loc='upper left')
+    plt.title("RKF: U estimation")
+    plt.ylabel('Positive Probability')
+    plt.xlabel('Different System Models')
+    plt.figure()
+    plt.show()
+
+def uContinousPlot(u, u_estimates):
 
     plt.plot(range(len(u)), u)
     plt.plot(range(len(u_estimates)), np.array(u_estimates).reshape(-1,))

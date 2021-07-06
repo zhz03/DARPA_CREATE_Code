@@ -49,14 +49,18 @@ class KalmanFilter(object):
         K = np.dot(np.dot(self.P, self.H.T), np.linalg.inv(S))  
         self.x = self.x + np.dot(K, y)
         self.P = self.P - np.dot(np.dot(K,self.H),self.P)
-        return self.P,self.x
+        HB = np.dot(self.H, self.B)
+        
+        u_est = np.dot(np.dot(np.linalg.inv(np.dot(HB.T,HB)), HB.T), y)
+        
+        return self.P,self.x, u_est
     
     def update_MM(self, z, ut):
         mean_ut_zt = []
         Sigma_ut_zt = []    
         y = z - np.dot(self.H, self.x)
         S = self.R + np.dot(self.H, np.dot(self.P, self.H.T))
-        K = np.dot(np.dot(self.P, self.H.T), np.linalg.inv(S))
+        K = np.dot(np.dot(self.P, self.H.T), np.linalg.inv(S)) 
                 
         ut_zt = y
         sigma = S
@@ -135,15 +139,17 @@ def KF_estimator(SM,measurements):
     kf = KalmanFilter(A=A,B=B,H=H,Q=Q,R=R)
     
     predictions = []
-    estimates = []
+    x_estimates = []
+    u_estimates = []
     Sigma = []
     for z in measurements:
         predictions.append(kf.predict()) #default u = 0 
-        P,x=kf.update(z)
-        estimates.append(x)
+        P,x,u_est=kf.update(z)
+        x_estimates.append(x)
         Sigma.append(P)
+        u_estimates.append(u_est)
 
-    return Sigma,estimates#,predictions
+    return Sigma,x_estimates,u_estimates#,predictions
 
 def KF_estimator_MM(SM,measurements,ut): #MM means multiple model meothod to calibrate x using U models
     A = SM[0]
@@ -179,7 +185,7 @@ def KF_estimator_ugt(SM,measurements,u):
     Sigma = []
     for i, z in enumerate(measurements):
         predictions.append(kf.predict(u[i])) 
-        P,x=kf.update(z)
+        P,x,_=kf.update(z)
         estimates.append(x)
         Sigma.append(P)
 
