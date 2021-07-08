@@ -58,8 +58,9 @@ def simulation_with_mode(SM,x0,uts,ts,ut,trials,mode_simulation):
             if mode_m.value == Mode_simulation.rkf.value:
                 u_rkf_list = u_D[0]
                 u_raw_list = u_D[1]
+                u_al_list = u_D[2]
                 if trials%5 == 0:
-                    E2Eplt.uComparisonPlot(u,u_rkf_list,u_raw_list)
+                    E2Eplt.uComparisonPlot(u,u_rkf_list,u_raw_list,u_al_list)
                 continue
             
     return u_T_D_list

@@ -8,15 +8,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def uComparisonPlot(u, u_rkf, u_raw):
+def uComparisonPlot(u, u_rkf, u_raw, u_al):
 
     plt.plot(range(len(u)), u)
     plt.plot(range(len(u_rkf)), np.array(u_rkf).reshape(-1,))
     plt.plot(range(len(u_raw)), np.array(u_raw).reshape(-1,))
-    plt.legend(['u_gt','u_rkf','u_raw'], loc='upper left')
+    plt.plot(range(len(u_al)), np.array(u_al).reshape(-1,))
+    plt.legend(['u_gt','u_rkf','u_raw','u_al'], loc='upper left')
     plt.title("RKF: U estimation")
-    plt.ylabel('Positive Probability')
-    plt.xlabel('Different System Models')
+    plt.ylabel('U Estimation Value')
+    plt.xlabel('Timestep')
     plt.figure()
     plt.show()
 

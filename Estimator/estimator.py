@@ -33,8 +33,10 @@ def estimator_with_mode(SM,z,ut,u,x0,mode_simulation):
     if mode_simulation.value == Mode_simulation.rkf.value:
         Sigma,x_estimates, u_rkf = KF_est.KF_estimator_rkf(SM,z,u)
         _,_,u_raw = KF_est.KF_estimator(SM,z)
+        _,_,u_al = KF_est.KF_estimator_al(SM,z,u)
         u_D_list.append(u_rkf)
         u_D_list.append(u_raw)
+        u_D_list.append(u_al)
         return u_D_list
     
     elif mode_simulation.value == Mode_simulation.raw.value:

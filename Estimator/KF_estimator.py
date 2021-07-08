@@ -128,6 +128,79 @@ class KalmanFilter(object):
         self.P = P_star - np.dot(K, (np.dot(P_star, self.H.T) + S_star).T) 
 
         return self.P,self.x, u_est_k
+    
+    def update_al(self, z,u_max,u_min): 
+        #Only applicable to 2D
+        mean_ut_zt = []
+        Sigma_ut_zt = []    
+        y = z - np.dot(self.H, self.x)
+        S = self.R + np.dot(self.H, np.dot(self.P, self.H.T))
+        K = np.dot(np.dot(self.P, self.H.T), np.linalg.inv(S))
+        HB = np.dot(self.H, self.B)
+        
+        M_k = np.dot(np.dot(np.linalg.inv(np.dot(np.dot(HB.T, np.linalg.inv(S)), HB)), HB.T), np.linalg.inv(S))     
+        u_est_temp = np.dot(M_k, y)
+        M_k_old = M_k - 10
+        M_k_new = M_k
+        
+        if u_est_temp <= u_max and u_est_temp >= u_min :
+            M_k_new = M_k
+        else:
+            al_sigma = 4
+            al_lamda_1 = 0
+            al_lamda_2 = 0
+            al_mu = 0
+            al_step = 0
+            max_term_1 = 0
+            max_term_2 = 0
+            if_tag1 = 1
+            if_tag2 = 1
+            
+            while (np.linalg.norm(M_k_new - M_k_old) > 1):
+                al_step +=1
+                print("Timestep: ",al_step )
+                print("M_k is ", np.linalg.norm(M_k))
+                M_k_old = M_k
+                g1 = u_max - np.dot(M_k_old, y)
+                g2 = np.dot(M_k_old, y) - u_min
+                h_m = np.dot(M_k_old, HB) - np.identity(self.B.shape[1])
+                if al_step == 1 :
+                    max_term_1 = al_lamda_1 - np.dot(al_sigma,g1)
+                    max_term_2 = al_lamda_2 - np.dot(al_sigma,g2)
+                f_M = 2*S - al_sigma* np.dot(y,y.T) + al_sigma*np.dot(HB,HB.T) # f_M*M = b1 or b2
+                b1 = (al_mu + al_sigma) * HB.T + (al_sigma*u_max-al_lamda_1)*y.T
+                b2 = (al_mu + al_sigma) * HB.T - (al_sigma*u_max+al_lamda_2)*y.T
+                if max_term_1 < 0 and if_tag1 == 1:
+                    max_term_1 = -1
+                    M_k_new = np.dot(b2,np.linalg.inv(f_M))
+                    print("1111--M_k_new is ", np.linalg.norm(M_k_new))
+                    if_tag2 = 0
+                if max_term_2 < 0 and if_tag2 == 1:
+                    max_term_2 = -1                                                               
+                    M_k_new = np.dot(b1,np.linalg.inv(f_M))
+                    print("2222--M_k_new is ", np.linalg.norm(M_k_new))
+                    if_tag1 = 0
+                    
+                M_k = M_k_new   
+                al_lamda_1 = np.max([0, (al_lamda_1 - al_sigma*g1)])
+                al_lamda_2 = np.max([0, (al_lamda_2 - al_sigma*g2)])
+                print("alpha 1 -: ", al_lamda_1)
+                print("alpha 2 -: ", al_lamda_2)
+                al_mu = al_mu - al_sigma*h_m
+            
+        M_k = M_k_new
+        L_k = K + np.dot((np.identity(K.shape[0]) - np.dot(K, self.H)), np.dot(self.B, M_k))
+        u_est_k = np.dot(M_k, y)
+        A_star = (np.identity(self.B.shape[0]) - np.dot(np.dot(self.B, M_k), self.H)) #A* = (I-GMC)
+        GM = np.dot(self.B, M_k)
+        Q_star = np.dot(np.dot(GM, self.R), GM.T)
+        P_star = np.dot(np.dot(A_star, self.P), A_star.T) + Q_star # P* = (I-GMC)P_k|k-1(I-GMC).T + Q*
+        S_star = -np.dot(np.dot(self.B, M_k), self.R)
+            
+        self.x = self.x + np.dot(L_k, y)
+        self.P = P_star - np.dot(K, (np.dot(P_star, self.H.T) + S_star).T)
+        
+        return self.P,self.x, u_est_k
       
 def KF_estimator(SM,measurements):
     A = SM[0]
@@ -207,6 +280,30 @@ def KF_estimator_rkf(SM,measurements,u):
     for _, z in enumerate(measurements):
         predictions.append(kf.predict()) 
         P,x,u_est_k=kf.update_rkf(z)
+        x_estimates.append(x)
+        Sigma.append(P)
+        u_estimates.append(u_est_k)
+    return Sigma,x_estimates, u_estimates
+
+def KF_estimator_al(SM,measurements,u):
+    A = SM[0]
+    B = SM[1]
+    H = SM[2]
+    Q = SM[3]
+    R = SM[4]
+    
+    u_max = np.max(u)+1
+    u_min = np.min(u)-1
+    
+    kf = KalmanFilter(A=A,B=B,H=H,Q=Q,R=R)
+    
+    predictions = []
+    x_estimates = []
+    u_estimates = []
+    Sigma = []
+    for _, z in enumerate(measurements):
+        predictions.append(kf.predict()) 
+        P,x,u_est_k=kf.update_al(z,u_max,u_min)
         x_estimates.append(x)
         Sigma.append(P)
         u_estimates.append(u_est_k)
