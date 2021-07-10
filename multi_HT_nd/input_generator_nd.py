@@ -14,7 +14,7 @@ def generate_mean(nHy,nd,Range):
     means = []
     for i in range(nHy):
         #mean = np.random.randint(Range[0],Range[1],size=nd)
-        means.append(20*i)
+        means.append(1*i)
     return means 
     
 def generate_cov(nHy,nd):

@@ -10,14 +10,14 @@ import matplotlib.pyplot as plt
 
 def uComparisonPlot(u, u_rkf, u_raw, u_al):
 
-    plt.plot(range(len(u)), u)
-    plt.plot(range(len(u_rkf)), np.array(u_rkf).reshape(-1,))
-    plt.plot(range(len(u_raw)), np.array(u_raw).reshape(-1,))
-    plt.plot(range(len(u_al)), np.array(u_al).reshape(-1,))
-    plt.legend(['u_gt','u_rkf','u_raw','u_al'], loc='upper left')
-    plt.title("RKF: U estimation")
-    plt.ylabel('U Estimation Value')
-    plt.xlabel('Timestep')
+    plt.plot(range(len(u)), u,color='k',linewidth=2)
+    plt.plot(range(len(u_rkf)), np.array(u_rkf).reshape(-1,), color='g',linewidth=3)
+    plt.plot(range(len(u_raw)), np.array(u_raw).reshape(-1,),color='cornflowerblue',linewidth=3)
+    plt.plot(range(len(u_al)), np.array(u_al).reshape(-1,),color='r',linewidth=3)
+    plt.legend(['u_Groundtruth','u_RKF','u_KF','u_AL-RKF'], loc='upper left',prop = {'size':15})
+    plt.title("Input U Value Estimation Comparison along with Timestep",fontsize='x-large')
+    plt.ylabel('Input value estimation',fontsize=15)
+    plt.xlabel('Timestep',fontsize=15)
     plt.figure()
     plt.show()
 
@@ -27,7 +27,7 @@ def uContinousPlot(u, u_estimates):
     plt.plot(range(len(u_estimates)), np.array(u_estimates).reshape(-1,))
 
     plt.legend(['u_gt','u_estimates'], loc='upper left')
-    plt.title("RKF: U estimation")
+    plt.title("Input U Estimation Algorithms Comparison")
     plt.ylabel('Positive Probability')
     plt.xlabel('Different System Models')
     plt.figure()
@@ -77,11 +77,12 @@ def resultPlt(mode_num, SM_num, trials, prob_d_list, prob_f_list, prob_d_error_l
     #plt.axhline(y=np.mean(prob_d_error_list[0]), color='g', linestyle='-')
     #plt.axhline(y=np.mean(prob_d_error_list[1]), color='b', linestyle='-')
 
-    plt.bar(np.arange(SM_num)-0.2, prob_d_list[1] , alpha=0.8, width=0.2, color='blue', label='Raw Estimator', lw=4)
-    plt.bar(np.arange(SM_num), prob_d_list[2], alpha=0.9, width=0.2, color='green', label='MM Estimator', lw=4)
-    plt.bar(np.arange(SM_num)+0.2, prob_d_list[3], alpha=0.9, width=0.2, color='red', label='UGT Estimator', lw=4)
+    plt.bar(np.arange(SM_num)-0.2, prob_d_list[1] , alpha=0.8, width=0.2, color='cornflowerblue', label='KF Estimator', lw=4)
+    plt.bar(np.arange(SM_num), prob_d_list[2], alpha=0.9, width=0.2, color='r', label='MM Estimator', lw=4)
+    plt.bar(np.arange(SM_num)+0.2, prob_d_list[3], alpha=0.9, width=0.2, color='g', label='UGT Estimator', lw=4)
     plt.ylabel('Positive Probability', fontsize=15)
     plt.xlabel('Different System Models', fontsize=15)
+    plt.title("Positive Probability Comparison of Input U Estimation based on Different Models",fontsize='x-large')
     plt.xticks(fontsize=15)
     plt.yticks(fontsize=15)
     plt.legend(loc='upper left',fontsize=15)
