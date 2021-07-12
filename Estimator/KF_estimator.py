@@ -158,8 +158,7 @@ class KalmanFilter(object):
             
             while (np.linalg.norm(M_k_new - M_k_old) > 1):
                 al_step +=1
-                print("Timestep: ",al_step )
-                print("M_k is ", np.linalg.norm(M_k))
+                # print("Timestep: ",al_step )
                 M_k_old = M_k
                 g1 = u_max - np.dot(M_k_old, y)
                 g2 = np.dot(M_k_old, y) - u_min
@@ -174,20 +173,17 @@ class KalmanFilter(object):
                 if max_term_1 < 0 and if_tag1 == 1:
                     max_term_1 = -1
                     M_k_new = np.dot(b2,np.linalg.inv(f_M_2))
-                    print("1111--M_k_new is ", np.linalg.norm(M_k_new))
+                    # print("1111--M_k_new is ", np.linalg.norm(M_k_new))
                     if_tag2 = 0
                 if max_term_2 < 0 and if_tag2 == 1:
                     max_term_2 = -1                                                               
                     M_k_new = np.dot(b1,np.linalg.inv(f_M_1))
-                    print("2222--M_k_new is ", np.linalg.norm(M_k_new))
+                    # print("2222--M_k_new is ", np.linalg.norm(M_k_new))
                     if_tag1 = 0
                     
                 M_k = M_k_new   
                 al_lamda_1 = np.max([0, (al_lamda_1 - al_sigma*g1)])
                 al_lamda_2 = np.max([0, (al_lamda_2 - al_sigma*g2)])
-                print("alpha 1 -: ", al_lamda_1)
-                print("alpha 2 -: ", al_lamda_2)
-                print("H_m", h_m)
                 al_mu = al_mu - al_sigma*h_m
             
         M_k = M_k_new

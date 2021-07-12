@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 import utility_functions.CompP2SHist as CompP2SHist
 from scipy.stats import multivariate_normal
 from E2Etest.E2E_validation_2d import Mode_simulation
-
+import Simulations.Binary_stat_hypothesis_testing_1d as BstatHT
 
 def estimator(SM,z,ut):
     Sigma,estimates = KF_est.KF_estimator(SM,z)
@@ -29,6 +29,8 @@ def estimator(SM,z,ut):
 
 def estimator_with_mode(SM,z,ut,u,x0,mode_simulation):
     u_D_list = []
+    p_u_D_list = []
+    x_est_list = []
     
     if mode_simulation.value == Mode_simulation.rkf.value:
         Sigma,x_estimates, u_rkf = KF_est.KF_estimator_rkf(SM,z,u)
@@ -37,29 +39,44 @@ def estimator_with_mode(SM,z,ut,u,x0,mode_simulation):
         u_D_list.append(u_rkf)
         u_D_list.append(u_raw)
         u_D_list.append(u_al)
-        return u_D_list
-    
-    elif mode_simulation.value == Mode_simulation.raw.value:
-        Sigma,x_estimates,u_estimates = KF_est.KF_estimator(SM,z)
-    elif mode_simulation.value == Mode_simulation.MM.value:
-        Sigma,x_estimates = KF_est.KF_estimator_MM(SM,z,ut)
-    elif mode_simulation.value == Mode_simulation.raw_ugt.value:
-        Sigma,x_estimates = KF_est.KF_estimator_ugt(SM,z,u)   
+        p_u_D_list.append([0])
         
-    for i in range(len(x_estimates)):
-        x_slice = []
-        if i == 0:
-            x_slice.append(x0)
-            x_slice.append(x_estimates[0])
-        else:
-            x_slice = x_estimates[0:i+1]
-        z_slice = z[0:i+1]
-        sigma_slice = Sigma[0:i+1]
-        ut_zt,mean_ut_zt,Sigma_ut_zt = BA.Bayesian_analysis(SM,ut,sigma_slice,x_slice,z_slice)
-        u_D = DM.Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt)
-        u_D_list.append(u_D)
-          
-    return u_D_list
+        return u_D_list, p_u_D_list
+    
+    elif mode_simulation.value == Mode_simulation.MM.value: #ut is [0,1], u is [0,...,0,1,...,1]
+        Sigma,kf_x_estimates,u_estimates = KF_est.KF_estimator(SM,z)   #u_estimates is continuous in KF_estimator
+        Sigma,mm_x_estimates = KF_est.KF_estimator_MM(SM,z,ut)
+        Sigma,ugt_x_estimates = KF_est.KF_estimator_ugt(SM,z,u)
+        x_est_list.append(kf_x_estimates)
+        x_est_list.append(mm_x_estimates)
+        x_est_list.append(ugt_x_estimates)
+         
+        for j in range(len(x_est_list)):  
+            u_D_mode = []
+            p_D_mode = []
+            x_estimates = x_est_list[j]
+            for i in range(len(x_estimates)):
+                x_slice = []
+                if i == 0:
+                    x_slice.append(x0)
+                    x_slice.append(x_estimates[0])
+                    z_slice = z[0]
+                    sigma_slice = Sigma[0]
+                else:
+                    x_slice = x_estimates[0:i+1]
+                    z_slice = z[0:i+1]
+                    sigma_slice = Sigma[0:i+1]
+                ut_zt,mean_ut_zt,Sigma_ut_zt = BA.Bayesian_analysis(SM,ut,sigma_slice,x_slice,z_slice)
+                u_D = DM.Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt)
+                u_td = [u[i],u_D]
+                u_D_mode.append(u_td)
+                p_D_seq = BstatHT.Bin_stat_hyp_test_nd(u_D_mode, ut) #p_D_seq.shape = (2,2) 
+                p_D_mode.append(p_D_seq) 
+                
+            u_D_list.append(u_D_mode)
+            p_u_D_list.append(p_D_mode)
+            
+        return u_D_list, p_u_D_list
 
 def verification(num):
 

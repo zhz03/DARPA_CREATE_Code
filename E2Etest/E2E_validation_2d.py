@@ -73,12 +73,12 @@ if __name__ == '__main__':
     mode = "const_2d"    
     mode_simulation = Mode_simulation # Four mode: raw & MM & raw_ugt & rkf
     model_num = 3
-    trials_ = 10 
+    trials_ = 20 
     nHy = 2      
     nd = 2
     dx = nd
     dz = nd 
-    Ts_ = 40
+    Ts_ = 200
     mode_num = 4        
         
     if mode == "1d":

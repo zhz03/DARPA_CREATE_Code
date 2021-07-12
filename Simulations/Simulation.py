@@ -35,34 +35,35 @@ def simulation(SM,x0,uts,ts,ut,trials):
 
 def simulation_with_mode(SM,x0,uts,ts,ut,trials,mode_simulation):
     u_T_D_list = []
+    p_u_T_D_list = []
     for _, mode_m in Mode_simulation.__members__.items():
         if mode_m.value == Mode_simulation.rkf.value:
                 continue
         u_T_D_list.append([])
     
-    for i in range(trials):
+    for i_trial in range(trials):
         u = Gsequ.generate_sequential_ut(uts,ts)
         u_T = u[-1]
         y,z = Simu.Simulator(SM,x0,u)
-        i_mode = 0
         for name, mode_m in mode_simulation.__members__.items():
-            u_D = Estr.estimator_with_mode(SM,z,ut,u,x0,mode_m) 
-            
-            if mode_m.value == Mode_simulation.raw.value or \
-                mode_m.value == Mode_simulation.MM.value or \
-                 mode_m.value == Mode_simulation.raw_ugt.value:
-                u_td = [u_T,u_D[-1]]
-                u_T_D_list[i_mode].append(u_td)
-                i_mode +=1     
+            if mode_m.value == Mode_simulation.MM.value: # MM = Raw, MM, rkf
+                u_D, p_u_D_list = Estr.estimator_with_mode(SM,z,ut,u,x0,mode_m) 
+                
+                if i_trial%100 == 0:
+                    E2Eplt.uPositiveProbPlot(u,p_u_D_list)
+                for i_mode in range(len(u_D)):
+                    u_mode = u_D[i_mode]
+                    u_td = u_mode[-1]
+                    u_T_D_list[i_mode].append(u_td)
                 
             if mode_m.value == Mode_simulation.rkf.value:
+                u_D, p_u_D_list = Estr.estimator_with_mode(SM,z,ut,u,x0,mode_m) 
                 u_rkf_list = u_D[0]
                 u_raw_list = u_D[1]
                 u_al_list = u_D[2]
-                if trials%5 == 0:
-                    E2Eplt.uComparisonPlot(u,u_rkf_list,u_raw_list,u_al_list)
-                continue
-            
+                # if i_trial%5 == 0:
+                    # E2Eplt.uComparisonPlot(u,u_rkf_list,u_raw_list,u_al_list)
+        
     return u_T_D_list
     
 def verification(num, mode):

@@ -7,6 +7,34 @@ Created on Tue Sep  8 01:30:22 2020
 import numpy as np
 import matplotlib.pyplot as plt
 
+def uPositiveProbPlot(u, prob_est_list):
+    p_kf = prob_est_list[0]
+    p_mm = prob_est_list[1]
+    p_ugt = prob_est_list[2]
+    
+    plt.plot(range(len(u)), u,color='k',linewidth=2)
+    plt.plot(range(len(p_ugt)),np.array(p_ugt)[:,0,0], color='g',linewidth=3)
+    plt.plot(range(len(p_kf)), np.array(p_kf)[:,0,0],color='cornflowerblue',linewidth=3)
+    plt.plot(range(len(p_mm)), np.array(p_mm)[:,0,0],color='r',linewidth=3)
+    
+    plt.legend(['u_Groundtruth','p_UGT','p_KF','p_MM'], loc='upper left',prop = {'size':15})
+    plt.title("Input U Positive Probability of P(0|0) Comparision along with Timestep",fontsize='x-large')
+    plt.ylabel('Positive Probability of P(0|0)',fontsize=15)
+    plt.xlabel('Timestep',fontsize=15)
+    plt.figure()
+    plt.show()
+    
+    plt.plot(range(len(u)), u,color='k',linewidth=2)
+    plt.plot(range(len(p_ugt)),np.array(p_ugt)[:,1,1], color='g',linewidth=3)
+    plt.plot(range(len(p_kf)), np.array(p_kf)[:,1,1],color='cornflowerblue',linewidth=3)
+    plt.plot(range(len(p_mm)), np.array(p_mm)[:,1,1],color='r',linewidth=3)
+    
+    plt.legend(['u_Groundtruth','p_UGT','p_KF','p_MM'], loc='upper left',prop = {'size':15})
+    plt.title("Input U Positive Probability of P(1|1) Comparision along with Timestep",fontsize='x-large')
+    plt.ylabel('Positive Probability of P(1|1)',fontsize=15)
+    plt.xlabel('Timestep',fontsize=15)
+    plt.figure()
+    plt.show()
 
 def uComparisonPlot(u, u_rkf, u_raw, u_al):
 
