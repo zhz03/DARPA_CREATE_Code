@@ -78,13 +78,12 @@ class KalmanFilter(object):
 
             self.p0 = (self.p0*p0)/(self.p0*p0 + self.p1*p1)
             self.p1 = (self.p1*p1)/(self.p0*p0 + self.p1*p1)
-            if self.p1 > 0.99:
-                self.p1 = 1
-                self.p0 = 0
-            elif self.p0 > 0.99:
-                self.p0 = 1
-                self.p1 = 0
-                
+            # if self.p1 > 0.999:
+            #     self.p1 = 1
+            #     self.p0 = 0
+            # elif self.p0 > 0.999:
+            #     self.p0 = 1
+            #     self.p1 = 0
             bias = (self.p0) * mean_ut_zt[0] + (self.p1) * mean_ut_zt[1]
                     
             self.x = self.x + np.dot(K, y) 
@@ -97,14 +96,18 @@ class KalmanFilter(object):
             if np.linalg.det(delta_P) < np.linalg.det(self.P):
                 self.P = self.P + delta_P
                 self.x = self.x + np.dot(1-K, bias)
+            
+            if self.p0 >= self.p1:
+                return self.P,self.x,ut[0]
+            else:
+                return self.P,self.x,ut[1]                
         else:
             #TODO: len(ut) > 2
             bias = 0 
             
             self.x = self.x + np.dot(K, y)
             self.P = self.P - np.dot(np.dot(K,self.H),self.P)
-        
-        return self.P,self.x
+            return self.P,self.x
     
     def update_rkf(self, z):
         mean_ut_zt = []
@@ -231,16 +234,18 @@ def KF_estimator_MM(SM,measurements,ut): #MM means multiple model meothod to cal
     kf = KalmanFilter(A=A,B=B,H=H,Q=Q,R=R)
     
     predictions = []
-    estimates = []
+    x_estimates = []
     Sigma = []
+    u_decision = []
     
     for z in measurements:
         predictions.append(kf.predict()) #default u = 0 
-        P,x=kf.update_MM(z,ut)
-        estimates.append(x)
+        P,x,u=kf.update_MM(z,ut)
+        x_estimates.append(x)
         Sigma.append(P)
+        u_decision.append(u)
 
-    return Sigma,estimates
+    return Sigma,x_estimates,u_decision
 
 def KF_estimator_ugt(SM,measurements,u):
     A = SM[0]

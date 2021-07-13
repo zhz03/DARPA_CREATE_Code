@@ -67,7 +67,7 @@ def resultPlt(mode_num, SM_num, trials, prob_d_list, prob_f_list, prob_d_error_l
     for i in range(mode_num):
         plt.plot(range(SM_num), prob_d_list[i])
     if mode_num == 4:
-        plt.legend(['Planner','Simulation_raw','Simulation_MM','Simulation_ugt'], loc='upper left')
+        plt.legend(['Planner','KF','MM','UGT'], loc='upper left')
     else:
         plt.legend(['Planner','Simulation'], loc='upper left')
     plt.title("Sensor Detection Error bound with {} trials/Iteration: Prob_D".format(trials))

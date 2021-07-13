@@ -49,7 +49,7 @@ def simulation_with_mode(SM,x0,uts,ts,ut,trials,mode_simulation):
             if mode_m.value == Mode_simulation.MM.value: # MM = Raw, MM, rkf
                 u_D, p_u_D_list = Estr.estimator_with_mode(SM,z,ut,u,x0,mode_m) 
                 
-                if i_trial%100 == 0:
+                if i_trial%500== 0:
                     E2Eplt.uPositiveProbPlot(u,p_u_D_list)
                 for i_mode in range(len(u_D)):
                     u_mode = u_D[i_mode]

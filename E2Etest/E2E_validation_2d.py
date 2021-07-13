@@ -25,7 +25,11 @@ class Mode_simulation(Enum):
 def E2E_validation_1d(SM,T,ut,x0,uts,ts,trials):
 
     Pr_D,Pr_FA,Pr_M,Pr_CR = Spr.Sensor_planner_1d(SM,T,ut)
-    
+    # Prob_error = Spr.Sensor_planner_nd(SM,T,ut)
+    # Pr_D = Prob_error[0][0] 
+    # Pr_FA = Prob_error[0][1] 
+    # Pr_M = Prob_error[1][0] 
+    # Pr_CR = Prob_error[1][1] 
     u_T_D = Sim.simulation(SM,x0,uts,ts,ut,trials)
     Pr_D_stat,Pr_FA_stat,Pr_M_stat,Pr_CR_stat = BstatHT.Bin_stat_hyp_test_1d(u_T_D)
     
@@ -57,9 +61,6 @@ def E2E_validation_nd_with_mode(SM,T,ut,x0,uts,ts,trials,mode_simulation):
         Prob_error_stat_list.append(Prob_error_stat)
         error_comparison_list.append(error_comparison)
         
-    # for i in range(len(u_T_D_list)):
-        
-        
     return Prob_error, Prob_error_stat_list, error_comparison_list
 
 if __name__ == '__main__':
@@ -72,13 +73,13 @@ if __name__ == '__main__':
     
     mode = "const_2d"    
     mode_simulation = Mode_simulation # Four mode: raw & MM & raw_ugt & rkf
-    model_num = 3
-    trials_ = 20 
+    model_num = 2
+    trials_ = 100 
     nHy = 2      
     nd = 2
     dx = nd
     dz = nd 
-    Ts_ = 200
+    Ts_ = 20
     mode_num = 4        
         
     if mode == "1d":

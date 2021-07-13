@@ -22,7 +22,7 @@ from E2Etest.E2E_validation_2d import Mode_simulation
 import Simulations.Binary_stat_hypothesis_testing_1d as BstatHT
 
 def estimator(SM,z,ut):
-    Sigma,estimates = KF_est.KF_estimator(SM,z)
+    Sigma,estimates,_ = KF_est.KF_estimator(SM,z)
     ut_zt,mean_ut_zt,Sigma_ut_zt = BA.Bayesian_analysis(SM,ut,Sigma,estimates,z)
     u_D = DM.Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt)
     return u_D
@@ -44,8 +44,8 @@ def estimator_with_mode(SM,z,ut,u,x0,mode_simulation):
         return u_D_list, p_u_D_list
     
     elif mode_simulation.value == Mode_simulation.MM.value: #ut is [0,1], u is [0,...,0,1,...,1]
-        Sigma,kf_x_estimates,u_estimates = KF_est.KF_estimator(SM,z)   #u_estimates is continuous in KF_estimator
-        Sigma,mm_x_estimates = KF_est.KF_estimator_MM(SM,z,ut)
+        Sigma,kf_x_estimates,kf_u_estimates = KF_est.KF_estimator(SM,z)   #kf_u_estimates is continuous in KF_estimator
+        Sigma,mm_x_estimates,mm_u_estimates = KF_est.KF_estimator_MM(SM,z,ut)
         Sigma,ugt_x_estimates = KF_est.KF_estimator_ugt(SM,z,u)
         x_est_list.append(kf_x_estimates)
         x_est_list.append(mm_x_estimates)
@@ -68,7 +68,10 @@ def estimator_with_mode(SM,z,ut,u,x0,mode_simulation):
                     sigma_slice = Sigma[0:i+1]
                 ut_zt,mean_ut_zt,Sigma_ut_zt = BA.Bayesian_analysis(SM,ut,sigma_slice,x_slice,z_slice)
                 u_D = DM.Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt)
-                u_td = [u[i],u_D]
+                if j == 1: # MM
+                    u_td = [u[i],mm_u_estimates[i]]
+                else:
+                    u_td = [u[i],u_D]
                 u_D_mode.append(u_td)
                 p_D_seq = BstatHT.Bin_stat_hyp_test_nd(u_D_mode, ut) #p_D_seq.shape = (2,2) 
                 p_D_mode.append(p_D_seq) 

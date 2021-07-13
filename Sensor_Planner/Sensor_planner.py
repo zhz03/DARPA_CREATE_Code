@@ -49,7 +49,6 @@ def Sensor_planner_nd(SM,T,ut):
     Sigma_ut = Uplnnd.Ut_planner_nd(SM,Sigma_xhat)    
     H = SM[2]
     B = SM[1]
-    
     n_Hy = len(ut)
     n_dim = np.size(ut[0])
     ut_hats = []
@@ -61,12 +60,9 @@ def Sensor_planner_nd(SM,T,ut):
         Sigma_uts.append(Sigma_ut)
         
     sam_size = 1000    
-    
     Prob_error = mhtnd(ut_hats,Sigma_uts,sam_size)  
     Prob_error = np.array(Prob_error)
-    #print("Prob_error.shape is ", np.array(Prob_error))
     return Prob_error
-    # ut_hats
 
     
 if __name__ == '__main__':
