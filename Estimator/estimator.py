@@ -29,31 +29,36 @@ def estimator(SM,z,ut):
 
 def estimator_with_mode(SM,z,ut,u,x0,mode_simulation):
     u_D_list = []
-    p_u_D_list = []
+    p_u_D_list = []  #p_D_seq.shape = (2,2)
     x_est_list = []
+    u_prob_list = []
+    p_vector = [] # p_vector.shape = (1,)
     
     if mode_simulation.value == Mode_simulation.rkf.value:
         Sigma,x_estimates, u_rkf = KF_est.KF_estimator_rkf(SM,z,u)
-        _,_,u_raw = KF_est.KF_estimator(SM,z)
+        _,_,u_raw,_ = KF_est.KF_estimator(SM,z,ut,u)
         _,_,u_al = KF_est.KF_estimator_al(SM,z,u)
         u_D_list.append(u_rkf)
         u_D_list.append(u_raw)
         u_D_list.append(u_al)
         p_u_D_list.append([0])
-        
-        return u_D_list, p_u_D_list
+        return u_D_list, p_u_D_list,p_vector
     
     elif mode_simulation.value == Mode_simulation.MM.value: #ut is [0,1], u is [0,...,0,1,...,1]
-        Sigma,kf_x_estimates,kf_u_estimates = KF_est.KF_estimator(SM,z)   #kf_u_estimates is continuous in KF_estimator
-        Sigma,mm_x_estimates,mm_u_estimates = KF_est.KF_estimator_MM(SM,z,ut)
-        Sigma,ugt_x_estimates = KF_est.KF_estimator_ugt(SM,z,u)
+        Sigma,kf_x_estimates,kf_u_estimates, kf_u_prob = KF_est.KF_estimator(SM,z,ut,u)   #kf_u_estimates is continuous in KF_estimator
+        Sigma,mm_x_estimates,mm_u_decisions, mm_u_prob = KF_est.KF_estimator_MM(SM,z,ut,u)
+        Sigma,ugt_x_estimates,ugt_u_estimates, ugt_u_prob = KF_est.KF_estimator_ugt(SM,z,ut,u)
         x_est_list.append(kf_x_estimates)
         x_est_list.append(mm_x_estimates)
         x_est_list.append(ugt_x_estimates)
+        u_prob_list.append(kf_u_prob)
+        u_prob_list.append(mm_u_prob)
+        u_prob_list.append(ugt_u_prob)
          
         for j in range(len(x_est_list)):  
             u_D_mode = []
             p_D_mode = []
+            p_current_step = []
             x_estimates = x_est_list[j]
             for i in range(len(x_estimates)):
                 x_slice = []
@@ -66,20 +71,20 @@ def estimator_with_mode(SM,z,ut,u,x0,mode_simulation):
                     x_slice = x_estimates[0:i+1]
                     z_slice = z[0:i+1]
                     sigma_slice = Sigma[0:i+1]
+                    
                 ut_zt,mean_ut_zt,Sigma_ut_zt = BA.Bayesian_analysis(SM,ut,sigma_slice,x_slice,z_slice)
                 u_D = DM.Decision_making(ut,ut_zt,mean_ut_zt,Sigma_ut_zt)
-                if j == 1: # MM
-                    u_td = [u[i],mm_u_estimates[i]]
-                else:
-                    u_td = [u[i],u_D]
+                
+                u_td = [u[i],u_D] if j!=1 else [u[i],mm_u_decisions[i]]
                 u_D_mode.append(u_td)
-                p_D_seq = BstatHT.Bin_stat_hyp_test_nd(u_D_mode, ut) #p_D_seq.shape = (2,2) 
+                p_D_seq = BstatHT.Bin_stat_hyp_test_nd(u_D_mode, ut) 
                 p_D_mode.append(p_D_seq) 
+                p_current_step.append(u_prob_list[j][i])
                 
             u_D_list.append(u_D_mode)
             p_u_D_list.append(p_D_mode)
-            
-        return u_D_list, p_u_D_list
+            p_vector.append(p_current_step)
+        return u_D_list, p_u_D_list,p_vector
 
 def verification(num):
 
